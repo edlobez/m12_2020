@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 edlobez
+ * Copyright (C) 2020 DAW_M12_grup2
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,13 @@
  */
 package dawm12.grup2.es.appConfig;
 
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+/**
+ *
+ * @author DAW_M12_grup2
+ */
+import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 
-public class WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
-
-    @Override
-    protected Class<?>[] getRootConfigClasses() {
-        return new Class[] {WebSecConfig.class, WebDataConfig.class};
-    }
-
-    @Override
-    protected Class<?>[] getServletConfigClasses() {
-        return new Class[]{WebAppConfig.class};
-    }
-
-    @Override
-    protected String[] getServletMappings() {
-        return new String[]{"/"};
-    }
+public class WebSecInitializer extends AbstractSecurityWebApplicationInitializer {
+    
 }
+
