@@ -55,7 +55,8 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable()
-                .authorizeRequests()                
+                .authorizeRequests()    
+                .antMatchers("/static/**").permitAll()
                 .antMatchers("/refugio").hasAuthority("admin")                
                 .anyRequest().authenticated()
                 .and()

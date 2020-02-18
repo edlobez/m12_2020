@@ -10,8 +10,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-       <link href="static/css/login.css" type="text/css" rel="stylesheet" />
+        <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+      <!--  <link href="static/css/login.css" type="text/css" rel="stylesheet" />-->
+      <link href="<c:url value="/static/css/login.css"/>"  rel="stylesheet"/>
+      
+       
         <title>Login Form</title>
     </head>
     <body>

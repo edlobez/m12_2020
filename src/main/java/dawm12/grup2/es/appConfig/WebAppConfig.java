@@ -26,6 +26,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.resource.PathResourceResolver;
 
 /**
  *
@@ -40,18 +41,19 @@ public class WebAppConfig implements WebMvcConfigurer {
     public void configureViewResolvers(ViewResolverRegistry registry) {
         registry.jsp("/WEB-INF/vistas/", ".jsp");
     }
-    
+
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-       registry.addViewController("/login").setViewName("login");       
-       registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        registry.addViewController("/login").setViewName("login");
+        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("/public/")
-                .setCacheControl(CacheControl.maxAge(2, TimeUnit.DAYS))
-                .resourceChain(true);
-    }  
+                .setCachePeriod(3600)
+                .resourceChain(true)
+                .addResolver(new PathResourceResolver());
+    }
 }
