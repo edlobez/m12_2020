@@ -52,6 +52,6 @@ public class WebAppConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("/public/")
                 .setCacheControl(CacheControl.maxAge(2, TimeUnit.DAYS))
-                .resourceChain(true);;
+                .resourceChain(true);
     }  
 }
