@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,5 +15,17 @@
     </head>
     <body>
         <h1>Hello World! Primera vista!</h1>
+        
+        <sec:authorize access="hasAuthority('ADMIN')">
+            <br>Este contenido sólo lo ve el admin.
+        </sec:authorize>
+            
+        <sec:authorize access="hasAuthority('TEC')">
+            Este contenido sólo lo ve el técnico.
+        </sec:authorize>
+            
+            <sec:authentication property="principal.username" />
+            <sec:authentication property="principal.authorities"/>
+        
     </body>
 </html>
