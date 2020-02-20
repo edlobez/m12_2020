@@ -17,7 +17,6 @@
 package dawm12.grup2.es.repository.imp;
 
 import dawm12.grup2.es.DBConnectionPool;
-import dawm12.grup2.es.repository.Repository;
 import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.sql.Connection;
@@ -28,25 +27,26 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import dawm12.grup2.es.repository.MyRepository;
 
 /**
  *
  * @author DAW_M12_grup2
  */
-public abstract class RepositoryImp <T> implements Repository <T> {
+public abstract class MyRepositoryImp <T> implements MyRepository <T> {
     
     private static DBConnectionPool dBConnectionPool;
     private static Connection connection;
 
-    public RepositoryImp ()  {
+    public MyRepositoryImp ()  {
         try {
             dBConnectionPool = DBConnectionPool.getInstance("dbPool.properties");
         } catch (IOException ex) {
-            Logger.getLogger(RepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(RepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(RepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         }
         
     }
@@ -65,7 +65,7 @@ public abstract class RepositoryImp <T> implements Repository <T> {
             }
             result = executeQuery(preparedStatement);
         } catch (SQLException ex) {
-            Logger.getLogger(RepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         }
            /* 
         if (edlobez.es.Debug.isDebugMode()) {
@@ -80,7 +80,7 @@ public abstract class RepositoryImp <T> implements Repository <T> {
     public T getone (String nomTabla, String... campos) {
         T result = null;
         Query q = new Query();
-        String qry = q.createQuerySelect(nomTabla, Repository.AND , campos);
+        String qry = q.createQuerySelect(nomTabla, MyRepository.AND , campos);
         
         try {
             PreparedStatement preparedStatement = getPreparedStatement(qry);
@@ -90,7 +90,7 @@ public abstract class RepositoryImp <T> implements Repository <T> {
             }
             result = findUniqueResult(preparedStatement);
         } catch (Exception ex) {
-            Logger.getLogger(RepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Error buscando en getByX");
         }    
         return result;
@@ -110,7 +110,7 @@ public abstract class RepositoryImp <T> implements Repository <T> {
                 preparedStatement.setString(i+1, q.getValor()[i]);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(RepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -131,7 +131,7 @@ public abstract class RepositoryImp <T> implements Repository <T> {
                 preparedStatement.setString(i+1, q.getValor()[i]);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(RepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         return createOrUpdate(nomTabla, preparedStatement, campos);
@@ -221,7 +221,7 @@ public abstract class RepositoryImp <T> implements Repository <T> {
         try {
             this.connection.close();
         } catch (SQLException ex) {
-            Logger.getLogger(RepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

@@ -33,4 +33,10 @@ public class PasswordEncoderGenerator {
 	}
 
   }
+  
+  public static String passwordGenerator (String pass) {
+      BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+      String hashedPassword = passwordEncoder.encode(pass);
+      return hashedPassword;
+  }
 }

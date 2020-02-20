@@ -14,18 +14,24 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World! Primera vista!</h1>
-        
-        <sec:authorize access="hasAuthority('ADMIN')">
+        <h1>Página de cualquier usuario logeado!</h1>
+
+        <sec:authorize access="hasAuthority('admin')">
             <br>Este contenido sólo lo ve el admin.
         </sec:authorize>
-            
-        <sec:authorize access="hasAuthority('TEC')">
+
+        <sec:authorize access="hasAuthority('tec')">
             Este contenido sólo lo ve el técnico.
         </sec:authorize>
-            
-            <sec:authentication property="principal.username" />
-            <sec:authentication property="principal.authorities"/>
-        
+
+        <br>
+        <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin">Ir a página del admin</a> 
+        <br>
+        <a class="logout-link" href="${pageContext.servletContext.contextPath}/logout">logout</a>
+
+        <h1>Usuario</h1>
+        <sec:authentication property="principal.username" /><br>
+        <sec:authentication property="principal.authorities"/>
+
     </body>
 </html>

@@ -23,7 +23,7 @@ import java.util.List;
  * @author DAW_M12_grup2
  */
 
-public interface Repository <T> {
+public interface MyRepository <T> {
     
     public static String AND = "AND";
     public static String OR = "OR";

@@ -16,10 +16,14 @@
  */
 package dawm12.grup2.es.controller;
 
+import dawm12.grup2.es.domain.Usuarios;
+import dawm12.grup2.es.service.Service;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,23 +39,39 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HelloController {
     
-    @RequestMapping(value = {"/"})
+   // @Autowired
+  //  @Qualifier("usuarioService")
+   // private Service usuariosService;
+    
+    @RequestMapping(value = {"/", "/home"})
     //@RequestMapping(value="/gasoil", method = RequestMethod.GET)
     public ModelAndView homeRequest (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         
         ModelAndView modelview = new ModelAndView(); 
-        modelview.setViewName("helloWorld");
+        modelview.setViewName("home");
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("\n\n  HELLOOO");
-        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("ADMIN"))) {
-            System.out.println("\n\n    ES EL ADMIN!!!");
+        
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
+            System.out.println("\n\nES EL ADMIN!!!");
         }
-        
-        
         return modelview;
         
     }  
+    
+    @RequestMapping(value={"/admin"})
+    public ModelAndView homeRequest_2 (HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException { 
+        
+        ModelAndView modelview = new ModelAndView(); 
+        
+        //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email)
+       // usuariosService.create(new Usuarios ("otro", "2222", true, "Nombre1", "Apellido1", null, "mail@mail.com"));
+        
+        modelview.setViewName("admin");
+        return modelview;
+    }
+    
     
 }
