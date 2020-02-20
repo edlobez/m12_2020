@@ -46,7 +46,7 @@ public class Query {
         //edlobez.es.Debug.printDebug("Nombre tabal: " + nomTabla + "\nCampos: ");
         int index = 0;
         for (String s: campos ) {
-            s = s.toUpperCase();
+            //s = s.toUpperCase();
             campo[index] = s.split("=")[0];
             valor[index] = s.split("=")[1];
             index++;
@@ -77,7 +77,7 @@ public class Query {
      //   edlobez.es.Debug.printDebug("Creando query select");
         int index = 0;
         for (String s: campos ) {  
-            s = s.toUpperCase();
+            //s = s.toUpperCase();
             campo[index] = s.split("=")[0];
             valor[index] = s.split("=")[1];
             index++;
@@ -172,7 +172,7 @@ public class Query {
                         output = output + inText.charAt(i);
                 }
         }
-        output= output.toUpperCase();             
+        //output= output.toUpperCase();             
         return output;
         
         

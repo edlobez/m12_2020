@@ -14,29 +14,37 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dawm12.grup2.es;
+package dawm12.grup2.es.domain;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+/**
+ *
+ * @author edlobez
+ */
+public class Roles {
+    
+    private String username;
+    private String role;
 
-public class PasswordEncoderGenerator {
+    public Roles(String username, String role) {
+        this.username = username;
+        this.role = role;
+    }
 
-  public static void main(String[] args) {
+    public String getUsername() {
+        return username;
+    }
 
-	int i = 0;
-	while (i < 10) {
-		String password = "2222";
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(password);
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-		System.out.println(hashedPassword);
-		i++;
-	}
+    public String getRole() {
+        return role;
+    }
 
-  }
-  
-  public static String passwordGenerator (String pass) {
-      BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-      String hashedPassword = passwordEncoder.encode(pass);
-      return hashedPassword;
-  }
+    public void setRole(String role) {
+        this.role = role;
+    }
+    
+    
 }

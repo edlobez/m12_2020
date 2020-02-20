@@ -38,7 +38,7 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
     @Autowired
     @Qualifier("usuarioImp")
     private MyRepository usuarioRepository;
-    private static String USUARIOS="usuarios";
+    private static String USUARIOS="USUARIOS";
     
     @Override
     protected List<Usuarios> getSeveral(String tipo_busqueda, String... campos) {
@@ -63,7 +63,8 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
                          "apellido2="+type.getApellido2(),
                          "email="+type.getEmail());
         } catch (Exception ex) {
-            Logger.getLogger(UsuarioService.class.getName()).log(Level.SEVERE, null, ex);
+            return u;
+          //  Logger.getLogger(UsuarioService.class.getName()).log(Level.SEVERE, null, ex);
         }        
         return u;
     }

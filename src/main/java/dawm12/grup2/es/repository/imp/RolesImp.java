@@ -14,29 +14,27 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package dawm12.grup2.es;
+package dawm12.grup2.es.repository.imp;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import dawm12.grup2.es.domain.Roles;
+import dawm12.grup2.es.repository.MyRepository;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
-public class PasswordEncoderGenerator {
+/**
+ *
+ * @author edlobez
+ */
 
-  public static void main(String[] args) {
+@Repository
+@Component("rolesImp")
+public class RolesImp extends MyRepositoryImp <Roles> implements MyRepository <Roles> {
 
-	int i = 0;
-	while (i < 10) {
-		String password = "2222";
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(password);
-
-		System.out.println(hashedPassword);
-		i++;
-	}
-
-  }
-  
-  public static String passwordGenerator (String pass) {
-      BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-      String hashedPassword = passwordEncoder.encode(pass);
-      return hashedPassword;
-  }
+    @Override
+    protected Roles buildDomainFromResultSet(ResultSet rs) throws SQLException {
+        return new Roles (rs.getString("username"), rs.getString("role"));
+    }
+    
 }

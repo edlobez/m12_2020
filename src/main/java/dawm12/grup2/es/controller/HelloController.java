@@ -16,6 +16,7 @@
  */
 package dawm12.grup2.es.controller;
 
+import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
 import java.io.IOException;
@@ -39,9 +40,13 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HelloController {
     
-   // @Autowired
-  //  @Qualifier("usuarioService")
-   // private Service usuariosService;
+    @Autowired
+    @Qualifier("usuarioService")
+    private Service usuariosService;
+    
+    @Autowired
+    @Qualifier("rolesService")
+    private Service rolesService;
     
     @RequestMapping(value = {"/", "/home"})
     //@RequestMapping(value="/gasoil", method = RequestMethod.GET)
@@ -67,7 +72,11 @@ public class HelloController {
         ModelAndView modelview = new ModelAndView(); 
         
         //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email)
-       // usuariosService.create(new Usuarios ("otro", "2222", true, "Nombre1", "Apellido1", null, "mail@mail.com"));
+        if ((usuariosService.create(new Usuarios ("cuatro", "2222", true, "Nombre1", "Apellido1", null, "mailCUATRO@mail.com")))==null) {
+            System.out.println("Error al crear el usuario");
+        } 
+        else 
+            rolesService.create(new Roles("cuatro", "user"));
         
         modelview.setViewName("admin");
         return modelview;
