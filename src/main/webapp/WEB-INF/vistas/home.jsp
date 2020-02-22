@@ -15,17 +15,17 @@
     </head>
     <body>
         <h1>Página de cualquier usuario logeado!</h1>
-
+        <br>
         <sec:authorize access="hasAuthority('admin')">
             <br>Este contenido sólo lo ve el admin.
         </sec:authorize>
 
-        <sec:authorize access="hasAuthority('tec')">
-            Este contenido sólo lo ve el técnico.
+        <sec:authorize access="hasAuthority('user')">
+            Este contenido sólo lo ve el usuario.
         </sec:authorize>
 
         <br>
-        <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin">Ir a página del admin</a> 
+        <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/home">Ir a página del admin</a> 
         <br>
         <a class="logout-link" href="${pageContext.servletContext.contextPath}/logout">logout</a>
 

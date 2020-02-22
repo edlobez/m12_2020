@@ -56,16 +56,12 @@ public class HelloController {
         ModelAndView modelview = new ModelAndView(); 
         modelview.setViewName("home");
         
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         
-        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
-            System.out.println("\n\nES EL ADMIN!!!");
-        }
         return modelview;
         
     }  
     
-    @RequestMapping(value={"/admin"})
+  /*  @RequestMapping(value={"/admin"})
     public ModelAndView homeRequest_2 (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         
@@ -80,7 +76,7 @@ public class HelloController {
         
         modelview.setViewName("admin");
         return modelview;
-    }
+    }*/
     
     
 }
