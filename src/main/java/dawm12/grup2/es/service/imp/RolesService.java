@@ -40,7 +40,7 @@ public class RolesService extends ServiceImp <Roles> implements Service <Roles> 
     private static String ROLES="ROLES";
 
     @Override
-    protected List<Roles> getSeveral(String tipo_busqueda, String args, String... campos) {
+    protected List<Roles> getSeveral(String tipo_busqueda, String args, String campos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -55,7 +55,7 @@ public class RolesService extends ServiceImp <Roles> implements Service <Roles> 
         Roles r = null;
         try {
             r = (Roles) rolesRepository.create(ROLES, 
-                    "USERNAME="+ type.getUsername(),
+                    "USERNAME="+ type.getUsername() +","+
                     "ROLE="+type.getRole());
             
         } catch (Exception ex) {
@@ -66,7 +66,7 @@ public class RolesService extends ServiceImp <Roles> implements Service <Roles> 
     }
 
     @Override
-    public Roles update(Roles type, String... campos) {
+    public Roles update(Roles type, String campos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     

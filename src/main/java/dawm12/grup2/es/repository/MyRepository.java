@@ -28,11 +28,11 @@ public interface MyRepository <T> {
     public static String AND = "AND";
     public static String OR = "OR";
     
-    public List<T> get (String nomTabla, String tipo_busqueda, String args, String... campos);
+    public List<T> get (String nomTabla, String tipo_busqueda, String args, String campos);
    // public List<T> get (String nomTabla, String tipo_busqueda, String... campos);
-    public T getone (String nomTabla, String... campos);
-    public T create (String nomTabla, String... campos) throws Exception;
-    public T update (String nombTabla, String condicion, String... campos) throws Exception;
+    public T getone (String nomTabla, String campos);
+    public T create (String nomTabla, String campos) throws Exception;
+    public T update (String nombTabla, String condicion, String campos) throws Exception;
     public void delete (T t);
 }
     

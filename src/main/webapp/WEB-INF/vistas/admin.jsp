@@ -56,7 +56,7 @@
         jQuery(document).ready(function ($) {            
 
             var grid = $("#grid-data").bootgrid({
-                rowCount: [-1, 5, 10],
+                rowCount: [-1, 1, 2],
                 ajax: true,
                 post: function ()
                 {
@@ -69,11 +69,11 @@
                     "commands": function (column, row)
                     {
                         return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\""
-                                + row.id +
+                                + row.username +
                                 "\"><span class=\"fa fa-pencil\">A</span></button> "
                                 +
                                 "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\""
-                                + row.id +
+                                + row.username +
                                 "\"><span class=\"fa fa-trash-o\">A</span></button>";
                     }
                 },
@@ -83,10 +83,13 @@
                 /* Executes after data is loaded and rendered */
                 grid.find(".command-edit").on("click", function (e)
                 {
-                    alert("You pressed edit on row: " + $(this).data("row-id"));
+                    //alert("You pressed edit on row: " + $(this).data("row-id"));
+                    location.href='${home}editUser?username=' + $(this).data("row-id");
+                    
                 }).end().find(".command-delete").on("click", function (e)
                 {
-                    alert("You pressed delete on row: " + $(this).data("row-id"));
+                    //alert("You pressed delete on row: " + $(this).data("row-id"));
+                    location.href='${home}deleteUser?username=' + $(this).data("row-id");
                 });
             });
 

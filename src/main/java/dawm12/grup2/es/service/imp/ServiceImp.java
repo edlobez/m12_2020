@@ -30,23 +30,23 @@ import dawm12.grup2.es.repository.MyRepository;
 public abstract class ServiceImp <T>  {
 
     public List <T> getAll() {
-        return this.getSeveral(null, null);
+        return this.getSeveral(null, null, null);
     }
     public List <T> getAll(String args) {
-        return this.getSeveral(null, args);
+        return this.getSeveral(null, args, null);
     }
    
-    public List <T> getOR(String... campos) {
+    public List <T> getOR(String campos) {
         return this.getSeveral(MyRepository.OR, null, campos);
     }
-    public List <T> getOR(String args, String... campos) {
+    public List <T> getOR(String args, String campos) {
         return this.getSeveral(MyRepository.OR, args, campos);
     }
    
-    public List <T> getAND(String... campos) {
+    public List <T> getAND(String campos) {
         return this.getSeveral (MyRepository.AND, null,  campos);
     }
-    public List <T> getAND(String args, String... campos) {
+    public List <T> getAND(String args, String campos) {
         return this.getSeveral (MyRepository.AND, args,  campos);
     }
    
@@ -58,5 +58,5 @@ public abstract class ServiceImp <T>  {
         return this.getSeveral(null, args, campos);
     }
         
-    protected abstract List<T> getSeveral(String tipo_busqueda, String args, String... campos);
+    protected abstract List<T> getSeveral(String tipo_busqueda, String args, String campos);
 }

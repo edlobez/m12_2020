@@ -112,7 +112,7 @@ public class Query {
        return qry;
     }
             
-    public String createQuerySelect (String nomTabla, String tipo_busqueda, String args, String... campos) {
+    public String createQuerySelect (String nomTabla, String tipo_busqueda, String args, String campos) {
         if (args == null || args.length() == 0 )
             return createQuerySelect (nomTabla, tipo_busqueda, campos);
         else {//throw new UnsupportedOperationException("Not supported yet.");
@@ -122,11 +122,24 @@ public class Query {
         //return null;
     }
     
-    public String createQuerySelect (String nomTabla, String tipo_busqueda, String... campos) {
+    public String createQuerySelect (String nomTabla, String tipo_busqueda, String _campos) {
         
         String operador_busqueda = EQUAL;
         String condicion_busqueda = tipo_busqueda;
+        String campos [] = null;
         
+        System.out.println ("En query antes de split: " + _campos);
+        if (_campos!= null) {
+            campos = _campos.split(",");
+            System.out.println("En query después de split: ");
+            for (String s : campos)
+            System.out.println(s);
+        }
+        else campos = new String [0];
+        
+        
+        
+        //nombre=xx,apellido=2
         campo= new String [campos.length];
         valor= new String [campos.length];
         
@@ -151,6 +164,50 @@ public class Query {
          qry = "SELECT * FROM " + nomTabla;
       else 
         qry = "SELECT * FROM " + nomTabla + " WHERE ";  
+      int aux = campo.length;
+      for (int i = 0; i < aux; i++) {
+        qry = qry + campo[i] + " " + operador_busqueda + " ? ";
+        if (i < (aux - 1)) {
+            qry = qry + " " + condicion_busqueda + " ";
+        }
+      }
+      
+      
+       qry = qry.trim();
+      // edlobez.es.Debug.printDebug(qry);
+       return qry;
+    }
+    /*
+    public String createQuerySelect (String nomTabla, String tipo_busqueda, String... campos) {
+        
+        String operador_busqueda = EQUAL;
+        String condicion_busqueda = tipo_busqueda;
+        
+        //nombre=xx,apellido=2
+        campo= new String [campos.length];
+        valor= new String [campos.length];
+        
+        nomTabla = normalizar(nomTabla);
+        
+      //  edlobez.es.Debug.printDebug("Nombre tabla: " + nomTabla + "\nCampos: ");
+        int index = 0;
+        for (String s: campos ) {  
+            s = normalizar(s);
+            campo[index] = s.split("=")[0];
+            valor[index] = s.split("=")[1];
+            if ( valor[index].contains("%") )
+                operador_busqueda = LIKE;
+            index++;
+        }
+      /*  for ( int i = 0; i < index; i++) {
+            edlobez.es.Debug.printDebug("Campo: " + campo[i]);
+            edlobez.es.Debug.printDebug("Valor: " + valor[i]);
+        }*//*
+      String qry;
+      if (campo.length == 0 )
+         qry = "SELECT * FROM " + nomTabla;
+      else 
+        qry = "SELECT * FROM " + nomTabla + " WHERE ";  
         int aux = campo.length;
         for ( int i = 0; i < aux; i++ ) {
             qry = qry + campo[i] + " "+ operador_busqueda +" ? ";
@@ -162,7 +219,7 @@ public class Query {
        qry = qry.trim();
       // edlobez.es.Debug.printDebug(qry);
        return qry;
-    }
+    }*/
     
     /*
      Sustituye acentos y cualquier vocal acentuada por un símbolo comodín

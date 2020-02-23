@@ -71,9 +71,25 @@ public class AdminController {
 
         return modelview;
     }
+    
+    @RequestMapping(value = "/editUser") 
+    public String editUser (@RequestParam("username") String username) {
+        
+        System.out.println ("Editar usuario: " + username);
+        
+        return "Editar usuario " + username;
+    }
+    
+    @RequestMapping(value = "/deleteUser") 
+    public String deleteUser (@RequestParam("username") String username) {
+        
+        System.out.println ("Borrar usuario: " + username);
+        
+        return "Borrar usuario " + username;
+    }
 
     @RequestMapping(value = "/userList")
-    public String getSearchResultViaAjax_(
+    public String getSearchResultViaAjax(
             @RequestBody String search, 
             @RequestParam("current") String actual,
             @RequestParam("rowCount") String numFilas,
@@ -84,16 +100,21 @@ public class AdminController {
         System.out.println("num filas a mostrar: " + numFilas);
         System.out.println("Buscar: " + cadenaBusqueda);
         
-        System.out.println("Todos los usuarios: " + usuarioService.getAll("LIMIT 1"));
-        System.out.println("Con argumentos:" + usuarioService.get("LIMIT 5", "nombre=%dmin"));
-        System.out.println("Sin argumentos:" + usuarioService.get("nombre=%tec%"));
+        //System.out.println("Todos los usuarios: " + usuarioService.getAll());
+        System.out.println("Con argumentos:" + usuarioService.getAND("nombre=%m%,apellido1=%1%"));
+        //System.out.println("Sin argumentos:" + usuarioService.get("nombre=%tec%"));
+        
         
         List <Usuarios> lista = new ArrayList <Usuarios> ();
-        if (cadenaBusqueda.length() == 0 )
-             lista = usuarioService.getAll();
+        if (cadenaBusqueda.length() == 0 ){
+            String aux = "";
+            if (Integer.parseInt(numFilas) != -1)
+                aux = "LIMIT " + numFilas;
+             lista = usuarioService.getAll(("ORDER BY username ASC " + aux).trim());
+        }
         else 
         {
-            lista = usuarioService.get("username=%" + cadenaBusqueda + "%");
+            lista = usuarioService.get("ORDER BY username","username=%" + cadenaBusqueda + "%");
         }
         
         ObjectMapper JSON_MAPPER = new ObjectMapper();
@@ -144,5 +165,7 @@ public class AdminController {
         System.out.println(json.toString());
         return json.toString();
     }
+    
+    
 
 }

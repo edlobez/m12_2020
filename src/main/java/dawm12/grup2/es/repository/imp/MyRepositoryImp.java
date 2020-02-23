@@ -53,11 +53,13 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
     
       
     @Override
-    public List<T> get(String nomTabla, String tipo_busqueda, String args, String... campos) {
+    public List<T> get(String nomTabla, String tipo_busqueda, String args, String campos) {
         List <T> result = null;
         Query q = new Query();
         
+        System.out.println ("En get: " + nomTabla + " " + tipo_busqueda + " " + args + " " + campos);
         String qry = q.createQuerySelect(nomTabla, tipo_busqueda, args, campos);
+        System.out.println("Qry: " + qry);
         PreparedStatement preparedStatement;
         try {
             preparedStatement = getPreparedStatement(qry);
@@ -78,7 +80,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
     }
     
     @Override
-    public T getone (String nomTabla, String... campos) {
+    public T getone (String nomTabla, String campos) {
         T result = null;
         Query q = new Query();
         String qry = q.createQuerySelect(nomTabla, MyRepository.AND , campos);
@@ -98,7 +100,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
     }
     
     @Override
-    public T create(String nomTabla, String... campos) throws Exception {
+    public T create(String nomTabla, String campos) throws Exception {
         T result = null;
         Query q = new Query();
         String qry = q.createQueryInsert(nomTabla, campos);
@@ -119,7 +121,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
     }
 
     @Override
-    public T update(String nomTabla, String condicion, String... campos) throws Exception{
+    public T update(String nomTabla, String condicion, String campos) throws Exception{
         T result = null;
         Query q = new Query();        
         String qry = q.createQueryUpdate (nomTabla,condicion, campos);
@@ -143,7 +145,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
-    private T createOrUpdate (String nomTabla, PreparedStatement preparedStatement, String... campos ) throws Exception {
+    private T createOrUpdate (String nomTabla, PreparedStatement preparedStatement, String campos ) throws Exception {
         int result = executeUpdateQuery (preparedStatement);
         if (result == 0 ) {
             throw new Exception ("Error creando elemento");

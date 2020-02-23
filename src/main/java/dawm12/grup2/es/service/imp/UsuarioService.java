@@ -41,7 +41,7 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
     private static String USUARIOS="USUARIOS";
     
     @Override
-    protected List<Usuarios> getSeveral(String tipo_busqueda, String args, String... campos) {
+    protected List<Usuarios> getSeveral(String tipo_busqueda, String args, String campos) {
         return usuarioRepository.get(USUARIOS, tipo_busqueda, args, campos);
     }
 
@@ -55,12 +55,12 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
         Usuarios u = null;
         try {
             u = (Usuarios) usuarioRepository.create(USUARIOS, 
-                         "username="+type.getUsername(),
-                         "password="+PasswordEncoderGenerator.passwordGenerator(type.getPassword()),
-                         "enabled="+ ((type.isEnabled())?1:0),
-                         "nombre="+type.getNombre(),
-                         "apellido1="+type.getApellido1(),
-                         "apellido2="+type.getApellido2(),
+                         "username="+type.getUsername() +","+
+                         "password="+PasswordEncoderGenerator.passwordGenerator(type.getPassword())+","+
+                         "enabled="+ ((type.isEnabled())?1:0)+","+
+                         "nombre="+type.getNombre()+","+
+                         "apellido1="+type.getApellido1()+","+
+                         "apellido2="+type.getApellido2()+","+
                          "email="+type.getEmail());
         } catch (Exception ex) {
             return u;
@@ -70,9 +70,8 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
     }
 
     @Override
-    public Usuarios update(Usuarios type, String... campos) {
+    public Usuarios update(Usuarios type, String campos) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
     
 }
