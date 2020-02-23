@@ -41,8 +41,8 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
     private static String USUARIOS="USUARIOS";
     
     @Override
-    protected List<Usuarios> getSeveral(String tipo_busqueda, String... campos) {
-        return usuarioRepository.get(USUARIOS, tipo_busqueda, campos);
+    protected List<Usuarios> getSeveral(String tipo_busqueda, String args, String... campos) {
+        return usuarioRepository.get(USUARIOS, tipo_busqueda, args, campos);
     }
 
     @Override

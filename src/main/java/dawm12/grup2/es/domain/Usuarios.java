@@ -96,6 +96,11 @@ public class Usuarios {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "Usuarios{" + "username=" + username + ", enabled=" + enabled + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", email=" + email + '}';
+    }
     
     
     

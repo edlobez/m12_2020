@@ -16,10 +16,25 @@
  */
 package dawm12.grup2.es.controller;
 
+import dawm12.grup2.es.domain.Usuarios;
+import dawm12.grup2.es.service.Service;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +53,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+    
+    @Autowired
+    @Qualifier("usuarioService")
+    private Service usuarioService;
 
     @RequestMapping("/home")
     public ModelAndView adminHome(HttpServletRequest request, HttpServletResponse response)
@@ -58,15 +77,51 @@ public class AdminController {
             @RequestBody String search, 
             @RequestParam("current") String actual,
             @RequestParam("rowCount") String numFilas,
-            @RequestParam("searchPhrase") String cadenaBusqueda) {
+            @RequestParam("searchPhrase") String cadenaBusqueda) throws JSONException {
         
-        System.out.println("Cadena compleata:" + search);
+        System.out.println("Cadena completa:" + search);
         System.out.println("Un parámetro (current): " + actual);
         System.out.println("num filas a mostrar: " + numFilas);
         System.out.println("Buscar: " + cadenaBusqueda);
         
+        System.out.println("Todos los usuarios: " + usuarioService.getAll("LIMIT 1"));
+        System.out.println("Con argumentos:" + usuarioService.get("LIMIT 5", "nombre=%dmin"));
+        System.out.println("Sin argumentos:" + usuarioService.get("nombre=%tec%"));
         
-        String result = "{\"current\":1, "
+        List <Usuarios> lista = new ArrayList <Usuarios> ();
+        if (cadenaBusqueda.length() == 0 )
+             lista = usuarioService.getAll();
+        else 
+        {
+            lista = usuarioService.get("username=%" + cadenaBusqueda + "%");
+        }
+        
+        ObjectMapper JSON_MAPPER = new ObjectMapper();
+        JSONObject member = null;
+        JSONArray array = new JSONArray();
+        for (Usuarios user:lista) {
+            try {
+                member = new JSONObject(JSON_MAPPER.writeValueAsString(user));
+                array.put(member);
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        System.out.println("Json array: " + array.toString());
+        
+        JSONObject json = new JSONObject();
+             try {
+                 json.put("rows", array);
+                 json.put("total", lista.size());
+                 json.put("rowCount", numFilas);
+                 json.put("current", actual);                 
+             } catch (JSONException ex) {
+                 Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+             }
+       
+        
+      /*  String result = "{\"current\":1, "
                 + "\"rowCount\":10,"
                 + "\"total\":14,"
                 + "\"rows\": ["
@@ -84,10 +139,10 @@ public class AdminController {
                 + "{\"id\":12,\"name\": \"mkyong\",\"correo\": \"mkyong@yahoo.com\"},"
                 + "{\"id\":13,\"name\": \"mkyong\",\"correo\": \"mkyong@yahoo.com\"},"
                 + "{\"id\":14,\"name\": \"mkyong\",\"correo\": \"mkyong@yahoo.com\"}"
-                + "]}";
+                + "]}";*/
 
-        System.out.println(result);
-        return result;
+        System.out.println(json.toString());
+        return json.toString();
     }
 
 }

@@ -31,13 +31,15 @@
         <h1>Página del administrador</h1>
         <h2>Lista de usuarios</h2>
         
+        
+        <!-- http://www.jquery-bootgrid.com/ -->
         <div>            
             <table id="grid-data" class="table table-condensed table-hover table-striped">
                 <thead>
                     <tr>
                         <th data-column-id="username">Username</th>
-                        <th data-column-id="name">Nombre</th>
-                        <th data-column-id="apellido">Apellido</th>
+                        <th data-column-id="nombre">Nombre</th>
+                        <th data-column-id="apellido1">Apellido</th>
                         <th data-column-id="email">email</th>
                         <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
                     </tr>

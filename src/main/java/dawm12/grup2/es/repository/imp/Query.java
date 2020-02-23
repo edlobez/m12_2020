@@ -112,7 +112,16 @@ public class Query {
        return qry;
     }
             
-            
+    public String createQuerySelect (String nomTabla, String tipo_busqueda, String args, String... campos) {
+        if (args == null || args.length() == 0 )
+            return createQuerySelect (nomTabla, tipo_busqueda, campos);
+        else {//throw new UnsupportedOperationException("Not supported yet.");
+            System.out.println ("CON argumentos: " + createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args);
+            return createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args;
+        }
+        //return null;
+    }
+    
     public String createQuerySelect (String nomTabla, String tipo_busqueda, String... campos) {
         
         String operador_busqueda = EQUAL;

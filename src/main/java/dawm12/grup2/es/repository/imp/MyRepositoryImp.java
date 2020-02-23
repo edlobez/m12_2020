@@ -51,12 +51,13 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         
     }
     
+      
     @Override
-    public List<T> get(String nomTabla, String tipo_busqueda, String... campos) {
+    public List<T> get(String nomTabla, String tipo_busqueda, String args, String... campos) {
         List <T> result = null;
         Query q = new Query();
         
-        String qry = q.createQuerySelect(nomTabla, tipo_busqueda, campos);
+        String qry = q.createQuerySelect(nomTabla, tipo_busqueda, args, campos);
         PreparedStatement preparedStatement;
         try {
             preparedStatement = getPreparedStatement(qry);

@@ -29,9 +29,13 @@ import java.util.List;
 public interface Service <T> {    
     
     List<T> getAll ();
+    List<T> getAll (String args);    
     List<T> getOR (String... campos);
+    List<T> getOR (String args, String... campos);
     List<T> getAND (String... campos);
+    List<T> getAND (String args, String... campos);
     List<T> get (String campos);
+    List<T> get (String args, String campos);
     T getone (String campos);
     public T create (T type);
     public T update (T type, String... campos);
