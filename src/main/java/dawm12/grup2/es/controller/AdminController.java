@@ -87,6 +87,14 @@ public class AdminController {
         
         return "Borrar usuario " + username;
     }
+    
+    @RequestMapping(value = "/newUser") 
+    public String newUser () {
+        
+        System.out.println ("Nuevo usuario");
+        
+        return "NUEVO USURIO";
+    }
 
     @RequestMapping(value = "/userList")
     public String getSearchResultViaAjax(
