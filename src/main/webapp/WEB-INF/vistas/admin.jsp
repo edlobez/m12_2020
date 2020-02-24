@@ -51,7 +51,7 @@
         <br>
         <a class="logout-link" href="${pageContext.servletContext.contextPath}/logout">-->Logout</a>
         <br><br>
-        <input type="submit" value="Nuevo usuario" onclick="location.href='${home}newUser'"/>
+        <input type="submit" value="Nuevo usuario" onclick="location.href='${pageContext.servletContext.contextPath}/admin/newUser'"/>
         
         
         <script>

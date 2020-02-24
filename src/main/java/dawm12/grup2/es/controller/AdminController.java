@@ -98,20 +98,35 @@ public class AdminController {
     }
     
     @RequestMapping(value = "/newUser") 
-    public String newUser () {
+    public ModelAndView newUser () {
         
-        System.out.println ("Nuevo usuario");
+      /*  System.out.println ("Nuevo usuario");
         
         //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email) {
 
         Usuarios usr = new Usuarios ("cinco", "5555", true, "Cinco", "apellido5", null, "mail5@mail.com");
         Roles rl = new Roles("cinco", "user");
         usuarioService.create(usr);
-        rolesService.create(rl);
+        rolesService.create(rl);*/
         
-        return "NUEVO USURIO";
+        return new ModelAndView ("newUser");
     }
 
+    @RequestMapping(value = "/saveUser") 
+    public String guardarUser () {
+        
+      /*  System.out.println ("Nuevo usuario");
+        
+        //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email) {
+
+        Usuarios usr = new Usuarios ("cinco", "5555", true, "Cinco", "apellido5", null, "mail5@mail.com");
+        Roles rl = new Roles("cinco", "user");
+        usuarioService.create(usr);
+        rolesService.create(rl);*/
+        
+        return "Guardando user";
+    }
+    
     @RequestMapping(value = "/userList")
     public String getSearchResultViaAjax(
             @RequestBody String search, 
@@ -134,11 +149,12 @@ public class AdminController {
             String aux = "";
             if (Integer.parseInt(numFilas) != -1)
                 aux = "LIMIT " + numFilas;
-             lista = usuarioService.getAll(("ORDER BY username ASC " + aux).trim());
+             //lista = usuarioService.getAll(("ORDER BY username ASC " + aux).trim());
+             lista = usuarioService.get(aux, "enabled=1");
         }
         else 
         {
-            lista = usuarioService.get("ORDER BY username","username=%" + cadenaBusqueda + "%");
+            lista = usuarioService.get("ORDER BY username","username=%" + cadenaBusqueda + "%,enabled=1");
         }
         
         ObjectMapper JSON_MAPPER = new ObjectMapper();
