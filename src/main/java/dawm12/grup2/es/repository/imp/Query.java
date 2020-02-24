@@ -35,11 +35,24 @@ public class Query {
         return this.valor;
     }
     
-    public String createQueryUpdate (String nomTabla, String key, String... campos) {
+    public String createQueryUpdate (String nomTabla, String key, String _campos) {
+        
+        String campos [] = null;
+        
+        System.out.println ("En queryUpdate antes de split: " + _campos);
+        if (_campos!= null) {
+            campos = _campos.split(",");
+            System.out.println("En queryUpdate después de split: ");
+            for (String s : campos)
+            System.out.println(s);
+        }
+        else campos = new String [0];
         
         campo= new String [campos.length];
         valor= new String [campos.length];
         key = normalizar(key);
+        key = key.replace("=", "='");
+        key = key+"'";
         nomTabla = nomTabla.toUpperCase();
         
         String qry;
@@ -64,11 +77,23 @@ public class Query {
        qry = qry + "WHERE " + key;
        qry = qry.trim();
        //edlobez.es.Debug.printDebug(qry);
+       System.out.println("Query update: " +qry);
        return qry;
         
     }
     
-    public String createQueryInsert (String nomTabla, String... campos) {
+    public String createQueryInsert (String nomTabla, String _campos) {
+        
+        String campos [] = null;
+        
+        System.out.println ("En queryInsert antes de split: " + _campos);
+        if (_campos!= null) {
+            campos = _campos.split(",");
+            System.out.println("En queryInsert después de split: ");
+            for (String s : campos)
+            System.out.println(s);
+        }
+        else campos = new String [0];
         
         campo= new String [campos.length];
         valor= new String [campos.length];
@@ -108,6 +133,8 @@ public class Query {
         }
        qry = qry + "?)";
        qry = qry.trim();
+       
+       System.out.println("Query insert:" + qry);
        //edlobez.es.Debug.printDebug(qry);
        return qry;
     }
@@ -128,10 +155,10 @@ public class Query {
         String condicion_busqueda = tipo_busqueda;
         String campos [] = null;
         
-        System.out.println ("En query antes de split: " + _campos);
+        System.out.println ("En querySelect antes de split: " + _campos);
         if (_campos!= null) {
             campos = _campos.split(",");
-            System.out.println("En query después de split: ");
+            System.out.println("En querySelect después de split: ");
             for (String s : campos)
             System.out.println(s);
         }

@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dawm12.grup2.es.domain.Roles;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,6 +58,10 @@ public class AdminController {
     @Autowired
     @Qualifier("usuarioService")
     private Service usuarioService;
+    
+    @Autowired
+    @Qualifier("rolesService")
+    private Service rolesService;
 
     @RequestMapping("/home")
     public ModelAndView adminHome(HttpServletRequest request, HttpServletResponse response)
@@ -73,11 +78,15 @@ public class AdminController {
     }
     
     @RequestMapping(value = "/editUser") 
-    public String editUser (@RequestParam("username") String username) {
+    public ModelAndView editUser (@RequestParam("username") String username) {
         
-        System.out.println ("Editar usuario: " + username);
+               
+        Usuarios usr = (Usuarios)usuarioService.getone("username="+username);
+        System.out.println("Editando: "+ usr.toString());
         
-        return "Editar usuario " + username;
+        usuarioService.update(usr, "nombre=eduardo");
+        
+        return new ModelAndView("admin");
     }
     
     @RequestMapping(value = "/deleteUser") 
@@ -92,6 +101,13 @@ public class AdminController {
     public String newUser () {
         
         System.out.println ("Nuevo usuario");
+        
+        //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email) {
+
+        Usuarios usr = new Usuarios ("cinco", "5555", true, "Cinco", "apellido5", null, "mail5@mail.com");
+        Roles rl = new Roles("cinco", "user");
+        usuarioService.create(usr);
+        rolesService.create(rl);
         
         return "NUEVO USURIO";
     }

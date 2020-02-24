@@ -130,7 +130,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         try {
             preparedStatement = getPreparedStatement(qry);
             for ( int i = 0; i < q.getValor().length; i++) {
-                //edlobez.es.Debug.printDebug(q.getValor()[i]);
+                System.out.println("Upadate a valor: " + q.getValor()[i]);
                 preparedStatement.setString(i+1, q.getValor()[i]);
             }
         } catch (SQLException ex) {
@@ -206,6 +206,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         }
         try {
             result = preparedStatement.executeUpdate();
+            System.out.println("Ejecutando:" + result);
         } catch (SQLException e) {
             e.printStackTrace();
         }

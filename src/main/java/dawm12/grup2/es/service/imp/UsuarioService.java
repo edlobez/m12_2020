@@ -71,7 +71,16 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
 
     @Override
     public Usuarios update(Usuarios type, String campos) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        Usuarios u = null;
+        try {
+            u = (Usuarios) usuarioRepository.update(USUARIOS, "username="+type.getUsername(), campos);
+        } catch (Exception ex) {
+            return null;
+        }
+        return u;
+        
+        
     }
     
 }

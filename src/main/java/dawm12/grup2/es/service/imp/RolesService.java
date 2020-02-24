@@ -59,7 +59,8 @@ public class RolesService extends ServiceImp <Roles> implements Service <Roles> 
                     "ROLE="+type.getRole());
             
         } catch (Exception ex) {
-            Logger.getLogger(RolesService.class.getName()).log(Level.SEVERE, null, ex);
+            return r;
+            //Logger.getLogger(RolesService.class.getName()).log(Level.SEVERE, null, ex);
         }        
         return r;
         
