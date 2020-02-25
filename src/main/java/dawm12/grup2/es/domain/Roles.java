@@ -30,6 +30,11 @@ public class Roles {
         this.role = role;
     }
 
+    public Roles() {
+    }
+    
+    
+
     public String getUsername() {
         return username;
     }

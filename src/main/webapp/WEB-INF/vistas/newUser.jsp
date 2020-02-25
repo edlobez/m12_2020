@@ -18,9 +18,31 @@
     </head>
     <body>        
         <h1>Registro de Usuarios:</h1>
+        <!--        
+         this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.nombre = nombre;
+        this.apellido1 = apellido1;
+        this.apellido2 = apellido2;
+        this.email = email;-->
 
-        <mvc:form action="${pageContext.servletContext.contextPath}/admin/saveUser" >                    
+        <mvc:form action="${pageContext.servletContext.contextPath}/admin/saveUser" modelAttribute="usuario">                    
 
+            Username:  <mvc:input type="text" path="username"/>
+            <br>
+            Password: <mvc:input type="password" path="password"/>
+            <br>
+            Nombre: <mvc:input type="text" path="nombre"/>
+            <br>
+            Apellido 1: <mvc:input type="text" path="apellido1"/>
+            <br>
+            Apellido 2: <mvc:input type="text" path="apellido2"/>
+            <br>
+            email: <mvc:input type="text" path="email"/>    
+            <br>
+            Roles <br>
+            
           
             <br/><br/><br/>
             <input type="submit" value="Enviar">

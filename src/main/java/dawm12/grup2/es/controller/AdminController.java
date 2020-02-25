@@ -40,6 +40,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -98,7 +101,7 @@ public class AdminController {
     }
     
     @RequestMapping(value = "/newUser") 
-    public ModelAndView newUser () {
+    public ModelAndView newUser (ModelMap modelo) {
         
       /*  System.out.println ("Nuevo usuario");
         
@@ -108,13 +111,23 @@ public class AdminController {
         Roles rl = new Roles("cinco", "user");
         usuarioService.create(usr);
         rolesService.create(rl);*/
+      
+        Usuarios usr = new Usuarios ();
+        Roles rl = new Roles ();
+        modelo.addAttribute("usuario", usr);
+        modelo.addAttribute("rol", rl);
+        ModelAndView mv = new ModelAndView ("newUser");
         
-        return new ModelAndView ("newUser");
+        
+        return mv;
     }
 
     @RequestMapping(value = "/saveUser") 
-    public String guardarUser () {
+    public ModelAndView guardarUser ( Model modelo, 
+            @ModelAttribute("usuario") Usuarios usr,
+            @ModelAttribute("rol") Roles rl ) {
         
+        System.out.println("\n\n\nGuardado: " + usr.toString());
       /*  System.out.println ("Nuevo usuario");
         
         //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email) {
@@ -123,8 +136,20 @@ public class AdminController {
         Roles rl = new Roles("cinco", "user");
         usuarioService.create(usr);
         rolesService.create(rl);*/
+      
+        if (usuarioService.getOR("username="+usr.getUsername()+",email="+usr.getEmail()).size() > 0) {
+            System.out.println("Error al crear el usuario, username o email repetido");
+            return new ModelAndView("newUser");            
+        }
+        else {
+            //TO - DO CONTROL DE ERRORES!!!!
+            rl.setUsername(usr.getUsername());
+           // usuarioService.create(usr);
+           // rolesService.create(rl);
+            System.out.println("\n\n\n\nUsuario creado");
+        }
         
-        return "Guardando user";
+        return new ModelAndView("admin");
     }
     
     @RequestMapping(value = "/userList")
