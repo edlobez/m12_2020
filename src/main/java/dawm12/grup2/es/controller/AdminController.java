@@ -125,7 +125,7 @@ public class AdminController {
     @RequestMapping(value = "/saveUser") 
     public ModelAndView guardarUser ( Model modelo, 
             @ModelAttribute("usuario") Usuarios usr,
-            @ModelAttribute("rol") Roles rl ) {
+            @RequestParam("role") String role) {
         
         System.out.println("\n\n\nGuardado: " + usr.toString());
       /*  System.out.println ("Nuevo usuario");
@@ -143,10 +143,12 @@ public class AdminController {
         }
         else {
             //TO - DO CONTROL DE ERRORES!!!!
-            rl.setUsername(usr.getUsername());
-           // usuarioService.create(usr);
+            Roles rl = new Roles();
+            //rl.setUsername(usr.getUsername());
+            //rl.setRole(role);
+            // usuarioService.create(usr);           
            // rolesService.create(rl);
-            System.out.println("\n\n\n\nUsuario creado");
+            System.out.println("\n\n\n\nUsuario creado: " + usr.toString()+ " con rol:" + role);
         }
         
         return new ModelAndView("admin");

@@ -42,7 +42,12 @@
             email: <mvc:input type="text" path="email"/>    
             <br>
             Roles <br>
-            
+            <input type="radio" name="role" value="admin">
+            <label>Admin</label>
+            <input type="radio" name="role" value="user" checked="true">
+            <label>User</label>
+            <input type="radio" name="role" value="responsable">
+            <label>Responsable</label>
           
             <br/><br/><br/>
             <input type="submit" value="Enviar">
