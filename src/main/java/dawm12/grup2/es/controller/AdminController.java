@@ -95,7 +95,7 @@ public class AdminController {
     @RequestMapping(value = "/deleteUser") 
     public String deleteUser (@RequestParam("username") String username) {
         
-        System.out.println ("Borrar usuario: " + username);
+        //System.out.println ("Borrar usuario: " + username);
         
         return "Borrar usuario " + username;
     }
@@ -127,7 +127,7 @@ public class AdminController {
             @ModelAttribute("usuario") Usuarios usr,
             @RequestParam("role") String role) {
         
-        System.out.println("\n\n\nGuardado: " + usr.toString());
+        //System.out.println("\n\n\nGuardado: " + usr.toString());
       /*  System.out.println ("Nuevo usuario");
         
         //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email) {
@@ -161,13 +161,13 @@ public class AdminController {
             @RequestParam("rowCount") String numFilas,
             @RequestParam("searchPhrase") String cadenaBusqueda) throws JSONException {
         
-        System.out.println("Cadena completa:" + search);
-        System.out.println("Un parámetro (current): " + actual);
-        System.out.println("num filas a mostrar: " + numFilas);
-        System.out.println("Buscar: " + cadenaBusqueda);
+        //System.out.println("Cadena completa:" + search);
+        //System.out.println("Un parámetro (current): " + actual);
+        //System.out.println("num filas a mostrar: " + numFilas);
+        //System.out.println("Buscar: " + cadenaBusqueda);
         
         //System.out.println("Todos los usuarios: " + usuarioService.getAll());
-        System.out.println("Con argumentos:" + usuarioService.getAND("nombre=%m%,apellido1=%1%"));
+        //System.out.println("Con argumentos:" + usuarioService.getAND("nombre=%m%,apellido1=%1%"));
         //System.out.println("Sin argumentos:" + usuarioService.get("nombre=%tec%"));
         
         
@@ -196,7 +196,7 @@ public class AdminController {
             }
         }
         
-        System.out.println("Json array: " + array.toString());
+        //System.out.println("Json array: " + array.toString());
         
         JSONObject json = new JSONObject();
              try {
@@ -229,7 +229,7 @@ public class AdminController {
                 + "{\"id\":14,\"name\": \"mkyong\",\"correo\": \"mkyong@yahoo.com\"}"
                 + "]}";*/
 
-        System.out.println(json.toString());
+        //System.out.println(json.toString());
         return json.toString();
     }
     

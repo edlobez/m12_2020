@@ -39,12 +39,12 @@ public class Query {
         
         String campos [] = null;
         
-        System.out.println ("En queryUpdate antes de split: " + _campos);
+        //System.out.println ("En queryUpdate antes de split: " + _campos);
         if (_campos!= null) {
             campos = _campos.split(",");
-            System.out.println("En queryUpdate después de split: ");
-            for (String s : campos)
-            System.out.println(s);
+            //System.out.println("En queryUpdate después de split: ");
+            //for (String s : campos)
+            //System.out.println(s);
         }
         else campos = new String [0];
         
@@ -77,7 +77,7 @@ public class Query {
        qry = qry + "WHERE " + key;
        qry = qry.trim();
        //edlobez.es.Debug.printDebug(qry);
-       System.out.println("Query update: " +qry);
+       //System.out.println("Query update: " +qry);
        return qry;
         
     }
@@ -86,12 +86,12 @@ public class Query {
         
         String campos [] = null;
         
-        System.out.println ("En queryInsert antes de split: " + _campos);
+        //System.out.println ("En queryInsert antes de split: " + _campos);
         if (_campos!= null) {
             campos = _campos.split(",");
-            System.out.println("En queryInsert después de split: ");
-            for (String s : campos)
-            System.out.println(s);
+            //System.out.println("En queryInsert después de split: ");
+            //for (String s : campos)
+            //System.out.println(s);
         }
         else campos = new String [0];
         
@@ -134,7 +134,7 @@ public class Query {
        qry = qry + "?)";
        qry = qry.trim();
        
-       System.out.println("Query insert:" + qry);
+       //System.out.println("Query insert:" + qry);
        //edlobez.es.Debug.printDebug(qry);
        return qry;
     }
@@ -143,7 +143,7 @@ public class Query {
         if (args == null || args.length() == 0 )
             return createQuerySelect (nomTabla, tipo_busqueda, campos);
         else {//throw new UnsupportedOperationException("Not supported yet.");
-            System.out.println ("CON argumentos: " + createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args);
+            //System.out.println ("CON argumentos: " + createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args);
             return createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args;
         }
         //return null;
@@ -155,12 +155,12 @@ public class Query {
         String condicion_busqueda = tipo_busqueda;
         String campos [] = null;
         
-        System.out.println ("En querySelect antes de split: " + _campos);
+        //System.out.println ("En querySelect antes de split: " + _campos);
         if (_campos!= null) {
             campos = _campos.split(",");
-            System.out.println("En querySelect después de split: ");
-            for (String s : campos)
-            System.out.println(s);
+            //System.out.println("En querySelect después de split: ");
+            //for (String s : campos)
+            //System.out.println(s);
         }
         else campos = new String [0];
         

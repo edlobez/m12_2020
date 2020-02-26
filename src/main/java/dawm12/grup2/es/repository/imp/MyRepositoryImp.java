@@ -57,9 +57,9 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         List <T> result = null;
         Query q = new Query();
         
-        System.out.println ("En get: " + nomTabla + " " + tipo_busqueda + " " + args + " " + campos);
+        //System.out.println ("En get: " + nomTabla + " " + tipo_busqueda + " " + args + " " + campos);
         String qry = q.createQuerySelect(nomTabla, tipo_busqueda, args, campos);
-        System.out.println("Qry: " + qry);
+        //System.out.println("Qry: " + qry);
         PreparedStatement preparedStatement;
         try {
             preparedStatement = getPreparedStatement(qry);
@@ -206,7 +206,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         }
         try {
             result = preparedStatement.executeUpdate();
-            System.out.println("Ejecutando:" + result);
+            //System.out.println("Ejecutando:" + result);
         } catch (SQLException e) {
             e.printStackTrace();
         }
