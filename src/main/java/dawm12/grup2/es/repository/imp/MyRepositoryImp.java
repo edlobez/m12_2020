@@ -59,23 +59,18 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         
         //System.out.println ("En get: " + nomTabla + " " + tipo_busqueda + " " + args + " " + campos);
         String qry = q.createQuerySelect(nomTabla, tipo_busqueda, args, campos);
-        //System.out.println("Qry: " + qry);
+        //System.out.println("\nQry: " + qry);
         PreparedStatement preparedStatement;
         try {
             preparedStatement = getPreparedStatement(qry);
-            for ( int i = 0; i < q.getValor().length; i++) {
+            for ( int i = 0; i < q.getValor().length; i++) { 
+                //System.out.println("Valor: " + q.getValor()[i]);
                 preparedStatement.setString(i+1, q.getValor()[i]);
             }
             result = executeQuery(preparedStatement);
         } catch (SQLException ex) {
             Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
-        }
-           /* 
-        if (edlobez.es.Debug.isDebugMode()) {
-            edlobez.es.Debug.printDebug("Elementos de la lista " + result.size());
-            for (T t: result)
-                edlobez.es.Debug.printDebug(t.toString());
-        }*/
+        }       
         return result;
     }
     
@@ -115,8 +110,6 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         } catch (SQLException ex) {
             Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
         return createOrUpdate(nomTabla, preparedStatement, campos);
     }
 
@@ -130,7 +123,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         try {
             preparedStatement = getPreparedStatement(qry);
             for ( int i = 0; i < q.getValor().length; i++) {
-                System.out.println("Upadate a valor: " + q.getValor()[i]);
+                //System.out.println("Upadate a valor: " + q.getValor()[i]);
                 preparedStatement.setString(i+1, q.getValor()[i]);
             }
         } catch (SQLException ex) {

@@ -39,20 +39,87 @@ public interface Service <T> {
      * Retorna una lista con todos los elementos de una tabla de la
      * base de datos. La lista la retornará en función de los criterios de
      * ordenación indicados en el parámetro args.
-     * Estos parámetros pueden ser "ORDER BY XXX" "LIMIT 1" "LIMIT 1 OFFSET 2"
-     * 
+     * Estos parámetros pueden ser "ORDER BY XXX" "GROUP BY" "LIMIT 1" 
+     * "LIMIT 1 OFFSET 2" "BETWEEN x AND Y   
      * @param args criterios de ordenación/búsqueda
      * @return la lista con todos los elementos de la tabla
      */
-    List<T> getAll (String args);    
+    List<T> getAll (String args);   
+    
+    /**
+     * Retorna una lista con todos los elementos de la tabla que cumplan la 
+     * condicion OR de los campos especificados
+     * @param pares de nombre=valor separados por coma (,)
+     * @return la lista de todos los elementos de la tabla que cumplen la
+     * condición
+     */
     List<T> getOR (String campos);
+     /**
+     * Retorna una lista con todos los elementos de la tabla que cumplan la 
+     * condicion OR de los campos especificados. La lista la retorna en función
+     * de los criterios indicados en el parámetro args
+     * @param args criterios de ordenación/búsqueda
+     * @param pares de nombre=valor separados por coma (,)
+     * @return la lista de todos los elementos de la tabla que cumplen la
+     * condición.
+     */
     List<T> getOR (String args, String campos);
+    /**
+     * Retorna una lista con todos los elementos de la tabla que cumplan la 
+     * condicion AND de los campos especificados
+     * @param pares de nombre=valor separados por coma (,)
+     * @return la lista de todos los elementos de la tabla que cumplen la
+     * condición
+     */
     List<T> getAND (String campos);
+    /**
+     * Retorna una lista con todos los elementos de la tabla que cumplan la 
+     * condicion AND de los campos especificados. La lista la retorna en función
+     * de los criterios indicados en el parámetro args
+     * @param args criterios de ordenación/búsqueda
+     * @param pares de nombre=valor separados por coma (,)
+     * @return la lista de todos los elementos de la tabla que cumplen la
+     * condición.
+     */
     List<T> getAND (String args, String campos);
-    List<T> get (String campos);
+    /**
+     * Retorna todos los elementos de una tabla que cumplan la condición del
+     * campo especificado en el parámetro campo
+     * @param campos par nombre=valor a buscar en la tabla
+     * @return la lista de todos los elementos de la tabla que cumplan la 
+     * condición
+     */
+    List<T> get (String campo);
+    /**
+     * Retorna todos los elementos de la tabla que cumplan la condición del 
+     * campo especificado en el parámetro campo y segun el criterio del 
+     * indicado en el parámetro args
+     * @param args criterios de ordenación/agrupación
+     * @param campos par nombre=valor a buscar en la tabla
+     * @return la lista de todos los elementos de la tabla que cumplan la 
+     * condición agurpados/ordenados
+     */
     List<T> get (String args, String campos);
+    /**
+     * Retorna un único elementos de la tabla que cumpla la condición del campo
+     * especificado en el parámetro campo.
+     * @param campos par nombre=valor a buscar en la tabla
+     * @return 
+     */
     T getone (String campos);
+    /**
+     * Crea un nuevo elemento en la base de datos
+     * @param type el elemento a crear
+     * @return el elemento creado si ha tenido éxito, null en caso contrario.
+     */
     public T create (T type);
-    public T update (T type, String campos);
+    /**
+     * Modifica un campo de la tabla con los valores del elemento pasado por 
+     * parámetro
+     * @param type el elemento a modificar con los valores nuevos
+     * @param campo criterio de búsqueda para modificar el registro
+     * @return el elemento modificado si ha tenido éxito, null en caso contrario.
+     */
+    public T update (T type, String campo);
     
 }

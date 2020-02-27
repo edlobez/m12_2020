@@ -170,6 +170,9 @@ public class AdminController {
         //System.out.println("Con argumentos:" + usuarioService.getAND("nombre=%m%,apellido1=%1%"));
         //System.out.println("Sin argumentos:" + usuarioService.get("nombre=%tec%"));
         
+        //System.out.println(usuarioService.get("BETWEEN 4 AND 5", "apellido1"));
+        
+        ejemplos();
         
         List <Usuarios> lista = new ArrayList <Usuarios> ();
         if (cadenaBusqueda.length() == 0 ){
@@ -181,7 +184,7 @@ public class AdminController {
         }
         else 
         {
-            lista = usuarioService.get("ORDER BY username","username=%" + cadenaBusqueda + "%,enabled=1");
+            lista = usuarioService.getAND("ORDER BY apellido1 ASC","username=%" + cadenaBusqueda + "%,enabled=1");
         }
         
         ObjectMapper JSON_MAPPER = new ObjectMapper();
@@ -233,6 +236,25 @@ public class AdminController {
         return json.toString();
     }
     
-    
+    private void ejemplos () {
+        
+        // SELECT * FROM USUARIOS
+        System.out.println("\nTODOS LOS USUARIOS: " +
+                usuarioService.getAll());
+        // SELECT * FROM USUARIOS ORDER BY USERNAME
+        System.out.println("\nTodos los usuarios ordenados por username: " + 
+                usuarioService.getAll("ORDER BY USERNAME"));
+        // SELECT * FROM USUARIOS WHERE USERNAME = edlobez
+        System.out.println("\nUsuarios de username edlobez: " + 
+                usuarioService.get("username=edlobez"));
+        // SELECT * FROM USUARIOS WHERE USERNAME = %C% AND NOMBRE =%E% ORDER BY APELLIDO1
+        System.out.println("Usuarios que contengan un 'C' es username y una 'E' en el nombre, ordenados por el apellido: " +
+                usuarioService.getAND("ORDER BY APELLIDO1", "username=%C%,nombre=%c%"));
+        // UPDATE USUARIOS SET APELLIDO=1000 NOMBRE=ADMIN WHERE USERNAME = EDLOBE
+        Usuarios usr = (Usuarios)usuarioService.getone("username=edlobez");        
+        System.out.println("Modificando usuario "+ usr.toString()+ ", cambiando nombre y apellido: " + 
+               usuarioService.update( usr, "nombre=admin,apellido1=1000"));         
+        
+    }
 
 }

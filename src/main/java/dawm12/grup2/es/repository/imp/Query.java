@@ -16,6 +16,8 @@
  */
 package dawm12.grup2.es.repository.imp;
 
+import dawm12.grup2.es.myExceptions.MyException;
+
 /**
  *
  * @author edlobez
@@ -35,7 +37,14 @@ public class Query {
         return this.valor;
     }
     
-    public String createQueryUpdate (String nomTabla, String key, String _campos) {
+    /**
+     * 
+     * @param nomTabla
+     * @param key
+     * @param _campos
+     * @return 
+     */
+    public String createQueryUpdate (String nomTabla, String key, String _campos) throws MyException {
         
         String campos [] = null;
         
@@ -46,7 +55,10 @@ public class Query {
             //for (String s : campos)
             //System.out.println(s);
         }
-        else campos = new String [0];
+        else {
+            campos = new String [0];
+            throw new MyException(MyException.ERROR_UPDATE_1);
+        }
         
         campo= new String [campos.length];
         valor= new String [campos.length];
@@ -140,10 +152,13 @@ public class Query {
     }
             
     public String createQuerySelect (String nomTabla, String tipo_busqueda, String args, String campos) {
-        if (args == null || args.length() == 0 )
+        if (args == null || args.length() == 0 ){
             return createQuerySelect (nomTabla, tipo_busqueda, campos);
-        else if (args.toLowerCase().indexOf("between") > -1 )
+        }
+        else if (args.toLowerCase().indexOf("between") > -1 ){
+            //System.out.println("hay un between");
             return createQuerySelectBetween ( nomTabla, args, campos);
+        }
         else {//throw new UnsupportedOperationException("Not supported yet.");
             //System.out.println ("CON argumentos: " + createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args);
             return createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args;
@@ -151,13 +166,34 @@ public class Query {
         //return null;
     }
     
-    public String createQuerySelectBetween ( String nomTabla,String args, String _campos) {
-        
-        
-        
+    public String createQuerySelectBetween ( String nomTabla,String args, String _campo) {       
+           
         //SELECT column_name FROM TABLA WHERE column_name BETWEEN x AND y
+        String qry;
+        nomTabla = normalizar(nomTabla);    
+        String campos [] = null;
+        String s_aux;
+        int i_aux;
         
-        return null;
+        s_aux = args.trim().substring("between".length(), args.length()).trim();
+        
+        //System.out.println("sin el between " + s_aux);
+        
+        if (s_aux!= null) {
+            campos = s_aux.toLowerCase().split("and");
+            //System.out.println("En querySelect después de split: ");
+            //for (String s : campos)
+            //System.out.println(s);
+        }
+        else campos = new String [0];
+        
+        valor= new String [campos.length];
+        valor[0] = campos[0].trim();
+        valor[1] = campos[1].trim();
+        
+        qry = "SELECT * FROM " + nomTabla + " WHERE " + _campo + " between ? and ?";
+        //System.out.println(qry);
+        return qry;
         
     }
     public String createQuerySelect (String nomTabla, String tipo_busqueda, String _campos) {
@@ -212,7 +248,7 @@ public class Query {
       
       
        qry = qry.trim();
-      // edlobez.es.Debug.printDebug(qry);
+      // System.out.println("Qry select: " + qry);
        return qry;
     }
     /*
