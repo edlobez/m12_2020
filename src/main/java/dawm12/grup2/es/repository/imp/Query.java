@@ -142,6 +142,8 @@ public class Query {
     public String createQuerySelect (String nomTabla, String tipo_busqueda, String args, String campos) {
         if (args == null || args.length() == 0 )
             return createQuerySelect (nomTabla, tipo_busqueda, campos);
+        else if (args.toLowerCase().indexOf("between") > -1 )
+            return createQuerySelectBetween ( nomTabla, args, campos);
         else {//throw new UnsupportedOperationException("Not supported yet.");
             //System.out.println ("CON argumentos: " + createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args);
             return createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args;
@@ -149,6 +151,15 @@ public class Query {
         //return null;
     }
     
+    public String createQuerySelectBetween ( String nomTabla,String args, String _campos) {
+        
+        
+        
+        //SELECT column_name FROM TABLA WHERE column_name BETWEEN x AND y
+        
+        return null;
+        
+    }
     public String createQuerySelect (String nomTabla, String tipo_busqueda, String _campos) {
         
         String operador_busqueda = EQUAL;

@@ -28,7 +28,22 @@ import java.util.List;
  */
 public interface Service <T> {    
     
+    /**
+     * Retorna una lista de elementos con todos los elementos
+     * que contiene una tabla de la base de datos.
+     * @return lista con todos los elementos de la tabla
+     */
     List<T> getAll ();
+    
+    /**
+     * Retorna una lista con todos los elementos de una tabla de la
+     * base de datos. La lista la retornará en función de los criterios de
+     * ordenación indicados en el parámetro args.
+     * Estos parámetros pueden ser "ORDER BY XXX" "LIMIT 1" "LIMIT 1 OFFSET 2"
+     * 
+     * @param args criterios de ordenación/búsqueda
+     * @return la lista con todos los elementos de la tabla
+     */
     List<T> getAll (String args);    
     List<T> getOR (String campos);
     List<T> getOR (String args, String campos);
