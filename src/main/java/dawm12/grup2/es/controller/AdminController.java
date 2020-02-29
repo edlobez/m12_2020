@@ -65,6 +65,9 @@ public class AdminController {
     @Autowired
     @Qualifier("rolesService")
     private Service rolesService;
+    
+    @Autowired @Qualifier("animalService")
+    private Service animalService;
 
     @RequestMapping("/home")
     public ModelAndView adminHome(HttpServletRequest request, HttpServletResponse response)
@@ -255,6 +258,8 @@ public class AdminController {
         System.out.println("Modificando usuario "+ usr.toString()+ ", cambiando nombre y apellido: " + 
              usuarioService.update( usr, "nombre=admin,apellido1=1000"));         
         
+        // SELECT * FROM ANIMAL
+        System.out.println("Todos los animales: "  + animalService.getAll());
     }
 
 }

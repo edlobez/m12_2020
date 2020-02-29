@@ -28,7 +28,7 @@ public class Animal {
     private int idAnimal;
     private String nom;
     private Date dataNaix;
-    private char sexe;
+    private String sexe;
     private String tamany;
     private int tipusAnimal;
     private int raza;
@@ -44,7 +44,7 @@ public class Animal {
     private String createdUser;
     private String imatge;
 
-    public Animal(int idAnimal, String nom, Date dataNaix, char sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, Date createdDate, String createdUser) {
+    public Animal(int idAnimal, String nom, Date dataNaix, String sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, Date createdDate, String createdUser) {
         this.idAnimal = idAnimal;
         this.nom = nom;
         this.dataNaix = dataNaix;
@@ -65,7 +65,7 @@ public class Animal {
         this.imatge = null;
     }
 
-    public Animal(int idAnimal, String nom, Date dataNaix, char sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, Date createdDate, String createdUser, String imatge) {
+    public Animal(int idAnimal, String nom, Date dataNaix, String sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, Date createdDate, String createdUser, String imatge) {
         this.idAnimal = idAnimal;
         this.nom = nom;
         this.dataNaix = dataNaix;
@@ -110,11 +110,11 @@ public class Animal {
         this.dataNaix = dataNaix;
     }
 
-    public char getSexe() {
+    public String getSexe() {
         return sexe;
     }
 
-    public void setSexe(char sexe) {
+    public void setSexe(String sexe) {
         this.sexe = sexe;
     }
 
@@ -229,5 +229,12 @@ public class Animal {
     public void setImatge(String imatge) {
         this.imatge = imatge;
     }
+
+    @Override
+    public String toString() {
+        return "Animal{" + "idAnimal=" + idAnimal + ", nom=" + nom + ", dataNaix=" + dataNaix + ", sexe=" + sexe + ", tamany=" + tamany + ", tipusAnimal=" + tipusAnimal + ", raza=" + raza + ", isAlta=" + isAlta + ", dataAlta=" + dataAlta + ", isAdoptat=" + isAdoptat + ", isVacunat=" + isVacunat + ", isEsterlitzat=" + isEsterlitzat + ", hasChip=" + hasChip + ", numChip=" + numChip + ", vetAssignat=" + vetAssignat + ", createdDate=" + createdDate + ", createdUser=" + createdUser + ", imatge=" + imatge + '}';
+    }
+    
+    
     
 }
