@@ -53,7 +53,7 @@ public class HelloController {
             throws ServletException, IOException { 
         
         ModelAndView modelview = new ModelAndView(); 
-        modelview.setViewName("presentacion");
+        modelview.setViewName("home");
         
         
         return modelview;

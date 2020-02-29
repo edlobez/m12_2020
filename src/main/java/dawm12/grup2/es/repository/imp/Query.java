@@ -65,7 +65,7 @@ public class Query {
         key = normalizar(key);
         key = key.replace("=", "='");
         key = key+"'";
-        nomTabla = nomTabla.toUpperCase();
+        //nomTabla = nomTabla.toUpperCase();
         
         String qry;
         //edlobez.es.Debug.printDebug("Nombre tabal: " + nomTabla + "\nCampos: ");

@@ -38,7 +38,7 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
     @Autowired
     @Qualifier("usuarioImp")
     private MyRepository usuarioRepository;
-    private static String USUARIOS="USUARIOS";
+    private static String USUARIOS="usuarios";
     
     @Override
     protected List<Usuarios> getSeveral(String tipo_busqueda, String args, String campos) {

@@ -37,7 +37,7 @@ public class RolesService extends ServiceImp <Roles> implements Service <Roles> 
     @Autowired
     @Qualifier("rolesImp")
     private MyRepository rolesRepository;
-    private static String ROLES="ROLES";
+    private static String ROLES="roles";
 
     @Override
     protected List<Roles> getSeveral(String tipo_busqueda, String args, String campos) {

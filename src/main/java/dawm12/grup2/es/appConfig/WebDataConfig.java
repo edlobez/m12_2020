@@ -33,10 +33,10 @@ public class WebDataConfig {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        //dataSource.setUrl("jdbc:mysql://192.168.1.42:3306/refugio");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/refugio");
+        dataSource.setUrl("jdbc:mysql://192.168.1.37:3306/refugio");
+        //dataSource.setUrl("jdbc:mysql://localhost:3306/refugio");
         dataSource.setUsername("edlobez");
-        dataSource.setPassword("#bt7yD18");
+        dataSource.setPassword("12345");
         return dataSource;
     }
 }

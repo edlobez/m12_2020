@@ -243,17 +243,17 @@ public class AdminController {
                 usuarioService.getAll());
         // SELECT * FROM USUARIOS ORDER BY USERNAME
         System.out.println("\nTodos los usuarios ordenados por username: " + 
-                usuarioService.getAll("ORDER BY USERNAME"));
+               usuarioService.getAll("ORDER BY username"));
         // SELECT * FROM USUARIOS WHERE USERNAME = edlobez
         System.out.println("\nUsuarios de username edlobez: " + 
                 usuarioService.get("username=edlobez"));
         // SELECT * FROM USUARIOS WHERE USERNAME = %C% AND NOMBRE =%E% ORDER BY APELLIDO1
         System.out.println("Usuarios que contengan un 'C' es username y una 'E' en el nombre, ordenados por el apellido: " +
-                usuarioService.getAND("ORDER BY APELLIDO1", "username=%C%,nombre=%c%"));
+                usuarioService.getAND("ORDER BY apellido1", "username=%C%,nombre=%c%"));
         // UPDATE USUARIOS SET APELLIDO=1000 NOMBRE=ADMIN WHERE USERNAME = EDLOBE
         Usuarios usr = (Usuarios)usuarioService.getone("username=edlobez");        
         System.out.println("Modificando usuario "+ usr.toString()+ ", cambiando nombre y apellido: " + 
-               usuarioService.update( usr, "nombre=admin,apellido1=1000"));         
+             usuarioService.update( usr, "nombre=admin,apellido1=1000"));         
         
     }
 
