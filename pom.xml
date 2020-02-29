@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dawm12.grup2</groupId>
-    <artifactId>DAWM12_VetGest</artifactId>
+    <artifactId>DAWM12_RescueManagement</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>DAWM12_VetGest</name>
+    <name>DAWM12_RescueManagement</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
@@ -121,7 +121,7 @@
     </dependencies>
 
     <build>
-        <finalName>DAWM12_VetGest</finalName>
+        <finalName>RescueManagement</finalName>
         <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
             <plugins>
                 <plugin>
