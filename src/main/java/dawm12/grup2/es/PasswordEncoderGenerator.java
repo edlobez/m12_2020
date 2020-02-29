@@ -24,7 +24,7 @@ public class PasswordEncoderGenerator {
 
 	int i = 0;
 	while (i < 10) {
-		String password = "2222";
+		String password = "12345";
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String hashedPassword = passwordEncoder.encode(password);
 

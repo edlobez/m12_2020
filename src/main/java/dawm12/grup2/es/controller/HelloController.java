@@ -48,13 +48,12 @@ public class HelloController {
     @Qualifier("rolesService")
     private Service rolesService;
     
-    @RequestMapping(value = {"/", "/home"})
-    //@RequestMapping(value="/gasoil", method = RequestMethod.GET)
+    @RequestMapping(value = {"/", "/home"})    
     public ModelAndView homeRequest (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         
         ModelAndView modelview = new ModelAndView(); 
-        modelview.setViewName("home");
+        modelview.setViewName("presentacion");
         
         
         return modelview;

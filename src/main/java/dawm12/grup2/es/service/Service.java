@@ -25,6 +25,7 @@ import java.util.List;
 /**
  *
  * @author edlobez-vbox
+ * @param <T>
  */
 public interface Service <T> {    
     
@@ -49,7 +50,7 @@ public interface Service <T> {
     /**
      * Retorna una lista con todos los elementos de la tabla que cumplan la 
      * condicion OR de los campos especificados
-     * @param pares de nombre=valor separados por coma (,)
+     * @param campos pares de nombre=valor separados por coma (,)
      * @return la lista de todos los elementos de la tabla que cumplen la
      * condición
      */
@@ -59,7 +60,7 @@ public interface Service <T> {
      * condicion OR de los campos especificados. La lista la retorna en función
      * de los criterios indicados en el parámetro args
      * @param args criterios de ordenación/búsqueda
-     * @param pares de nombre=valor separados por coma (,)
+     * @param campos pares de nombre=valor separados por coma (,)
      * @return la lista de todos los elementos de la tabla que cumplen la
      * condición.
      */
@@ -67,7 +68,7 @@ public interface Service <T> {
     /**
      * Retorna una lista con todos los elementos de la tabla que cumplan la 
      * condicion AND de los campos especificados
-     * @param pares de nombre=valor separados por coma (,)
+     * @param campos pares de nombre=valor separados por coma (,)
      * @return la lista de todos los elementos de la tabla que cumplen la
      * condición
      */
@@ -77,7 +78,7 @@ public interface Service <T> {
      * condicion AND de los campos especificados. La lista la retorna en función
      * de los criterios indicados en el parámetro args
      * @param args criterios de ordenación/búsqueda
-     * @param pares de nombre=valor separados por coma (,)
+     * @param campos pares de nombre=valor separados por coma (,)
      * @return la lista de todos los elementos de la tabla que cumplen la
      * condición.
      */
@@ -85,7 +86,7 @@ public interface Service <T> {
     /**
      * Retorna todos los elementos de una tabla que cumplan la condición del
      * campo especificado en el parámetro campo
-     * @param campos par nombre=valor a buscar en la tabla
+     * @param campo campo par nombre=valor a buscar en la tabla
      * @return la lista de todos los elementos de la tabla que cumplan la 
      * condición
      */
