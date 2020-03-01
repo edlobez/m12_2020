@@ -9,12 +9,13 @@
 <%@ taglib prefix="s" uri="http://www.springframework.org/security/tags" %>
 
 
+
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
       <!--  <link href="static/css/login.css" type="text/css" rel="stylesheet" />-->
-      <!-- <link href="<c:url value="bootstrap.min.css"/>"  rel="stylesheet"/> -->
+      <link href="<c:url value="static/css/login_7.css"/>"  rel="stylesheet"/>
 
        
       
@@ -24,6 +25,9 @@
     <body>
 
         <div class="main">
+            <div class="logo">
+             <img src='<c:url value="/static/resources/RescueManagement_2.jpg"></c:url>' />  
+            </div>
             <div class="box">
 
                 <h1 class="title">Iniciar sessió</h1>
