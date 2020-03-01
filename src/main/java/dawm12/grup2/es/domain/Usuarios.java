@@ -16,13 +16,19 @@
  */
 package dawm12.grup2.es.domain;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  *
  * @author z003says
  */
 public class Usuarios {
     
+    @NotNull
+    @Size(min=3, message="Campo no puede estar vacío")
     private String username;
+    
     private String password;
     private boolean enabled;
     private String nombre, apellido1, apellido2;

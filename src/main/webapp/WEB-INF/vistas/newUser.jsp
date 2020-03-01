@@ -30,6 +30,7 @@
         <mvc:form action="${pageContext.servletContext.contextPath}/admin/saveUser" modelAttribute="usuario">                    
 
             Username:  <mvc:input type="text" path="username"/>
+            <mvc:errors path="username" style="color:red"/>
             <br>
             Password: <mvc:input type="password" path="password"/>
             <br>
