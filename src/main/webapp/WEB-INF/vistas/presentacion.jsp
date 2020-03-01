@@ -10,18 +10,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-
-        <style type="text/css">
-            .video{
-                width:640px;
-                margin-left: auto;
-                margin-right: auto;
-                max-width: 100%;
-            }            
-
-        </style>
-
+        <link rel="stylesheet" type="text/css" href="static/css/video.css" />
+        <script src="static/js/jquery/jquery-3.3.1.min.js"></script>
+        <script src="static/js/jquery/jquery-ui.js"></script>
+        <script src="static/js/myjs/myjs.js"></script>
+        
         <title>PetManagement</title>
     </head>
     <body>
