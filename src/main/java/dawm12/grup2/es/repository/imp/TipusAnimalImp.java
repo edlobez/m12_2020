@@ -33,7 +33,7 @@ public class TipusAnimalImp extends MyRepositoryImp <TipusAnimal> implements MyR
 
     @Override
     protected TipusAnimal buildDomainFromResultSet(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new TipusAnimal (rs.getInt("idtipus"), rs.getString("descripcio"));
     }
     
 }

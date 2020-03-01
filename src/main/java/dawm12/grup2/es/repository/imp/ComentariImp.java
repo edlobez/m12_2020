@@ -33,7 +33,16 @@ public class ComentariImp extends MyRepositoryImp <Comentari> implements MyRepos
 
     @Override
     protected Comentari buildDomainFromResultSet(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //   public Comentari(int idComentari, String descripcio, int idAnimal, Date createdDate, String createdUser) {
+
+        Comentari c = new Comentari (
+                rs.getInt("idcomentari"),
+                rs.getString("descripcio"),
+                rs.getInt("idanimal"),
+                rs.getDate("createdate"),
+                rs.getString("createuser")
+        );
+        return c;
     }
     
 }

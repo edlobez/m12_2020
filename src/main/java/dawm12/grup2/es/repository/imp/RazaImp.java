@@ -33,7 +33,8 @@ public class RazaImp extends MyRepositoryImp <Raza> implements MyRepository <Raz
 
     @Override
     protected Raza buildDomainFromResultSet(ResultSet rs) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+        return new Raza (rs.getInt("idraza"), rs.getString("descripcio"));
     }
     
 }
