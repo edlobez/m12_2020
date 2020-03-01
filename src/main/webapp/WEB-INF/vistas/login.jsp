@@ -14,7 +14,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
       <!--  <link href="static/css/login.css" type="text/css" rel="stylesheet" />-->
-      <link href="<c:url value="/static/css/login.css"/>"  rel="stylesheet"/>
+      <!-- <link href="<c:url value="bootstrap.min.css"/>"  rel="stylesheet"/> -->
+
+       
       
        
         <title>Login Form</title>
@@ -24,31 +26,31 @@
         <div class="main">
             <div class="box">
 
-                <h1 class="title">Iniciar Sesión</h1>
+                <h1 class="title">Iniciar sessió</h1>
 
                 <c:url value="/login" var="loginUrl"/>
 
                 <form action="${loginUrl}" method="post">
 
                     <c:if test="${param.error != null}">
-                        <p class="error">Username y password incorrectos, intentalo nuevamente.</p>
+                        <p class="error">Ususari o contrasenya erronis, si us plau torna-ho a provar.</p>
                     </c:if>
 
                     <c:if test="${param.logout != null}">
-                        <p class="logout">La sesión ha sido cerrada correctamente.</p>
+                        <p class="logout">La sessió s'ha tancat correctament.</p>
                     </c:if>
 
                     <div>
-                        <label for="username">Nombre</label>
+                        <label for="username">Nom</label>
                         <input type="text" id="username" name="username"/>
                     </div>
 
                     <div>
-                        <label for="password">Contraseña</label>
+                        <label for="password">Contrasenya</label>
                         <input type="password" id="password" name="password"/>
                     </div>
 
-                    <button type="submit" class="btn">Log in</button>
+                    <button type="submit" class="btn">Accedir</button>
                 </form>
 
             </div>
