@@ -1,0 +1,97 @@
+/*
+Copyright (C) 2020 DAW_M12_grup2
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+/* 
+    Created on : 18-Feb-2020, 15:19:38
+    Author     : DAW_M12_grup2
+*/
+
+
+div.main {    
+    font-family: Segoe UI Light;
+    font-size: 20px;
+}
+
+div.box { 
+    border: #5F9EA0;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    border-radius: 5px;
+    border-style: inset;
+    padding: 20px;
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+form input {
+    width: 100%;
+    height: 20px;
+    border-radius: 3px;
+    border: #607D8B solid 1px;
+}
+
+h1.title {
+    text-align: center;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 39px;
+    letter-spacing: -1.2px;
+    word-spacing: -0.4px;
+    color: #505050;
+    font-weight: 700;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: none;
+}
+
+button.btn {
+    width: 100%;
+    height: 40px;
+}
+
+p.error {
+    font-size: 11px;
+    color: red;
+    font-style: italic;
+    font-family: Segoe UI Semibold;   
+}
+
+p.logout {
+    font-size: 11px;
+    color: green;
+    font-style: italic;
+    font-family: Segoe UI Semibold;   
+}
+
+form label { display: block; }
+form div { margin-bottom: 10px; }
+
+body {
+    background: linear-gradient(to right, rgba(169,227,229,1) 0%, rgba(136,213,215,1) 36%, rgba(113,203,206,1) 68%, rgba(89,193,197,1) 100%);
+}
+
+logo {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    left:0;
+    top:0;
+}
+
