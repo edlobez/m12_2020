@@ -16,8 +16,6 @@
  */
 package dawm12.grup2.es.controller;
 
-import dawm12.grup2.es.domain.Roles;
-import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -38,45 +36,33 @@ import org.springframework.web.servlet.ModelAndView;
  */
 
 @Controller
-public class HelloController {
-    
-    @Autowired
-    @Qualifier("usuarioService")
-    private Service usuariosService;
-    
-    @Autowired
-    @Qualifier("rolesService")
-    private Service rolesService;
+public class HomeController {    
     
     @RequestMapping(value = {"/", "/home"})    
     public ModelAndView homeRequest (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         
-        ModelAndView modelview = new ModelAndView(); 
-        modelview.setViewName("home");
-        //modelview.setViewName("presentacion");
+        ModelAndView modelview = new ModelAndView();
+        String mv = "home";
         
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
+            mv = "redirect:/admin/home";
+            System.out.println("El admin");
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("responsable"))){
+            mv = "redirect:/responsable/home";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("veterinari"))){
+            mv = "redirect:/veterinari/home";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("voluntari"))){
+            mv = "redirect:/voluntari/home";
+        }
+        
+        modelview.setViewName(mv);
+        //modelview.setViewName("presentacion");        
         
         return modelview;
         
     }  
     
-  /*  @RequestMapping(value={"/admin"})
-    public ModelAndView homeRequest_2 (HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException { 
-        
-        ModelAndView modelview = new ModelAndView(); 
-        
-        //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email)
-        if ((usuariosService.create(new Usuarios ("cuatro", "2222", true, "Nombre1", "Apellido1", null, "mailCUATRO@mail.com")))==null) {
-            System.out.println("Error al crear el usuario");
-        } 
-        else 
-            rolesService.create(new Roles("cuatro", "user"));
-        
-        modelview.setViewName("admin");
-        return modelview;
-    }*/
-    
-    
+     
 }

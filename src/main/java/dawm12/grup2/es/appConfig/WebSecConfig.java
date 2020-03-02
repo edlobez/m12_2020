@@ -31,8 +31,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
- 
 @Configuration
 @EnableWebSecurity
 public class WebSecConfig extends WebSecurityConfigurerAdapter {
@@ -54,19 +52,25 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        /*
+          
+         */
         http.csrf().disable()
-                .authorizeRequests()    
+            .authorizeRequests()
                 .antMatchers("/static/**").permitAll()
-                .antMatchers("/","/home").authenticated()
-                .antMatchers("/admin").hasAuthority("admin")                
+                .antMatchers("/", "/home").authenticated()
+                .antMatchers("/admin").hasAuthority("admin")
+                .antMatchers("/voluntari").hasAuthority("voluntari")
+                .antMatchers("/veterinari").hasAuthority("veterinari")
+                .antMatchers("/responsable").hasAuthority("responsable")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
                 .logout().permitAll();
     }
-    
-     @Bean
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
