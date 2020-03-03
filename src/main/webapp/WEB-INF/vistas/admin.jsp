@@ -72,11 +72,11 @@
                     {
                         return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\""
                                 + row.username +
-                                "\"><span class=\"fa fa-pencil\">A</span></button> "
+                                "\"><span class=\"fa fa-pencil\">E</span></button> "
                                 +
                                 "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\""
                                 + row.username +
-                                "\"><span class=\"fa fa-trash-o\">A</span></button>";
+                                "\"><span class=\"fa fa-trash-o\">B</span></button>";
                     }
                 },
                 

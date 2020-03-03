@@ -37,6 +37,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -70,91 +71,67 @@ public class AdminController {
     @RequestMapping("/home")
     public ModelAndView adminHome(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView();
-        modelview.setViewName("admin");
-
-        /* Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
-            System.out.println("\nES EL ADMIN!!!");
-        }*/
+        ModelAndView modelview = new ModelAndView();           
         return modelview;
     }
 
     @RequestMapping(value = "/editUser")
-    public ModelAndView editUser(@RequestParam("username") String username) {
-
+    public ModelAndView editUser(@RequestParam("username") String username, Model modelo) {
         Usuarios usr = (Usuarios) usuarioService.getone("username=" + username);
-        System.out.println("Editando: " + usr.toString());
-
-        usuarioService.update(usr, "nombre=eduardo");
-
-        return new ModelAndView("admin");
+        modelo.addAttribute("usuario", usr);
+        modelo.addAttribute("accion", "update");
+        return new ModelAndView("user");
     }
 
     @RequestMapping(value = "/deleteUser")
     public String deleteUser(@RequestParam("username") String username) {
-
         //System.out.println ("Borrar usuario: " + username);
         return "Borrar usuario " + username;
     }
 
     @RequestMapping(value = "/newUser")
     public ModelAndView newUser(ModelMap modelo) {
-
-        /*  System.out.println ("Nuevo usuario");
-        
-        //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email) {
-
-        Usuarios usr = new Usuarios ("cinco", "5555", true, "Cinco", "apellido5", null, "mail5@mail.com");
-        Roles rl = new Roles("cinco", "user");
-        usuarioService.create(usr);
-        rolesService.create(rl);*/
         Usuarios usr = new Usuarios();
-        //Roles rl = new Roles();
         modelo.addAttribute("usuario", usr);
-        //modelo.addAttribute("rol", rl);
-        ModelAndView mv = new ModelAndView("newUser");
-
+        modelo.addAttribute("accion", "create");
+        ModelAndView mv = new ModelAndView("user");
         return mv;
     }
 
     /*
-    Validación del resultado formulario newUser.jsp
+    Validación del resultado formulario user.jsp
      */
     @RequestMapping(value = "/saveUser")
     public ModelAndView guardarUser(
             @Valid @ModelAttribute("usuario") Usuarios usr,            
             BindingResult validacion,
-            @RequestParam("role") String role) {
+            @RequestParam("role") String role,
+            @RequestParam("accion") String accion) {
 
-        //System.out.println("\n\n\nGuardado: " + usr.toString());
-        /*  System.out.println ("Nuevo usuario");
-        
-        //public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email) {
-
-        Usuarios usr = new Usuarios ("cinco", "5555", true, "Cinco", "apellido5", null, "mail5@mail.com");
-        Roles rl = new Roles("cinco", "user");
-        usuarioService.create(usr);
-        rolesService.create(rl);*/        
-
-       // System.out.println("\n\nBinding: " + validacion.toString());
-       // System.out.println("\n\nResultado validación: " + validacion.hasErrors());
         if (validacion.hasErrors()) {
-            //System.out.println("\n\n\nTiene errores");
-            return new ModelAndView("newUser");
-        } // Comprobamos que no exista ni el nombre de usuario ni el mail
-        else if (false) { //usuarioService.getOR("username="+usr.getUsername()+",email="+usr.getEmail()).size() > 0) {
+            return new ModelAndView("user");
+        } 
+        
+        if (accion.equals("update")) {
+            System.out.println("\n\nVamos hacer update");
+        }
+        else if (accion.equals("create")) {
+            System.out.println("\n\nVamos a crear un nuevo usuario");
+        }
+
+        // Comprobamos que no exista ni el nombre de usuario ni el mail
+       /* else if (false) { //usuarioService.getOR("username="+usr.getUsername()+",email="+usr.getEmail()).size() > 0) {
             System.out.println("Error al crear el usuario, username o email repetido");
             return new ModelAndView("newUser");
-        } else {
+        } else {*/
             //TO - DO CONTROL DE ERRORES!!!!
-            Roles rl = new Roles();
+           // Roles rl = new Roles();
             //rl.setUsername(usr.getUsername());
             //rl.setRole(role);
             // usuarioService.create(usr);           
             // rolesService.create(rl);
-            System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
-        }
+        //    System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
+       // }
 
         return new ModelAndView("admin");
     }

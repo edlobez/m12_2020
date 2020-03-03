@@ -18,14 +18,7 @@
     </head>
     <body>        
         <h1>Registro de Usuarios:</h1>
-        <!--        
-         this.username = username;
-        this.password = password;
-        this.enabled = enabled;
-        this.nombre = nombre;
-        this.apellido1 = apellido1;
-        this.apellido2 = apellido2;
-        this.email = email;-->
+        <h1>${accion}</h1>
 
         <mvc:form action="${pageContext.servletContext.contextPath}/admin/saveUser" modelAttribute="usuario">                    
 
@@ -49,6 +42,7 @@
             <label>User</label>
             <input type="radio" name="role" value="responsable">
             <label>Responsable</label>
+            <input type="hidden" name="accion" value="${accion}"/>
           
             <br/><br/><br/>
             <input type="submit" value="Enviar">
