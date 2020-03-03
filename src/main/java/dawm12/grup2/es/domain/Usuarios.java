@@ -46,6 +46,16 @@ public class Usuarios {
 
     public Usuarios() {
     }
+    
+    public Usuarios ( Usuarios usr ) {
+        this.username = usr.getUsername();
+        this.password = usr.getPassword();
+        this.enabled = usr.isEnabled();
+        this.nombre = usr.getNombre();
+        this.apellido1 = usr.getApellido1();
+        this.apellido2 = usr.getApellido2();
+        this.email = usr.getEmail();        
+    }
 
     public String getUsername() {
         return username;

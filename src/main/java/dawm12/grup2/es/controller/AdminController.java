@@ -29,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dawm12.grup2.es.PasswordEncoderGenerator;
+import dawm12.grup2.es.domain.Roles;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.validation.Valid;
@@ -66,6 +68,8 @@ public class AdminController {
     @Autowired
     @Qualifier("animalService")
     private Service animalService;
+    
+    private Usuarios _usr_copy;
 
     @RequestMapping("/home")
     public ModelAndView adminHome(HttpServletRequest request, HttpServletResponse response)
@@ -77,7 +81,9 @@ public class AdminController {
     @RequestMapping(value = "/editUser")
     public ModelAndView editUser(@RequestParam("username") String username, Model modelo) {
         Usuarios usr = (Usuarios) usuarioService.getone("username=" + username);
+        //Usuarios usr_copy = new Usuarios (usr);
         modelo.addAttribute("usuario", usr);
+        this._usr_copy = new Usuarios (usr); // guardamos una copia que no se modificará
         modelo.addAttribute("accion", "update");
         return new ModelAndView("user");
     }
@@ -102,7 +108,7 @@ public class AdminController {
      */
     @RequestMapping(value = "/saveUser")
     public ModelAndView guardarUser(
-            @Valid @ModelAttribute("usuario") Usuarios usr,            
+            @Valid @ModelAttribute("usuario") Usuarios usr,             
             BindingResult validacion,
             @RequestParam("role") String role,
             @RequestParam("accion") String accion) {
@@ -112,25 +118,18 @@ public class AdminController {
         } 
         
         if (accion.equals("update")) {
-            System.out.println("\n\nVamos hacer update");
+            System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
+            if (updateUsuario(usr, _usr_copy, role) == null ) {
+                // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
+                System.out.println("\n\n--ERROR AL MODIFICAR EL USUARIO PASSWORD - EMAIL REPETIDO");
+            }
         }
         else if (accion.equals("create")) {
-            System.out.println("\n\nVamos a crear un nuevo usuario");
+            if (createUsuario(usr, role) == null ){
+                // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
+                System.out.println("\n\n--ERROR AL CREAR EL USUARIO PASSWORD - EMAIL REPETIDO");
+            }  
         }
-
-        // Comprobamos que no exista ni el nombre de usuario ni el mail
-       /* else if (false) { //usuarioService.getOR("username="+usr.getUsername()+",email="+usr.getEmail()).size() > 0) {
-            System.out.println("Error al crear el usuario, username o email repetido");
-            return new ModelAndView("newUser");
-        } else {*/
-            //TO - DO CONTROL DE ERRORES!!!!
-           // Roles rl = new Roles();
-            //rl.setUsername(usr.getUsername());
-            //rl.setRole(role);
-            // usuarioService.create(usr);           
-            // rolesService.create(rl);
-        //    System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
-       // }
 
         return new ModelAndView("admin");
     }
@@ -208,6 +207,79 @@ public class AdminController {
                 + "]}";*/
         //System.out.println(json.toString());
         return json.toString();
+    }
+    
+    private Usuarios createUsuario (Usuarios usr,  String role) {
+        
+        Usuarios usr_resultado;
+        Roles rl_resultado;
+        
+        // Comprobamos que no exista ni el nombre de usuario ni el mail
+        if (usuarioService.getOR("username="+usr.getUsername()+",email="+usr.getEmail()).size() > 0) {
+            //System.out.println("Error al crear el usuario, username o email repetido");
+            return null;
+        } else {
+            Roles rl = new Roles();
+            rl.setUsername(usr.getUsername());
+            rl.setRole(role);
+            usr_resultado = (Usuarios) usuarioService.create(usr);           
+            rl_resultado = (Roles) rolesService.create(rl);
+            if (rl_resultado == null ) return null;
+            //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
+        }
+        
+        return usr_resultado;
+        
+    }
+    
+    private Usuarios updateUsuario (Usuarios usr, Usuarios usr_old, String role) {
+        
+        Usuarios usr_resultado = null;
+        Roles rl_resultado;
+        boolean username_modificado = false;
+        // Si se ha modificado el username o email
+        // Comprobamos que no exista ni el nombre de usuario ni el mail
+        
+        System.out.println("Modificando: "+usr_old.toString());
+        System.out.println("Valor nuevo: " +usr.toString());
+        if ( !usr_old.getUsername().equals(usr.getUsername())){
+             //System.out.println("1: " + usuarioService.getone("username="+usr.getUsername()));
+             username_modificado = true;
+             if (usuarioService.getone("username="+usr.getUsername())!=null  ) {              
+                System.out.println("Error al modificar el usuario, username repetido");
+                return null;
+             }
+        }
+        if(!usr_old.getEmail().equals(usr.getEmail())) {            
+            if (usuarioService.getone("email="+usr.getEmail())!=null) {
+                System.out.println("Error al modificar el usuario, email repetido");
+                return null;
+            }            
+        } 
+            System.out.println("3: "+ rolesService.getone("username="+usr_old.getUsername()));
+            //Verifiamos si se ha modificado el rol
+            Roles aux_r = (Roles) rolesService.getone("username="+usr_old.getUsername());
+            if ( !aux_r.getRole().equals((role)) ) {
+                System.out.println("Se ha modificado el rol");
+                if (rolesService.update(aux_r, "role="+role) == null) {
+                    System.out.println("Error al modificar el rol");
+                    return null;
+                }
+            }              
+            System.out.println("Modificando: " + usr);
+            usr_resultado = (Usuarios) usuarioService.update(usr_old, 
+                         "username="+usr.getUsername() +","+                         
+                         "enabled="+ ((usr.isEnabled())?1:0)+","+
+                         "nombre="+usr.getNombre()+","+
+                         "apellido1="+usr.getApellido1()+","+
+                         "apellido2="+usr.getApellido2()+","+
+                         "email="+usr.getEmail());
+            
+            //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
+        
+        
+        return usr_resultado;
+        
     }
 
     private void ejemplos() {

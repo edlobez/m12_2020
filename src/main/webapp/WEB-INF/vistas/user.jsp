@@ -33,17 +33,20 @@
             <br>
             Apellido 2: <mvc:input type="text" path="apellido2"/>
             <br>
-            email: <mvc:input type="text" path="email"/>    
+            email: <mvc:input type="text" path="email"/>
+            <br>
+            enabled: <mvc:checkbox path="enabled" value="1"/>
             <br>
             Roles <br>
             <input type="radio" name="role" value="admin">
             <label>Admin</label>
-            <input type="radio" name="role" value="user" checked="true">
-            <label>User</label>
+            <input type="radio" name="role" value="voluntari" checked="true">
+            <label>Voluntari</label>
             <input type="radio" name="role" value="responsable">
             <label>Responsable</label>
-            <input type="hidden" name="accion" value="${accion}"/>
-          
+            <input type="radio" name="role" value="veterinari">
+            <label>Veterinari</label>
+            <input type="hidden" name="accion" value="${accion}"/> 
             <br/><br/><br/>
             <input type="submit" value="Enviar">
         </mvc:form>

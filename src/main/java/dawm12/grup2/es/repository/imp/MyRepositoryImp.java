@@ -79,7 +79,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         T result = null;
         Query q = new Query();
         String qry = q.createQuerySelect(nomTabla, MyRepository.AND , campos);
-        
+        //System.out.println("\n\nGet one buscando: " + nomTabla + " : " + campos);
         try {
             PreparedStatement preparedStatement = getPreparedStatement(qry);
             for ( int i = 0; i < q.getValor().length; i++) {
@@ -130,7 +130,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
             Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return createOrUpdate(nomTabla, preparedStatement, campos);
+        return createOrUpdate(nomTabla, preparedStatement, condicion);
     }
 
     @Override

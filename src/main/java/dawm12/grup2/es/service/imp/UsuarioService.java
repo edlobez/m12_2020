@@ -21,8 +21,6 @@ import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.repository.MyRepository;
 import dawm12.grup2.es.service.Service;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
