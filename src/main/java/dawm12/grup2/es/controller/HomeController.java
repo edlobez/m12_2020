@@ -16,8 +16,11 @@
  */
 package dawm12.grup2.es.controller;
 
+import dawm12.grup2.es.domain.Accesos;
 import dawm12.grup2.es.service.Service;
 import java.io.IOException;
+import java.sql.Date;
+import java.sql.Timestamp;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +39,10 @@ import org.springframework.web.servlet.ModelAndView;
  */
 
 @Controller
-public class HomeController {    
+public class HomeController {   
+    
+    @Autowired @Qualifier("accesosService")
+    private Service accesosService;
     
     @RequestMapping(value = {"/", "/home"})    
     public ModelAndView homeRequest (HttpServletRequest request, HttpServletResponse response)
@@ -47,8 +53,7 @@ public class HomeController {
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
-            mv = "redirect:/admin/home";
-            System.out.println("El admin");
+            mv = "redirect:/admin/home";                       
         } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("responsable"))){
             mv = "redirect:/responsable/home";
         } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("veterinari"))){
@@ -57,12 +62,23 @@ public class HomeController {
             mv = "redirect:/voluntari/home";
         }
         
+        guardarAcceso(auth.getName());         
         modelview.setViewName(mv);
-        //modelview.setViewName("presentacion");        
-        
+        //modelview.setViewName("presentacion"); 
         return modelview;
         
     }  
+    
+    private void guardarAcceso (String username) {
+        accesosService.create(new Accesos(username, horaActual()));
+        
+    }
+    
+    private Timestamp horaActual () {        
+        java.util.Date d = new java.util.Date();        
+        Timestamp date2 = new Timestamp(d.getTime());        
+        return date2;        
+    }
     
      
 }

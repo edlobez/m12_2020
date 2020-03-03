@@ -29,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dawm12.grup2.es.domain.Roles;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.validation.Valid;
@@ -71,7 +70,7 @@ public class AdminController {
     @RequestMapping("/home")
     public ModelAndView adminHome(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView();           
+        ModelAndView modelview = new ModelAndView("admin");           
         return modelview;
     }
 
@@ -151,7 +150,7 @@ public class AdminController {
         //System.out.println("Con argumentos:" + usuarioService.getAND("nombre=%m%,apellido1=%1%"));
         //System.out.println("Sin argumentos:" + usuarioService.get("nombre=%tec%"));
         //System.out.println(usuarioService.get("BETWEEN 4 AND 5", "apellido1"));
-        ejemplos();
+        //ejemplos();
 
         List<Usuarios> lista = new ArrayList<Usuarios>();
         if (cadenaBusqueda.length() == 0) {

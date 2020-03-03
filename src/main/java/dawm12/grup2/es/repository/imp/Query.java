@@ -109,7 +109,7 @@ public class Query {
         
         campo= new String [campos.length];
         valor= new String [campos.length];
-        nomTabla = nomTabla.toUpperCase();
+        //nomTabla = nomTabla.toUpperCase();
         
      //   edlobez.es.Debug.printDebug("Creando query select");
         int index = 0;
