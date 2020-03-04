@@ -77,6 +77,11 @@ public class AdminController {
         ModelAndView modelview = new ModelAndView("admin");           
         return modelview;
     }
+    
+    @RequestMapping("/logout")
+    public void logout () {
+        System.out.println("\n\n\nAdios");
+    }
 
     @RequestMapping(value = "/editUser")
     public ModelAndView editUser(@RequestParam("username") String username, Model modelo) {
@@ -151,7 +156,7 @@ public class AdminController {
         //System.out.println(usuarioService.get("BETWEEN 4 AND 5", "apellido1"));
         //ejemplos();
 
-        List<Usuarios> lista = new ArrayList<Usuarios>();
+        List<Usuarios> lista = new ArrayList<>();
         if (cadenaBusqueda.length() == 0) {
             String aux = "";
             if (Integer.parseInt(numFilas) != -1) {
