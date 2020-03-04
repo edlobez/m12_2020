@@ -70,7 +70,9 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
             result = executeQuery(preparedStatement);
         } catch (SQLException ex) {
             Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }
+        if ( getConnection() != null ) closeConnection();
+        
         return result;
     }
     
@@ -90,7 +92,10 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         } catch (Exception ex) {
             Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
             System.err.println("Error buscando en getByX");
-        }    
+        }
+        
+        if ( getConnection() != null ) closeConnection();
+        
         return result;
     }
     
@@ -216,7 +221,9 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
     
     private void closeConnection ()  {
         try {
+            System.out.println("\n\nCerrando conexión!!!!");
             this.connection.close();
+            this.connection = null;
         } catch (SQLException ex) {
             Logger.getLogger(MyRepositoryImp.class.getName()).log(Level.SEVERE, null, ex);
         }
