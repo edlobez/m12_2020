@@ -59,7 +59,9 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
                          "nombre="+type.getNombre()+","+
                          "apellido1="+type.getApellido1()+","+
                          "apellido2="+type.getApellido2()+","+
-                         "email="+type.getEmail());
+                         "email="+type.getEmail()+","+
+                         "rol="+type.getRol()+","+
+                         "tipusAnimal="+type.getTipusAnimal());
         } catch (Exception ex) {
             return u;
           //  Logger.getLogger(UsuarioService.class.getName()).log(Level.SEVERE, null, ex);

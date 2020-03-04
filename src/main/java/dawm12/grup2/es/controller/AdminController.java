@@ -219,12 +219,12 @@ public class AdminController {
             //System.out.println("Error al crear el usuario, username o email repetido");
             return null;
         } else {
-            Roles rl = new Roles();
-            rl.setUsername(usr.getUsername());
-            rl.setRole(role);
+            //Roles rl = new Roles();
+            //rl.setUsername(usr.getUsername());
+            //rl.setRole(role);
             usr_resultado = (Usuarios) usuarioService.create(usr);           
-            rl_resultado = (Roles) rolesService.create(rl);
-            if (rl_resultado == null ) return null;
+            //rl_resultado = (Roles) rolesService.create(rl);
+            if (usr_resultado == null ) return null;
             //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
         }
         
@@ -256,6 +256,8 @@ public class AdminController {
                 return null;
             }            
         } 
+        //TODO Añadir la parte de rol¿?
+  
             System.out.println("3: "+ rolesService.getone("username="+usr_old.getUsername()));
             //Verifiamos si se ha modificado el rol
             Roles aux_r = (Roles) rolesService.getone("username="+usr_old.getUsername());
@@ -273,7 +275,9 @@ public class AdminController {
                          "nombre="+usr.getNombre()+","+
                          "apellido1="+usr.getApellido1()+","+
                          "apellido2="+usr.getApellido2()+","+
-                         "email="+usr.getEmail());
+                         "email="+usr.getEmail()+","+
+                         "rol="+usr.getEmail()+","+
+                         "tipusAnimal="+usr.getTipusAnimal());       
             
             //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
         

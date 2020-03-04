@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020 z003says
+ * Copyright (C) 2020 edlobez
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author z003says
+ * @author edlobez
  */
 public class Usuarios {
     
@@ -33,8 +33,10 @@ public class Usuarios {
     private boolean enabled;
     private String nombre, apellido1, apellido2;
     private String email;
+    private int rol;
+    private int tipusAnimal;
 
-    public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email) {
+    public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email, int rol, int tipusAnimal) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
@@ -42,6 +44,8 @@ public class Usuarios {
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
         this.email = email;
+        this.rol = rol;
+        this.tipusAnimal = tipusAnimal;
     }
 
     public Usuarios() {
@@ -54,7 +58,9 @@ public class Usuarios {
         this.nombre = usr.getNombre();
         this.apellido1 = usr.getApellido1();
         this.apellido2 = usr.getApellido2();
-        this.email = usr.getEmail();        
+        this.email = usr.getEmail(); 
+        this.rol = usr.getRol();
+        this.tipusAnimal = usr.getTipusAnimal();       
     }
 
     public String getUsername() {
@@ -113,11 +119,25 @@ public class Usuarios {
         this.email = email;
     }
 
+    public int getRol() {
+        return rol;
+    }
+
+    public void setEmail(int rol) {
+        this.rol = rol;
+    }
+
+    public int getTipusAnimal() {
+        return tipusAnimal;
+    }
+
+    public void setTipusAnimal(int tipusAnimal) {
+        this.tipusAnimal = tipusAnimal;
+    }
+
     @Override
     public String toString() {
-        return "Usuarios{" + "username=" + username + ", enabled=" + enabled + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", email=" + email + '}';
+        return "Usuarios{" + "username=" + username + ", password=" + password + ", enabled=" + enabled + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", email=" + email + ", rol=" + rol + ", tipusAnimal=" + tipusAnimal + '}';
     }
-    
-    
-    
+
 }

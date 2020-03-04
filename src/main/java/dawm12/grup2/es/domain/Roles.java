@@ -22,25 +22,23 @@ package dawm12.grup2.es.domain;
  */
 public class Roles {
     
-    private String username;
+    private int idRol;
     private String role;
 
-    public Roles(String username, String role) {
-        this.username = username;
+    public Roles(int idRol, String role) {
+        this.idRol = idRol;
         this.role = role;
     }
 
     public Roles() {
     }
     
-    
-
-    public String getUsername() {
-        return username;
+    public int getIdRol() {
+        return idRol;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setIdRol(int idRol) {
+        this.idRol = idRol;
     }
 
     public String getRole() {

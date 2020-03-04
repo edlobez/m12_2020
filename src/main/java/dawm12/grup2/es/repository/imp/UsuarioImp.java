@@ -41,7 +41,9 @@ public class UsuarioImp extends MyRepositoryImp <Usuarios> implements MyReposito
                 rs.getString("nombre"),
                 rs.getString("apellido1"),
                 rs.getString("apellido2"),
-                rs.getString("email")
+                rs.getString("email"),
+                rs.getInt("rol"),
+                rs.getInt("tipusAnimal")
         );
     }
     

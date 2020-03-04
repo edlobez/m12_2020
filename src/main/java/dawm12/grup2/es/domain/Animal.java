@@ -40,11 +40,12 @@ public class Animal {
     private boolean hasChip;
     private int numChip;
     private String vetAssignat;
+    private boolean inactiu;
     private Date createdDate;
     private String createdUser;
     private String imatge;
 
-    public Animal(int idAnimal, String nom, Date dataNaix, String sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, Date createdDate, String createdUser) {
+    public Animal(int idAnimal, String nom, Date dataNaix, String sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, boolean inactiu, Date createdDate, String createdUser, String imatge) {
         this.idAnimal = idAnimal;
         this.nom = nom;
         this.dataNaix = dataNaix;
@@ -60,31 +61,12 @@ public class Animal {
         this.hasChip = hasChip;
         this.numChip = numChip;
         this.vetAssignat = vetAssignat;
-        this.createdDate = createdDate;
-        this.createdUser = createdUser;
-        this.imatge = null;
-    }
-
-    public Animal(int idAnimal, String nom, Date dataNaix, String sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, Date createdDate, String createdUser, String imatge) {
-        this.idAnimal = idAnimal;
-        this.nom = nom;
-        this.dataNaix = dataNaix;
-        this.sexe = sexe;
-        this.tamany = tamany;
-        this.tipusAnimal = tipusAnimal;
-        this.raza = raza;
-        this.isAlta = isAlta;
-        this.dataAlta = dataAlta;
-        this.isAdoptat = isAdoptat;
-        this.isVacunat = isVacunat;
-        this.isEsterlitzat = isEsterlitzat;
-        this.hasChip = hasChip;
-        this.numChip = numChip;
-        this.vetAssignat = vetAssignat;
+        this.inactiu = inactiu;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
         this.imatge = imatge;
     }
+    
 
     public int getIdAnimal() {
         return idAnimal;
@@ -230,11 +212,17 @@ public class Animal {
         this.imatge = imatge;
     }
 
+    public boolean isInactiu() {
+        return inactiu;
+    }
+
+    public void setInactiu(boolean inactiu) {
+        this.inactiu = inactiu;
+    }
+
     @Override
     public String toString() {
-        return "Animal{" + "idAnimal=" + idAnimal + ", nom=" + nom + ", dataNaix=" + dataNaix + ", sexe=" + sexe + ", tamany=" + tamany + ", tipusAnimal=" + tipusAnimal + ", raza=" + raza + ", isAlta=" + isAlta + ", dataAlta=" + dataAlta + ", isAdoptat=" + isAdoptat + ", isVacunat=" + isVacunat + ", isEsterlitzat=" + isEsterlitzat + ", hasChip=" + hasChip + ", numChip=" + numChip + ", vetAssignat=" + vetAssignat + ", createdDate=" + createdDate + ", createdUser=" + createdUser + ", imatge=" + imatge + '}';
+        return "Animal{" + "idAnimal=" + idAnimal + ", nom=" + nom + ", dataNaix=" + dataNaix + ", sexe=" + sexe + ", tamany=" + tamany + ", tipusAnimal=" + tipusAnimal + ", raza=" + raza + ", isAlta=" + isAlta + ", dataAlta=" + dataAlta + ", isAdoptat=" + isAdoptat + ", isVacunat=" + isVacunat + ", isEsterlitzat=" + isEsterlitzat + ", hasChip=" + hasChip + ", numChip=" + numChip + ", vetAssignat=" + vetAssignat + ", inactiu=" + inactiu + ", createdDate=" + createdDate + ", createdUser=" + createdUser + ", imatge=" + imatge + '}';
     }
-    
-    
-    
+       
 }

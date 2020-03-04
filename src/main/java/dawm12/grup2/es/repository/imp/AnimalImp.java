@@ -54,6 +54,7 @@ public class AnimalImp extends MyRepositoryImp <Animal> implements MyRepository 
                 rs.getBoolean("haschip"),
                 rs.getInt("numChip"),
                 rs.getString("vetassignat"),
+                rs.getBoolean("inactiu"),
                 rs.getDate("createddate"),
                 rs.getString("createduser"),
                 rs.getString("imatge")
