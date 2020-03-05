@@ -45,7 +45,9 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .dataSource(dataSource)
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("SELECT username, password, true FROM usuarios WHERE username = ?")
-                .authoritiesByUsernameQuery("SELECT username, role FROM roles WHERE username = ?");
+                .authoritiesByUsernameQuery("select usuarios.username, roles.rol from usuarios, roles where usuarios.username = ? and usuarios.rol=roles.idrol");
+               //.authoritiesByUsernameQuery("SELECT username, role FROM roles WHERE username = ?");
+        // SELECT rol from roles where idrol = (select rol form usuarios where username = ?"
         dataSource.getConnection().close();
     }
 
