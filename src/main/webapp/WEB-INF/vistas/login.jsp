@@ -26,7 +26,7 @@
 
         <div class="main">
             <div class="logo">
-             <img src='<c:url value="/static/resources/RescueManagement_2.jpg"></c:url>' />  
+             <img src='<c:url value="/static/resources/imgs/kitty.png"></c:url>' />  
             </div>
             <div class="box">
 
