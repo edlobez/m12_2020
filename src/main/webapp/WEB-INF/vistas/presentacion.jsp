@@ -18,15 +18,15 @@
         <title>PetManagement</title>
     </head>
     <body>
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+        <input type="submit" name="logout" value="Desconnectar" />
+        </form>
         <div class="video">
             <video controls autoplay width="640" height="480">
                 <source src="<c:url value="/static/resources/videos/RescueManagement.mp4"/>">
                 <source src="<c:url value="/static/resources/videos/RescueManagement.ogg"/>">
                 Tu navegador no soporta HTML5 video.            
             </video>
-        </div>
-        <div id="logout">
-            <a href="${pageContext.servletContext.contextPath}/logout">--Logout--</a>
         </div>
     </body>
 </html>
