@@ -12,9 +12,11 @@
         <title>JSP Page</title>
     </head>
     <body>
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+        <input type="submit" name="logout" value="Desconnectar" />
+        </form>
         <h1>Vista del voluntari</h1>
         
         <br>
-        <a class="logout-link" href="${pageContext.servletContext.contextPath}/logout">logout</a>
     </body>
 </html>

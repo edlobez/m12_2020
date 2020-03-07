@@ -15,6 +15,21 @@ html {
   box-sizing: inherit;
 }
 
+.submit {
+
+background: #0066A2;
+color: white;
+border-style: outset;
+border-color: #0066A2;
+height: 50px;
+width: 100px;
+font: bold 15px arial, sans-serif;
+text-shadow:none;
+position: absolute;
+right:0;
+top:0;
+
+}
 .container {
   width: 100%;
   padding-right: 15px;
