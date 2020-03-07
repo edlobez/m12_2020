@@ -60,7 +60,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #fff;
+  background-color: #f2f4f3;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -72,8 +72,11 @@ hr {
   height: 0;
   overflow: visible;
 }
+h1{
+   color: #117a8b; 
+}
 
-h1, h2, h3, h4, h5, h6 {
+h2, h3, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
@@ -260,7 +263,17 @@ button,
 [type="button"],
 [type="reset"],
 [type="submit"] {
-  -webkit-appearance: button;
+  background: #0066A2;
+    color: white;
+    border-style: outset;
+    border-color: #0066A2;
+    height: 50px;
+    width: 100px;
+    font: bold 15px arial, sans-serif;
+    text-shadow:none;
+    position: absolute;
+    right: 15px;
+    top: 35px;
 }
 
 button:not(:disabled),
