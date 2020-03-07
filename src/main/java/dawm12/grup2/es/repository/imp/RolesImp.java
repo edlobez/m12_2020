@@ -34,7 +34,7 @@ public class RolesImp extends MyRepositoryImp <Roles> implements MyRepository <R
 
     @Override
     protected Roles buildDomainFromResultSet(ResultSet rs) throws SQLException {
-        return new Roles (rs.getInt("idRol"), rs.getString("role"));
+        return new Roles (rs.getInt("idRol"), rs.getString("rol"));
     }
     
 }

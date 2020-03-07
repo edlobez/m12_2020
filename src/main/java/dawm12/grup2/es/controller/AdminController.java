@@ -82,14 +82,14 @@ public class AdminController {
     public void logout () {
         System.out.println("\n\n\nAdios");
     }
-
+    
     @RequestMapping(value = "/editUser")
     public ModelAndView editUser(@RequestParam("username") String username, Model modelo) {
         Usuarios usr = (Usuarios) usuarioService.getone("username=" + username);
         //Usuarios usr_copy = new Usuarios (usr);
         modelo.addAttribute("usuario", usr);
         this._usr_copy = new Usuarios (usr); // guardamos una copia que no se modificará
-        modelo.addAttribute("accion", "update");
+        modelo.addAttribute("accion", "update"); 
         return new ModelAndView("user");
     }
 
@@ -115,7 +115,6 @@ public class AdminController {
     public ModelAndView guardarUser(
             @Valid @ModelAttribute("usuario") Usuarios usr,             
             BindingResult validacion,
-            @RequestParam("role") String role,
             @RequestParam("accion") String accion) {
 
         if (validacion.hasErrors()) {
@@ -124,13 +123,14 @@ public class AdminController {
         
         if (accion.equals("update")) {
             System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
-            if (updateUsuario(usr, _usr_copy, role) == null ) {
+
+            if (updateUsuario(usr, _usr_copy) == null ) {
                 // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
                 System.out.println("\n\n--ERROR AL MODIFICAR EL USUARIO PASSWORD - EMAIL REPETIDO");
             }
         }
         else if (accion.equals("create")) {
-            if (createUsuario(usr, role) == null ){
+            if (createUsuario(usr) == null ){
                 // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
                 System.out.println("\n\n--ERROR AL CREAR EL USUARIO PASSWORD - EMAIL REPETIDO");
             }  
@@ -214,7 +214,7 @@ public class AdminController {
         return json.toString();
     }
     
-    private Usuarios createUsuario (Usuarios usr,  String role) {
+    private Usuarios createUsuario (Usuarios usr) {
         
         Usuarios usr_resultado;
         Roles rl_resultado;
@@ -226,11 +226,8 @@ public class AdminController {
             //System.out.println("Error al crear el usuario, username o email repetido");
             return null;
         } else {
-            //Roles rl = new Roles();
-            //rl.setUsername(usr.getUsername());
-            //rl.setRole(role);
+            
             usr_resultado = (Usuarios) usuarioService.create(usr);           
-            //rl_resultado = (Roles) rolesService.create(rl);
             if (usr_resultado == null ) return null;
             //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
         }
@@ -240,7 +237,7 @@ public class AdminController {
     }
     
     // TO - DO REACER DESPUES DEL CAMBIO DE LA TABLA ROLES
-    private Usuarios updateUsuario (Usuarios usr, Usuarios usr_old, String role) {
+    private Usuarios updateUsuario (Usuarios usr, Usuarios usr_old) {
         
         Usuarios usr_resultado = null;
         Roles rl_resultado;
@@ -266,30 +263,22 @@ public class AdminController {
                 return null;
             }            
         } 
-        //TODO Añadir la parte de rol¿?
-  
-            System.out.println("3: "+ rolesService.getone("username="+usr_old.getUsername()));
-            //Verifiamos si se ha modificado el rol
-            Roles aux_r = (Roles) rolesService.getone("username="+usr_old.getUsername());
-            if ( !aux_r.getRole().equals((role)) ) {
-                System.out.println("Se ha modificado el rol");
-                if (rolesService.update(aux_r, "role="+role) == null) {
-                    System.out.println("Error al modificar el rol");
-                    return null;
-                }
-            }              
-            System.out.println("Modificando: " + usr);
-            usr_resultado = (Usuarios) usuarioService.update(usr_old, 
-                         "username="+usr.getUsername() +","+                         
-                         "enabled="+ ((usr.isEnabled())?1:0)+","+
-                         "nombre="+usr.getNombre()+","+
-                         "apellido1="+usr.getApellido1()+","+
-                         "apellido2="+usr.getApellido2()+","+
-                         "email="+usr.getEmail()+","+
-                         "rol="+usr.getEmail()+","+
-                         "tipusAnimal="+usr.getTipusAnimal());       
-            
-            //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
+        
+       // String passCodificada = PasswordEncoderGenerator.passwordGenerator(usr.getPassword());
+
+        System.out.println("Modificando: " + usr);
+        usr_resultado = (Usuarios) usuarioService.update(usr_old, 
+                     "username="+usr.getUsername() +","+
+                     "password="+PasswordEncoderGenerator.passwordGenerator(usr.getPassword()) + ","+
+                     "enabled="+ ((usr.isEnabled())?1:0)+","+
+                     "nombre="+usr.getNombre()+","+
+                     "apellido1="+usr.getApellido1()+","+
+                     "apellido2="+usr.getApellido2()+","+
+                     "email="+usr.getEmail()+","+
+                     "rol="+usr.getRol()+","+
+                     "tipusAnimal="+ usr.getTipusAnimal());       
+
+        //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
         
         
         return usr_resultado;
