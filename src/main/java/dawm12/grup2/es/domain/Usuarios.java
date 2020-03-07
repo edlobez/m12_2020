@@ -16,6 +16,8 @@
  */
 package dawm12.grup2.es.domain;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -32,7 +34,11 @@ public class Usuarios {
     private String password;
     private boolean enabled;
     private String nombre, apellido1, apellido2;
+    
+    @NotEmpty (message="Campo no puede estar vacío")
+    @Email(message = "La dirección de correo electrónico es incorrecta.")
     private String email;
+    
     private int rol;
     private int tipusAnimal;
 

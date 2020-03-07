@@ -220,6 +220,8 @@ public class AdminController {
         Roles rl_resultado;
         
         // Comprobamos que no exista ni el nombre de usuario ni el mail
+        // Esta comprobación se podría quitar ya que mysql retornará null en el 
+        // ... create del item al estar repetido cualquiera de los campos.
         if (usuarioService.getOR("username="+usr.getUsername()+",email="+usr.getEmail()).size() > 0) {
             //System.out.println("Error al crear el usuario, username o email repetido");
             return null;
@@ -237,6 +239,7 @@ public class AdminController {
         
     }
     
+    // TO - DO REACER DESPUES DEL CAMBIO DE LA TABLA ROLES
     private Usuarios updateUsuario (Usuarios usr, Usuarios usr_old, String role) {
         
         Usuarios usr_resultado = null;
@@ -247,6 +250,8 @@ public class AdminController {
         
         System.out.println("Modificando: "+usr_old.toString());
         System.out.println("Valor nuevo: " +usr.toString());
+        // Esta comprobaciónse podría quitar ya que se retornará null en el 
+        // ... update. Existe la restricción en mysql que ambos campos son únicos.
         if ( !usr_old.getUsername().equals(usr.getUsername())){
              //System.out.println("1: " + usuarioService.getone("username="+usr.getUsername()));
              username_modificado = true;
