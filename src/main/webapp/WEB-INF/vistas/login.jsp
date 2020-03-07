@@ -20,7 +20,7 @@
        
       
        
-        <title>Login Form</title>
+        <title>Rescue Management - Login</title>
     </head>
     <body>
 
