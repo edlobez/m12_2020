@@ -9,12 +9,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Rescue Management</title>
     </head>
     <body>
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+        <input type="submit" name="logout" value="Desconnectar" />
+        </form>
         <h1>Vista del responsable</h1>
         
         <br>
-        <a class="logout-link" href="${pageContext.servletContext.contextPath}/logout">logout</a>
     </body>
 </html>
