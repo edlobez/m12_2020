@@ -24,6 +24,10 @@
         <title>Página del administrador</title>
     </head>
     <body>
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+        <input type="submit" name="logout" value="Desconnectar" />
+        </form>
+        
         <h1>Página del administrador</h1>
         <h2>Lista de usuarios</h2>
 
