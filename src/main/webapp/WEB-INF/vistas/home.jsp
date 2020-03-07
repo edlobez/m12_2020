@@ -11,11 +11,15 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="stylesheet" type="text/css" href="static/css/bootstrap-4.4.1/bootstrap.css" />
+        <script src="static/js/jquery/jquery-3.3.1.min.js"></script>
+        <script src="static/js/jquery/jquery-ui.js"></script>
+        <script src="static/js/myjs/myjs.js"></script>
+        <title>Rescue Management</title>
     </head>
     <body>
-        <h1>Página de cualquier usuario logeado!</h1>
-        <br>
+        <h1>Benvingut a RescueManagement</h1>
+        <br> 
         <sec:authorize access="hasAuthority('admin')">
             <br>Este contenido sólo lo ve el admin.
         </sec:authorize>
@@ -25,11 +29,14 @@
         </sec:authorize>
 
         <br>
-        <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/home">Ir a página del admin</a> 
+        <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin">Ir a página del admin</a> 
         <br>
-        <a class="logout-link" href="${pageContext.servletContext.contextPath}/logout">logout</a>
+        
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+        <input type="submit" name="logout" value="Desconnectar" />
+        </form>
 
-        <h1>Usuario</h1>
+        <h1>Usuari:</h1>
         <sec:authentication property="principal.username" /><br>
         <sec:authentication property="principal.authorities"/>
 
