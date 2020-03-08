@@ -53,7 +53,7 @@ public class RolesService extends ServiceImp <Roles> implements Service <Roles> 
         Roles r = null;
         try {
             r = (Roles) rolesRepository.create(ROLES, 
-                    "ROLE="+type.getRole());
+                    "ROL="+type.getRol());
             
         } catch (Exception ex) {
             return r;
@@ -67,7 +67,7 @@ public class RolesService extends ServiceImp <Roles> implements Service <Roles> 
     public Roles update(Roles type, String campos) {
         Roles r = null;
         try {
-            r = (Roles) rolesRepository.update(ROLES, "idrol="+type.getIdRol(), campos);
+            r = (Roles) rolesRepository.update(ROLES, "idRol="+type.getIdRol(), campos);
         } catch (Exception ex) {
             return null;
         }

@@ -23,11 +23,11 @@ package dawm12.grup2.es.domain;
 public class Roles {
     
     private int idRol;
-    private String role;
+    private String rol;
 
-    public Roles(int idRol, String role) {
+    public Roles(int idRol, String rol) {
         this.idRol = idRol;
-        this.role = role;
+        this.rol = rol;
     }
 
     public Roles() {
@@ -41,12 +41,12 @@ public class Roles {
         this.idRol = idRol;
     }
 
-    public String getRole() {
-        return role;
+    public String getRol() {
+        return rol;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRol(String rol) {
+        this.rol = rol;
     }
     
     

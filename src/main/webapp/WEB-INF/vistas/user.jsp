@@ -60,15 +60,22 @@
             enabled: <mvc:checkbox path="enabled" class="form-control" value="1"/>
               </div>
             
-            Roles <br>
-            <input type="radio" name="role" value="admin">
+            Rols: <br>
+            <input type="radio" name="rol" value="1">
             <label>Admin</label>
-            <input type="radio" name="role" value="voluntari">
-            <label>Voluntari</label>
-            <input type="radio" name="role" value="responsable">
+            <input type="radio" name="rol" value="2">
             <label>Responsable</label>
-            <input type="radio" name="role" value="veterinari">
+            <input type="radio" name="rol" value="3">
+            <label>Voluntari</label>
+            <input type="radio" name="rol" value="4">
             <label>Veterinari</label>
+            
+            Tipus d'animals: <br>
+            <input type="radio" name="tipusAnimal" value="1">
+            <label>Gos</label>
+            <input type="radio" name="tipusAnimal" value="2">
+            <label>Gat</label>
+
             <input type="hidden" name="accion" value="${accion}"/> 
             <br/><br/><br/>
             <input type="submit" value="Enviar">
