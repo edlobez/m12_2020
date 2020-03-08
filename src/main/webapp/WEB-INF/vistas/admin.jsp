@@ -25,11 +25,13 @@
     </head>
     <body>
         <form action="${pageContext.request.contextPath}/logout" method="post">
-        <input type="submit" name="logout" value="Desconnectar" />
+        <input type="submit" class="usr" name="logout" value="Desconnectar" />
         </form>
+        <br>
         
-        <h1>Página del administrador</h1>
-        <h2>Lista de usuarios</h2>
+        <input type="button"  value="Crear usuari" onclick="location.href = '${pageContext.servletContext.contextPath}/admin/newUser'"/>
+        
+        <h1>Llistat d'usuaris</h1>
 
 
         <!-- http://www.jquery-bootgrid.com/ -->
@@ -38,20 +40,16 @@
                 <thead>
                     <tr>
                         <th data-column-id="username">Username</th>
-                        <th data-column-id="nombre">Nombre</th>
-                        <th data-column-id="apellido1">Apellido</th>
-                        <th data-column-id="email">email</th>
+                        <th data-column-id="nombre">Nom</th>
+                        <th data-column-id="apellido1">Cognom</th>
+                        <th data-column-id="email">e-mail</th>
                         <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
                     </tr>
                 </thead>
             </table>   
         </div>
-
-
-        <br>
-        <a class="logout-link" href="${pageContext.servletContext.contextPath}/logout">-->Logout</a>
         <br><br>
-        <input type="submit" value="Nuevo usuario" onclick="location.href = '${pageContext.servletContext.contextPath}/admin/newUser'"/>
+      
 
 
         <script>

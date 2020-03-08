@@ -31,14 +31,32 @@
         <br>
         <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin">Ir a página del admin</a> 
         <br>
-        
+        <%-- Boton a la vista admin 
+        <div>
+        <form action="${pageContext.request.contextPath}/admin" method="post">
+        <button type="button" name="admin" value="Vista admin" />
+        </form>
+        </div>
+        <br>    --%>
+
+        <%-- Boton logout --%>
+        <div>
         <form action="${pageContext.request.contextPath}/logout" method="post">
         <input type="submit" name="logout" value="Desconnectar" />
         </form>
-
+        </div>
+        <br>
+        
+        <div>
         <h1>Usuari:</h1>
         <sec:authentication property="principal.username" /><br>
         <sec:authentication property="principal.authorities"/>
-
+        </div>
+        <br>
+         <%-- logo --%>
+         <div class="logo">
+             <img src='<c:url value="/static/resources/imgs/kitty.png"></c:url>' />  
+            </div>
+        
     </body>
 </html>

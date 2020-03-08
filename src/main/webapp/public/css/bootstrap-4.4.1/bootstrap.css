@@ -63,6 +63,14 @@ body {
   background-color: #f2f4f3;
 }
 
+logo {
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    right:0;
+    bottom:0;
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
@@ -239,7 +247,7 @@ button,
 select,
 optgroup,
 textarea {
-  margin: 0;
+  margin: 10;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -259,21 +267,45 @@ select {
   word-wrap: normal;
 }
 
+button.usr {
+   background: #0066A2;
+    color: white;
+    border-style: outset;
+    border-color: #0066A2;
+    height: 80px;
+    width: 150px;
+    font: bold 15px arial, sans-serif;
+    text-shadow:none;
+    position: absolute;
+    right: 15px;
+    bottom: 55px; 
+}
+
 button,
-[type="button"],
 [type="reset"],
 [type="submit"] {
   background: #0066A2;
     color: white;
     border-style: outset;
     border-color: #0066A2;
-    height: 50px;
-    width: 100px;
+    height: 80px;
+    width: 150px;
     font: bold 15px arial, sans-serif;
     text-shadow:none;
     position: absolute;
     right: 15px;
-    top: 35px;
+    top: 55px;
+}
+
+button {
+    background: #c3e6cb;
+    color: white;
+    border-style: outset;
+    border-color: #6c757d;
+    height: 100px;
+    width: 200px;
+    font: bold 25px arial, sans-serif;
+    text-shadow:none;
 }
 
 button:not(:disabled),

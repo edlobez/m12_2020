@@ -18,7 +18,10 @@
          <link href="<c:url value="../static/css/bootstrap-4.4.1/bootstrap.min.css"/>" rel="stylesheet"/>
         <title>Nuevo usuario</title>
     </head>
-    <body>        
+    <body>   
+        <form action="${pageContext.request.contextPath}/logout" method="post">
+        <input type="submit" name="logout" value="Desconnectar" />
+        </form>
         <h1>Registro de Usuarios:</h1>
         <h1>${accion}</h1>
 
@@ -70,7 +73,5 @@
             <br/><br/><br/>
             <input type="submit" value="Enviar">
         </mvc:form>        
-       
-        <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/home">Volver</a> 
     </body>
 </html>
