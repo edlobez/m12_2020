@@ -38,7 +38,7 @@ public class VoluntariController {
     public ModelAndView voluntariHome(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView();
-        modelview.setViewName("voluntari");
+        modelview.setViewName("listaAnimales");
         return modelview;
     }
     

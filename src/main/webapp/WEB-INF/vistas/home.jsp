@@ -20,17 +20,40 @@
     <body>
         <h1>Benvingut a RescueManagement</h1>
         <br> 
-        <sec:authorize access="hasAuthority('admin')">
-            <br>Este contenido sólo lo ve el admin.
+        <div>
+            <h1>Usuari:</h1>
+            <sec:authentication property="principal.username" /><br>
+            <sec:authentication property="principal.authorities"/>
+        </div>
+        
+        <sec:authorize access="hasAuthority('admin')">   
+            <h1>Sección del administrador</h1>
+            <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/users">Gestión Usuarios</a>
+            <br>
+            <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/pets">Gestión Animales</a>
+            <br>
         </sec:authorize>
 
-        <sec:authorize access="hasAuthority('user')">
-            Este contenido sólo lo ve el usuario.
+        <sec:authorize access="hasAuthority('responsable')">
+            <h1>Sección del responsable</h1>
+            <a class="logout-link" href="${pageContext.servletContext.contextPath}/responsable/home">Gestionar animales</a> 
+            <br>
         </sec:authorize>
+            
+        <sec:authorize access="hasAuthority('veterinari')">
+            <h1>Sección del veterinari</h1>
+            <a class="logout-link" href="${pageContext.servletContext.contextPath}/veterinari/home">Ir a página del veterinari</a> 
+            <br>
+        </sec:authorize>
+            
+        <sec:authorize access="hasAuthority('voluntari')">
+            <h1>Sección del voluntari</h1>
+            <a class="logout-link" href="${pageContext.servletContext.contextPath}/voluntari/home">Ir a página del voluntari</a> 
+            <br>
+        </sec:authorize>
+            
 
-        <br>
-        <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin">Ir a página del admin</a> 
-        <br>
+
         <%-- Boton a la vista admin 
         <div>
         <form action="${pageContext.request.contextPath}/admin" method="post">
@@ -41,22 +64,15 @@
 
         <%-- Boton logout --%>
         <div>
-        <form action="${pageContext.request.contextPath}/logout" method="post">
-        <input type="submit" name="logout" value="Desconnectar" />
-        </form>
+            <form action="${pageContext.request.contextPath}/logout" method="post">
+                <input type="submit" name="logout" value="Desconnectar" />
+            </form>
         </div>
-        <br>
-        
-        <div>
-        <h1>Usuari:</h1>
-        <sec:authentication property="principal.username" /><br>
-        <sec:authentication property="principal.authorities"/>
+     
+        <%-- logo --%>
+        <div class="logo">
+            <img src='<c:url value="/static/resources/imgs/kitty.png"></c:url>' />  
         </div>
-        <br>
-         <%-- logo --%>
-         <div class="logo">
-             <img src='<c:url value="/static/resources/imgs/kitty.png"></c:url>' />  
-            </div>
-        
+
     </body>
 </html>

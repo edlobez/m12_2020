@@ -71,17 +71,24 @@ public class AdminController {
     
     private Usuarios _usr_copy;
 
-    @RequestMapping("/home")
-    public ModelAndView adminHome(HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping("/users")
+    public ModelAndView adminUsers(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView("admin");           
+        ModelAndView modelview = new ModelAndView("adminUsers");           
         return modelview;
     }
     
-    @RequestMapping("/logout")
+    @RequestMapping("/pets")
+    public ModelAndView adminPets(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        ModelAndView modelview = new ModelAndView("listaAnimales");           
+        return modelview;
+    }
+    
+  /*  @RequestMapping("/logout")
     public void logout () {
         System.out.println("\n\n\nAdios");
-    }
+    }*/
     
     @RequestMapping(value = "/editUser")
     public ModelAndView editUser(@RequestParam("username") String username, Model modelo) {

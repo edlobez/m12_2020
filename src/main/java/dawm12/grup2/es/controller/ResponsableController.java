@@ -39,7 +39,7 @@ public class ResponsableController {
     public ModelAndView responsableHome(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView();
-        modelview.setViewName("responsable");
+        modelview.setViewName("listaAnimales");
         return modelview;
     }
     

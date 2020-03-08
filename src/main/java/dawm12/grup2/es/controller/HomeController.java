@@ -51,7 +51,7 @@ public class HomeController {
         String mv = "home";
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
+    /*    if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
             mv = "redirect:/admin/home";                       
         } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("responsable"))){
             mv = "redirect:/responsable/home";
@@ -60,7 +60,7 @@ public class HomeController {
         } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("voluntari"))){
             mv = "redirect:/voluntari/home";
         }
-        
+        */
         guardarAcceso(auth.getName());         
         modelview.setViewName(mv);
         //modelview.setViewName("presentacion"); 

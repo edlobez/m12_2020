@@ -39,7 +39,7 @@ public class VeterinariController {
     public ModelAndView veterinariHome(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView();
-        modelview.setViewName("veterinari");
+        modelview.setViewName("listaAnimales");
         return modelview;
     }
     
