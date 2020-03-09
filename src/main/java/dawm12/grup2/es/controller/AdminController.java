@@ -31,6 +31,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dawm12.grup2.es.PasswordEncoderGenerator;
 import dawm12.grup2.es.domain.Roles;
+import dawm12.grup2.es.domain.TipusAnimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.validation.Valid;
@@ -64,6 +65,10 @@ public class AdminController {
     @Autowired
     @Qualifier("rolesService")
     private Service rolesService;
+    
+    @Autowired
+    @Qualifier("tipusAnimalService")
+    private Service tipusAnimalService;
 
     @Autowired
     @Qualifier("animalService")
@@ -96,8 +101,14 @@ public class AdminController {
         //Usuarios usr_copy = new Usuarios (usr);
         modelo.addAttribute("usuario", usr);
         this._usr_copy = new Usuarios (usr); // guardamos una copia que no se modificará
-        modelo.addAttribute("accion", "update"); 
-        return new ModelAndView("user");
+        modelo.addAttribute("accion", "update");
+        
+        ModelAndView mv = new ModelAndView("user");
+        List <Roles> roles = rolesService.getAll();
+        mv.addObject("listaRoles",roles );
+        List <TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+        mv.addObject("listaTipusAnimal",tipusAnimal);
+        return mv;
     }
 
     @RequestMapping(value = "/deleteUser")
@@ -111,7 +122,12 @@ public class AdminController {
         Usuarios usr = new Usuarios();
         modelo.addAttribute("usuario", usr);
         modelo.addAttribute("accion", "create");
+        
         ModelAndView mv = new ModelAndView("user");
+        List <Roles> roles = rolesService.getAll();
+        mv.addObject("listaRoles",roles );
+        List <TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+        mv.addObject("listaTipusAnimal",tipusAnimal);
         return mv;
     }
 

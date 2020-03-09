@@ -116,6 +116,27 @@
                             </div>
 
                         </div>
+                            
+                        <div class="form-group">
+                            Rols: <br/>
+                            <c:if test="${not empty listaRoles}">
+                                <c:forEach var="roles" items="${listaRoles}">
+                                    <input type="radio" name="rol" value="${roles.idRol}">
+                                    <c:out value="${roles.rol}" />
+                                </c:forEach>
+                            </c:if>
+                        </div>
+
+                        <br/>
+                        <div class="form-group">
+                            Tipus d'animals: <br/>
+                            <c:if test="${not empty listaTipusAnimal}">
+                                <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
+                                    <input type="radio" name="tipusAnimal" value="${tipusAnimal.idTipus}">
+                                    <c:out value="${tipusAnimal.descripcio}" />
+                                </c:forEach>
+                            </c:if>
+                        </div>
 
 
                     </div>
