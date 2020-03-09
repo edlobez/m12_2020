@@ -28,14 +28,15 @@ import javax.validation.constraints.Size;
 public class Usuarios {
     
     @NotNull
-    @Size(min=3, message="Campo no puede estar vacío")
+    @Size(min=3, message="Campo username no puede estar vacío")
     private String username;
+    
     
     private String password;
     private boolean enabled;
     private String nombre, apellido1, apellido2;
     
-    @NotEmpty (message="Campo no puede estar vacío")
+    @NotEmpty (message="Campo email no puede estar vacío")
     @Email(message = "La dirección de correo electrónico es incorrecta.")
     private String email;
     

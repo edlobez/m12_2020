@@ -12,73 +12,128 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-       <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
-              rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> 
-        -->
-         <link href="<c:url value="../static/css/bootstrap-4.4.1/bootstrap.min.css"/>" rel="stylesheet"/>
-        <title>Nuevo usuario</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>" rel="stylesheet" type="text/css"/>
+
+        <style>
+            @font-face {
+                font-family: 'Glyphicons Halflings';
+                src: url('../fonts/glyphicons-halflings-regular.eot');
+                src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') 
+                    format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') 
+                    format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') 
+                    format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') 
+                    format('svg');
+            }
+        </style>
+
+        <title>Formulario usuario</title>
     </head>
-    <body>   
-        <form action="${pageContext.request.contextPath}/logout" method="post">
-        <input type="submit" name="logout" value="Desconnectar" />
-        </form>
-        <h1>Registro de Usuarios:</h1>
-        <h1>${accion}</h1>
+    <body>  
 
-        <mvc:form action="${pageContext.servletContext.contextPath}/admin/saveUser" modelAttribute="usuario">  
-            
-            <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
-            
-            <div class="form-group">
-            Username:  <mvc:input type="text" class="form-control" path="username"/>
-            </div>
-       <!--     <mvc:errors path="username" style="color:red"/>-->
-            
-            <div class="form-group">
-            Password: <mvc:input type="password" class="form-control" path="password"/>
-            </div>
-            
-            <div class="form-group">
-            Nombre: <mvc:input type="text" class="form-control" path="nombre"/>
-              </div>
-            
-            <div class="form-group">
-            Apellido 1: <mvc:input type="text" class="form-control" path="apellido1"/>
-              </div>
-            
-            <div class="form-group">
-            Apellido 2: <mvc:input type="text" class="form-control" path="apellido2"/>
-              </div>
-           
-            
-            <div class="form-group">
-            email: <mvc:input type="text" class="form-control" path="email"/> 
-          <!--  <mvc:errors path="email" style="color:red"/>-->
-              </div>
-            
-            <div class="form-group">
-            enabled: <mvc:checkbox path="enabled" class="form-control" value="1"/>
-              </div>
-            
-            Rols: <br>
-            <input type="radio" name="rol" value="1">
-            <label>Admin</label>
-            <input type="radio" name="rol" value="2">
-            <label>Responsable</label>
-            <input type="radio" name="rol" value="3">
-            <label>Voluntari</label>
-            <input type="radio" name="rol" value="4">
-            <label>Veterinari</label>
-            
-            Tipus d'animals: <br>
-            <input type="radio" name="tipusAnimal" value="1">
-            <label>Gos</label>
-            <input type="radio" name="tipusAnimal" value="2">
-            <label>Gat</label>
+    <body>
 
-            <input type="hidden" name="accion" value="${accion}"/> 
-            <br/><br/><br/>
-            <input type="submit" value="Enviar">
-        </mvc:form>        
+        <div class="container">
+
+            <div class="signup-form-container">
+
+                <!-- form start -->
+                <mvc:form method="post" role="form" id="register-form" autocomplete="off" 
+                          action="${pageContext.servletContext.contextPath}/admin/saveUser" modelAttribute="usuario">
+
+                    <div class="form-header">
+                        <h3 class="form-title"><i class="fa fa-user"></i> Registro usuario</h3>
+
+                        <!--      <div class="pull-right">
+                                  <h3 class="form-title"><span class="glyphicon glyphicon-pencil"></span></h3>
+                              </div>-->
+
+                    </div>
+
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <mvc:input path="username" name="usernamename" type="text" class="form-control" placeholder="Username"/>
+                            </div>
+                            <span class="help-block" id="error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                                <input name="email" type="text" class="form-control" placeholder="Email">
+                            </div> 
+                            <span class="help-block" id="error"></span>                     
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-lg-4">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input name="nombre" id="nombre" type="text" class="form-control" placeholder="Nombre">
+                                </div>  
+                                <span class="help-block" id="error"></span>                    
+                            </div>
+
+                            <div class="form-group col-lg-4">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input name="apellido1" type="text" class="form-control" placeholder="Apellido 1">
+                                </div>  
+                                <span class="help-block" id="error"></span>                    
+                            </div>
+
+                             <div class="form-group col-lg-4">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <input name="apellido2" type="text" class="form-control" placeholder="Apellido 2">
+                                </div>  
+                                <span class="help-block" id="error"></span>                    
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <div class="form-group col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                    <input name="password" id="password" type="password" class="form-control" placeholder="Password">
+                                </div>  
+                                <span class="help-block" id="error"></span>                    
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                    <input name="cpassword" type="password" class="form-control" placeholder="Retype Password">
+                                </div>  
+                                <span class="help-block" id="error"></span>                    
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-footer">
+                        <button type="submit" class="btn btn-info">
+                            <span class="glyphicon glyphicon-log-in"></span> Enviar
+                        </button>
+                    </div>
+
+
+                </mvc:form>
+
+            </div>
+
+
+
+        </div>
+
     </body>
 </html>
