@@ -132,6 +132,7 @@ public class AdminController {
 
     /*
     Validación del resultado formulario user.jsp
+    TO-DO ELIMINAR TANTOS BLOQUES DE CÓDIGO REPETIDO
      */
     @RequestMapping(value = "/saveUser")
     public ModelAndView guardarUser(
@@ -139,7 +140,7 @@ public class AdminController {
             BindingResult validacion,
             @RequestParam("accion") String accion,
             @RequestParam("password") String password,
-            @RequestParam("password") String cpassword,
+            @RequestParam("cpassword") String cpassword,
             ModelMap modelo) {
 
         if (validacion.hasErrors()) {
@@ -152,9 +153,12 @@ public class AdminController {
             mv.addObject("listaTipusAnimal", tipusAnimal);
             return mv;
         }
+
+        //System.out.println("Password:" + password);
+        //System.out.println("Cpasswore: " + cpassword);
         if (accion.equals("create") && !password.equals(cpassword)) {
-            // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
-                System.out.println("\n\n--ERROR AL CREAR CONTRASEÑAS NO COINCIDEN");
+            //    System.out.println("\n\n--ERROR AL CREAR CONTRASEÑAS NO COINCIDEN");
+            modelo.addAttribute("error", "password_error");
             modelo.addAttribute("usuario", usr);
             modelo.addAttribute("accion", accion);
             ModelAndView mv = new ModelAndView("user");
@@ -164,7 +168,6 @@ public class AdminController {
             mv.addObject("listaTipusAnimal", tipusAnimal);
             return mv;
         }
-        
 
         if (accion.equals("update")) {
             System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
@@ -172,15 +175,25 @@ public class AdminController {
             if (updateUsuario(usr, _usr_copy) == null) {
                 // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
                 System.out.println("\n\n--ERROR AL MODIFICAR EL USUARIO PASSWORD - EMAIL REPETIDO");
+                
             }
         } else if (accion.equals("create")) {
-            if (createUsuario(usr) == null) {
-                // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
-                System.out.println("\n\n--ERROR AL CREAR EL USUARIO PASSWORD - EMAIL REPETIDO");
+            
+           
+            if (createUsuario(usr) == null) {                
+                modelo.addAttribute("error", "create_error");
+                modelo.addAttribute("usuario", usr);
+                modelo.addAttribute("accion", accion);
+                ModelAndView mv = new ModelAndView("user");
+                List<Roles> roles = rolesService.getAll();
+                mv.addObject("listaRoles", roles);
+                List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+                mv.addObject("listaTipusAnimal", tipusAnimal);
+                return mv;
             }
         }
 
-        return new ModelAndView("admin");
+        return new ModelAndView("adminUsers");
     }
 
     @RequestMapping(value = "/userList")
@@ -260,21 +273,23 @@ public class AdminController {
     private Usuarios createUsuario(Usuarios usr) {
 
         Usuarios usr_resultado;
-        Roles rl_resultado;
+              
+        
+        
 
         // Comprobamos que no exista ni el nombre de usuario ni el mail
         // Esta comprobación se podría quitar ya que mysql retornará null en el 
         // ... create del item al estar repetido cualquiera de los campos.
         if (usuarioService.getOR("username=" + usr.getUsername() + ",email=" + usr.getEmail()).size() > 0) {
-            //System.out.println("Error al crear el usuario, username o email repetido");
+            System.out.println("Error al crear el usuario, username o email repetido");
             return null;
         } else {
-
+            usr.setEnabled(true);
             usr_resultado = (Usuarios) usuarioService.create(usr);
             if (usr_resultado == null) {
                 return null;
             }
-            //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
+            System.out.println("\n\n\n\nUsuario creado: " + usr.toString());
         }
 
         return usr_resultado;

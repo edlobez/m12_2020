@@ -72,7 +72,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
-                                <mvc:input path="email" name="email" type="text" class="form-control" placeholder="Email"/>
+                                    <mvc:input path="email" name="email" type="text" class="form-control" placeholder="Email"/>
                             </div> 
                             <span class="help-block" id="error"></span>                     
                         </div>
@@ -82,7 +82,7 @@
                             <div class="form-group col-lg-4">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <mvc:input path="nombre" name="nombre" id="nombre" type="text" class="form-control" placeholder="Nombre"/>
+                                        <mvc:input path="nombre" name="nombre" id="nombre" type="text" class="form-control" placeholder="Nombre"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -90,15 +90,15 @@
                             <div class="form-group col-lg-4">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <mvc:input path="apellido1" name="apellido1" type="text" class="form-control" placeholder="Apellido 1"/>
+                                        <mvc:input path="apellido1" name="apellido1" type="text" class="form-control" placeholder="Apellido 1"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
 
-                             <div class="form-group col-lg-4">
+                            <div class="form-group col-lg-4">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <mvc:input path="apellido2" name="apellido2" type="text" class="form-control" placeholder="Apellido 2"/>
+                                        <mvc:input path="apellido2" name="apellido2" type="text" class="form-control" placeholder="Apellido 2"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -109,7 +109,7 @@
                             <div class="form-group col-lg-6">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                                    <mvc:input path="password" name="password" id="password" type="password" class="form-control" placeholder="Password"/>
+                                        <mvc:input path="password" name="password" id="password" type="password" class="form-control" placeholder="Password"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -123,7 +123,7 @@
                             </div>
 
                         </div>
-                            
+
                         <div class="form-check">
                             Rols: <br/>
                             <c:if test="${not empty listaRoles}">
@@ -160,8 +160,17 @@
                         <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/admin/users'"                        
                                value=' Volver'/>
                         <input type="hidden" name="accion" value="${accion}"/> 
-                    
+
                         <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
+                        <br>
+                        <c:choose>
+                            <c:when test="${error=='password_error'}">
+                                <br><span class="alert alert-danger">Contraseñas no coinciden</span>
+                            </c:when>
+                            <c:when test="${error=='create_error'}">
+                                <br><span class="alert alert-danger">Nombre usuario o email repetido</span>
+                            </c:when>
+                        </c:choose>
                     </div>
 
 

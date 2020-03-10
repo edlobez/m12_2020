@@ -51,6 +51,7 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
     @Override
     public Usuarios create(Usuarios type) {
         Usuarios u = null;
+        System.out.println("Usuario a crear: " + type.toString());
         try {
             u = (Usuarios) usuarioRepository.create(USUARIOS, 
                          "username="+type.getUsername() +","+

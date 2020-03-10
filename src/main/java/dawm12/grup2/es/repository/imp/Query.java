@@ -23,234 +23,280 @@ import dawm12.grup2.es.myExceptions.MyException;
  * @author edlobez
  */
 public class Query {
-    
-      // private static String OR = "OR";
-   // private static String AND = "AND";
+
+    // private static String OR = "OR";
+    // private static String AND = "AND";
     private static String LIKE = "LIKE";
     private static String EQUAL = "=";
-    
+
     private String query;
-    private String campo []; //= new String [campos.length];
-    private String valor [];// = new String [campos.length];
-    
-    public String [] getValor ()  {
+    private String campo[]; //= new String [campos.length];
+    private String valor[];// = new String [campos.length];
+
+    public String[] getValor() {
         return this.valor;
     }
-    
+
     /**
-     * 
+     *
      * @param nomTabla
      * @param key
      * @param _campos
-     * @return 
+     * @return
      */
-    public String createQueryUpdate (String nomTabla, String key, String _campos) throws MyException {
-        
-        String campos [] = null;
-        
+    public String createQueryUpdate(String nomTabla, String key, String _campos) throws MyException {
+
+        String campos[] = null;
+
         //System.out.println ("En queryUpdate antes de split: " + _campos);
-        if (_campos!= null) {
+        if (_campos != null) {
             campos = _campos.split(",");
             //System.out.println("En queryUpdate después de split: ");
             //for (String s : campos)
             //System.out.println(s);
-        }
-        else {
-            campos = new String [0];
+        } else {
+            campos = new String[0];
             throw new MyException(MyException.ERROR_UPDATE_1);
         }
-        
-        campo= new String [campos.length];
-        valor= new String [campos.length];
+
+        campo = new String[campos.length];
+        valor = new String[campos.length];
         key = normalizar(key);
         key = key.replace("=", "='");
-        key = key+"'";
+        key = key + "'";
         //nomTabla = nomTabla.toUpperCase();
-        
+
         String qry;
         //edlobez.es.Debug.printDebug("Nombre tabal: " + nomTabla + "\nCampos: ");
         int index = 0;
-        for (String s: campos ) {
+        for (String s : campos) {
             //s = s.toUpperCase();
             campo[index] = s.split("=")[0];
             valor[index] = s.split("=")[1];
             index++;
         }
-      
+
         qry = "UPDATE " + nomTabla + " SET ";
-            int aux = campo.length;
-            for ( int i = 0; i < aux; i++ ) {
-                qry = qry + campo[i] + " = ? ";
-                if ( i < (aux -1 )) {
-                    qry = qry + ", ";
-                }
+        int aux = campo.length;
+        for (int i = 0; i < aux; i++) {
+            qry = qry + campo[i] + " = ? ";
+            if (i < (aux - 1)) {
+                qry = qry + ", ";
             }
-       // }
-       qry = qry + "WHERE " + key;
-       qry = qry.trim();
-       //edlobez.es.Debug.printDebug(qry);
-       //System.out.println("Query update: " +qry);
-       return qry;
-        
+        }
+        // }
+        qry = qry + "WHERE " + key;
+        qry = qry.trim();
+        //edlobez.es.Debug.printDebug(qry);
+        //System.out.println("Query update: " +qry);
+        return qry;
+
     }
-    
-    public String createQueryInsert (String nomTabla, String _campos) {
-        
-        String campos [] = null;
-        
+
+    public String createQueryInsert(String nomTabla, String _campos) {
+
+        String campos[] = null;
+
         //System.out.println ("En queryInsert antes de split: " + _campos);
-        if (_campos!= null) {
+        if (_campos != null) {
             campos = _campos.split(",");
             //System.out.println("En queryInsert después de split: ");
             //for (String s : campos)
             //System.out.println(s);
+        } else {
+            campos = new String[0];
         }
-        else campos = new String [0];
-        
-        campo= new String [campos.length];
-        valor= new String [campos.length];
+
+        int aux_long = campos.length;
+        campo = new String[aux_long];
+        valor = new String[aux_long];
         //nomTabla = nomTabla.toUpperCase();
-        
-     //   edlobez.es.Debug.printDebug("Creando query select");
+
+        //   edlobez.es.Debug.printDebug("Creando query select");
+        // Hacemo comprobaciones por si algun valor está en blanco
         int index = 0;
-        for (String s: campos ) {  
+        for (String s : campos) {
             //s = s.toUpperCase();
-            campo[index] = s.split("=")[0];
-            valor[index] = s.split("=")[1];
-            index++;
+            //System.out.println(s.split("=").length);
+            if (s.split("=").length == 2) {
+                campo[index] = s.split("=")[0];
+                valor[index] = s.split("=")[1];
+
+                // System.out.println("Campo: " + campo[index]);
+                //  System.out.println("Valor: " + valor[index]);
+                index++;
+            }
         }
-     
-        String qry="";
-     /*   if (campo.length == 0 )
+
+        /*for (int i = 0; i < index; i++) {
+            System.out.println("Campo: " + campo[i]);
+            System.out.println("Valor: " + valor[i]);
+        }*/
+        if (index < aux_long) {
+            String _campo[] = new String[index];
+            String _valor[] = new String[index];
+            for (int i = 0; i < index; i++) {
+                _campo[i] = campo[i];
+                _valor[i] = valor[i];
+            }
+            campo = new String[index];
+            valor = new String[index];
+            campo = _campo;
+            valor = _valor;
+
+        }
+
+        String qry = "";
+        /*   if (campo.length == 0 )
            edlobez.es.Debug.printDebug("Error lanzar exception");
         else */
-          if (campo.length != 0)
-              qry = "INSERT INTO " + nomTabla + " (";
-   
-        int aux = campo.length;
+        if (index != 0) {
+            qry = "INSERT INTO " + nomTabla + " (";
+        }
+
+        int aux = index;
         for (int i = 0; i < aux; i++) {
             qry = qry + campo[i];
             if (i < (aux - 1)) {
                 qry = qry + ", ";
             }
         }
-       
-       qry = qry + ") VALUES (";
-        
-        aux = campo.length;
+
+        qry = qry + ") VALUES (";
+
+        aux = index;
         for (int i = 0; i < aux; i++) {
             if (i < (aux - 1)) {
                 qry = qry + "?, ";
             }
         }
-       qry = qry + "?)";
-       qry = qry.trim();
-       
-       //System.out.println("Query insert:" + qry);
-       //edlobez.es.Debug.printDebug(qry);
-       return qry;
+        qry = qry + "?)";
+        qry = qry.trim();
+
+        //System.out.println("Query insert:" + qry);
+        //edlobez.es.Debug.printDebug(qry);
+        return qry;
     }
-            
-    public String createQuerySelect (String nomTabla, String tipo_busqueda, String args, String campos) {
-        if (args == null || args.length() == 0 ){
-            return createQuerySelect (nomTabla, tipo_busqueda, campos);
-        }
-        else if (args.toLowerCase().indexOf("between") > -1 ){
+
+    public String createQuerySelect(String nomTabla, String tipo_busqueda, String args, String campos) {
+        if (args == null || args.length() == 0) {
+            return createQuerySelect(nomTabla, tipo_busqueda, campos);
+        } else if (args.toLowerCase().indexOf("between") > -1) {
             //System.out.println("hay un between");
-            return createQuerySelectBetween ( nomTabla, args, campos);
-        }
-        else {//throw new UnsupportedOperationException("Not supported yet.");
+            return createQuerySelectBetween(nomTabla, args, campos);
+        } else {//throw new UnsupportedOperationException("Not supported yet.");
             //System.out.println ("CON argumentos: " + createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args);
-            return createQuerySelect (nomTabla, tipo_busqueda, campos) + " " + args;
+            return createQuerySelect(nomTabla, tipo_busqueda, campos) + " " + args;
         }
         //return null;
     }
-    
-    public String createQuerySelectBetween ( String nomTabla,String args, String _campo) {       
-           
+
+    public String createQuerySelectBetween(String nomTabla, String args, String _campo) {
+
         //SELECT column_name FROM TABLA WHERE column_name BETWEEN x AND y
         String qry;
-        nomTabla = normalizar(nomTabla);    
-        String campos [] = null;
+        nomTabla = normalizar(nomTabla);
+        String campos[] = null;
         String s_aux;
         int i_aux;
-        
+
         s_aux = args.trim().substring("between".length(), args.length()).trim();
-        
+
         //System.out.println("sin el between " + s_aux);
-        
-        if (s_aux!= null) {
+        if (s_aux != null) {
             campos = s_aux.toLowerCase().split("and");
             //System.out.println("En querySelect después de split: ");
             //for (String s : campos)
             //System.out.println(s);
+        } else {
+            campos = new String[0];
         }
-        else campos = new String [0];
-        
-        valor= new String [campos.length];
+
+        valor = new String[campos.length];
         valor[0] = campos[0].trim();
         valor[1] = campos[1].trim();
-        
+
         qry = "SELECT * FROM " + nomTabla + " WHERE " + _campo + " between ? and ?";
         //System.out.println(qry);
         return qry;
-        
+
     }
-    public String createQuerySelect (String nomTabla, String tipo_busqueda, String _campos) {
-        
+
+    public String createQuerySelect(String nomTabla, String tipo_busqueda, String _campos) {
+
         String operador_busqueda = EQUAL;
         String condicion_busqueda = tipo_busqueda;
-        String campos [] = null;
-        
-        //System.out.println ("En querySelect antes de split: " + _campos);
-        if (_campos!= null) {
+        String campos[] = null;
+
+        System.out.println("En querySelect antes de split: " + _campos);
+        if (_campos != null) {
             campos = _campos.split(",");
-            //System.out.println("En querySelect después de split: ");
-            //for (String s : campos)
-            //System.out.println(s);
+            System.out.println("En querySelect después de split: ");
+            for (String s : campos) {
+                System.out.println(s);
+            }
+        } else {
+            campos = new String[0];
         }
-        else campos = new String [0];
-        
-        
-        
+
         //nombre=xx,apellido=2
-        campo= new String [campos.length];
-        valor= new String [campos.length];
-        
+        int aux_long = campos.length;
+        campo = new String[aux_long];
+        valor = new String[aux_long];
+
         nomTabla = normalizar(nomTabla);
-        
-      //  edlobez.es.Debug.printDebug("Nombre tabla: " + nomTabla + "\nCampos: ");
+
+        //  edlobez.es.Debug.printDebug("Nombre tabla: " + nomTabla + "\nCampos: ");
         int index = 0;
-        for (String s: campos ) {  
+        for (String s : campos) {
             s = normalizar(s);
-            campo[index] = s.split("=")[0];
-            valor[index] = s.split("=")[1];
-            if ( valor[index].contains("%") )
-                operador_busqueda = LIKE;
-            index++;
+            if (s.split("=").length == 2) {
+                campo[index] = s.split("=")[0];
+                valor[index] = s.split("=")[1];
+                if (valor[index].contains("%")) {
+                    operador_busqueda = LIKE;
+                }
+                index++;
+            }
         }
-      /*  for ( int i = 0; i < index; i++) {
+        /*  for ( int i = 0; i < index; i++) {
             edlobez.es.Debug.printDebug("Campo: " + campo[i]);
             edlobez.es.Debug.printDebug("Valor: " + valor[i]);
         }*/
-      String qry;
-      if (campo.length == 0 )
-         qry = "SELECT * FROM " + nomTabla;
-      else 
-        qry = "SELECT * FROM " + nomTabla + " WHERE ";  
-      int aux = campo.length;
-      for (int i = 0; i < aux; i++) {
-        qry = qry + campo[i] + " " + operador_busqueda + " ? ";
-        if (i < (aux - 1)) {
-            qry = qry + " " + condicion_busqueda + " ";
+        
+        if (index < aux_long) {
+            String _campo[] = new String[index];
+            String _valor[] = new String[index];
+            for (int i = 0; i < index; i++) {
+                _campo[i] = campo[i];
+                _valor[i] = valor[i];
+            }
+            campo = new String[index];
+            valor = new String[index];
+            campo = _campo;
+            valor = _valor;
+            
         }
-      }
-      
-      
-       qry = qry.trim();
-      // System.out.println("Qry select: " + qry);
-       return qry;
+        
+        String qry;
+        if (campo.length == 0) {
+            qry = "SELECT * FROM " + nomTabla;
+        } else {
+            qry = "SELECT * FROM " + nomTabla + " WHERE ";
+        }
+        int aux = campo.length;
+        for (int i = 0; i < aux; i++) {
+            qry = qry + campo[i] + " " + operador_busqueda + " ? ";
+            if (i < (aux - 1)) {
+                qry = qry + " " + condicion_busqueda + " ";
+            }
+        }
+
+        qry = qry.trim();
+        // System.out.println("Qry select: " + qry);
+        return qry;
     }
+
     /*
     public String createQuerySelect (String nomTabla, String tipo_busqueda, String... campos) {
         
@@ -294,28 +340,27 @@ public class Query {
       // edlobez.es.Debug.printDebug(qry);
        return qry;
     }*/
-    
-    /*
+
+ /*
      Sustituye acentos y cualquier vocal acentuada por un símbolo comodín
-    */
-    private String normalizar (String inText ) {
+     */
+    private String normalizar(String inText) {
         String originalchars = "áéíóúäëïöüâêîôûàèìòùÁÉÍÓÚÄËÏÖÜÂÊÎÔÛÀÈÌÒÙ%";
         String output = "";
         char ch;
         int pos;
 
         for (int i = 0; i < inText.length(); i++) {
-                pos = originalchars.indexOf(inText.charAt(i));
-                if (pos != -1)
-                        output = output + "%";
-                else {
-                        output = output + inText.charAt(i);
-                }
+            pos = originalchars.indexOf(inText.charAt(i));
+            if (pos != -1) {
+                output = output + "%";
+            } else {
+                output = output + inText.charAt(i);
+            }
         }
         //output= output.toUpperCase();             
         return output;
-        
-        
+
     }
-    
+
 }
