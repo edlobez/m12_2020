@@ -221,7 +221,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
     
     private void closeConnection ()  {
         try {
-            System.out.println("\n\nCerrando conexión!!!!");
+            //System.out.println("\n\nCerrando conexión!!!!");
             this.connection.close();
             this.connection = null;
         } catch (SQLException ex) {

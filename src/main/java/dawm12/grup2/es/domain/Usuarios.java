@@ -31,10 +31,20 @@ public class Usuarios {
     @Size(min=3, message="Campo username no puede estar vacío")
     private String username;
     
-    
+    @Size(min=8, message="Longitud mínima password 8 carateres")
     private String password;
+    
     private boolean enabled;
-    private String nombre, apellido1, apellido2;
+    
+    @NotNull
+    @Size(min=3, message="Campo nombre no puede estar vacío")
+    private String nombre;
+    
+    @NotNull
+    @Size(min=3, message="Campo apellido no puede estar vacío")
+    private String apellido1;
+    
+    private String apellido2;
     
     @NotEmpty (message="Campo email no puede estar vacío")
     @Email(message = "La dirección de correo electrónico es incorrecta.")

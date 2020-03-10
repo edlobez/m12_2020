@@ -65,7 +65,7 @@ public class AdminController {
     @Autowired
     @Qualifier("rolesService")
     private Service rolesService;
-    
+
     @Autowired
     @Qualifier("tipusAnimalService")
     private Service tipusAnimalService;
@@ -73,41 +73,40 @@ public class AdminController {
     @Autowired
     @Qualifier("animalService")
     private Service animalService;
-    
+
     private Usuarios _usr_copy;
 
     @RequestMapping("/users")
     public ModelAndView adminUsers(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView("adminUsers");           
+        ModelAndView modelview = new ModelAndView("adminUsers");
         return modelview;
     }
-    
+
     @RequestMapping("/pets")
     public ModelAndView adminPets(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView("listaAnimales");           
+        ModelAndView modelview = new ModelAndView("listaAnimales");
         return modelview;
     }
-    
-  /*  @RequestMapping("/logout")
+
+    /*  @RequestMapping("/logout")
     public void logout () {
         System.out.println("\n\n\nAdios");
     }*/
-    
     @RequestMapping(value = "/editUser")
     public ModelAndView editUser(@RequestParam("username") String username, Model modelo) {
         Usuarios usr = (Usuarios) usuarioService.getone("username=" + username);
         //Usuarios usr_copy = new Usuarios (usr);
         modelo.addAttribute("usuario", usr);
-        this._usr_copy = new Usuarios (usr); // guardamos una copia que no se modificará
+        this._usr_copy = new Usuarios(usr); // guardamos una copia que no se modificará
         modelo.addAttribute("accion", "update");
-        
+
         ModelAndView mv = new ModelAndView("user");
-        List <Roles> roles = rolesService.getAll();
-        mv.addObject("listaRoles",roles );
-        List <TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
-        mv.addObject("listaTipusAnimal",tipusAnimal);
+        List<Roles> roles = rolesService.getAll();
+        mv.addObject("listaRoles", roles);
+        List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+        mv.addObject("listaTipusAnimal", tipusAnimal);
         return mv;
     }
 
@@ -122,12 +121,12 @@ public class AdminController {
         Usuarios usr = new Usuarios();
         modelo.addAttribute("usuario", usr);
         modelo.addAttribute("accion", "create");
-        
+
         ModelAndView mv = new ModelAndView("user");
-        List <Roles> roles = rolesService.getAll();
-        mv.addObject("listaRoles",roles );
-        List <TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
-        mv.addObject("listaTipusAnimal",tipusAnimal);
+        List<Roles> roles = rolesService.getAll();
+        mv.addObject("listaRoles", roles);
+        List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+        mv.addObject("listaTipusAnimal", tipusAnimal);
         return mv;
     }
 
@@ -136,27 +135,49 @@ public class AdminController {
      */
     @RequestMapping(value = "/saveUser")
     public ModelAndView guardarUser(
-            @Valid @ModelAttribute("usuario") Usuarios usr,             
+            @Valid @ModelAttribute("usuario") Usuarios usr,
             BindingResult validacion,
-            @RequestParam("accion") String accion) {
+            @RequestParam("accion") String accion,
+            @RequestParam("password") String password,
+            @RequestParam("password") String cpassword,
+            ModelMap modelo) {
 
         if (validacion.hasErrors()) {
-            return new ModelAndView("user");
-        } 
+            modelo.addAttribute("usuario", usr);
+            modelo.addAttribute("accion", accion);
+            ModelAndView mv = new ModelAndView("user");
+            List<Roles> roles = rolesService.getAll();
+            mv.addObject("listaRoles", roles);
+            List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+            mv.addObject("listaTipusAnimal", tipusAnimal);
+            return mv;
+        }
+        if (accion.equals("create") && !password.equals(cpassword)) {
+            // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
+                System.out.println("\n\n--ERROR AL CREAR CONTRASEÑAS NO COINCIDEN");
+            modelo.addAttribute("usuario", usr);
+            modelo.addAttribute("accion", accion);
+            ModelAndView mv = new ModelAndView("user");
+            List<Roles> roles = rolesService.getAll();
+            mv.addObject("listaRoles", roles);
+            List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+            mv.addObject("listaTipusAnimal", tipusAnimal);
+            return mv;
+        }
         
+
         if (accion.equals("update")) {
             System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
 
-            if (updateUsuario(usr, _usr_copy) == null ) {
+            if (updateUsuario(usr, _usr_copy) == null) {
                 // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
                 System.out.println("\n\n--ERROR AL MODIFICAR EL USUARIO PASSWORD - EMAIL REPETIDO");
             }
-        }
-        else if (accion.equals("create")) {
-            if (createUsuario(usr) == null ){
+        } else if (accion.equals("create")) {
+            if (createUsuario(usr) == null) {
                 // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
                 System.out.println("\n\n--ERROR AL CREAR EL USUARIO PASSWORD - EMAIL REPETIDO");
-            }  
+            }
         }
 
         return new ModelAndView("admin");
@@ -178,7 +199,6 @@ public class AdminController {
         //System.out.println("Sin argumentos:" + usuarioService.get("nombre=%tec%"));
         //System.out.println(usuarioService.get("BETWEEN 4 AND 5", "apellido1"));
         //ejemplos();
-
         List<Usuarios> lista = new ArrayList<>();
         if (cadenaBusqueda.length() == 0) {
             String aux = "";
@@ -236,76 +256,75 @@ public class AdminController {
         //System.out.println(json.toString());
         return json.toString();
     }
-    
-    private Usuarios createUsuario (Usuarios usr) {
-        
+
+    private Usuarios createUsuario(Usuarios usr) {
+
         Usuarios usr_resultado;
         Roles rl_resultado;
-        
+
         // Comprobamos que no exista ni el nombre de usuario ni el mail
         // Esta comprobación se podría quitar ya que mysql retornará null en el 
         // ... create del item al estar repetido cualquiera de los campos.
-        if (usuarioService.getOR("username="+usr.getUsername()+",email="+usr.getEmail()).size() > 0) {
+        if (usuarioService.getOR("username=" + usr.getUsername() + ",email=" + usr.getEmail()).size() > 0) {
             //System.out.println("Error al crear el usuario, username o email repetido");
             return null;
         } else {
-            
-            usr_resultado = (Usuarios) usuarioService.create(usr);           
-            if (usr_resultado == null ) return null;
+
+            usr_resultado = (Usuarios) usuarioService.create(usr);
+            if (usr_resultado == null) {
+                return null;
+            }
             //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
         }
-        
+
         return usr_resultado;
-        
+
     }
-    
+
     // TO - DO REACER DESPUES DEL CAMBIO DE LA TABLA ROLES
-    private Usuarios updateUsuario (Usuarios usr, Usuarios usr_old) {
-        
+    private Usuarios updateUsuario(Usuarios usr, Usuarios usr_old) {
+
         Usuarios usr_resultado = null;
         Roles rl_resultado;
         boolean username_modificado = false;
         // Si se ha modificado el username o email
         // Comprobamos que no exista ni el nombre de usuario ni el mail
-        
-        System.out.println("Modificando: "+usr_old.toString());
-        System.out.println("Valor nuevo: " +usr.toString());
+
+        System.out.println("Modificando: " + usr_old.toString());
+        System.out.println("Valor nuevo: " + usr.toString());
         // Esta comprobaciónse podría quitar ya que se retornará null en el 
         // ... update. Existe la restricción en mysql que ambos campos son únicos.
-        if ( !usr_old.getUsername().equals(usr.getUsername())){
-             //System.out.println("1: " + usuarioService.getone("username="+usr.getUsername()));
-             username_modificado = true;
-             if (usuarioService.getone("username="+usr.getUsername())!=null  ) {              
+        if (!usr_old.getUsername().equals(usr.getUsername())) {
+            //System.out.println("1: " + usuarioService.getone("username="+usr.getUsername()));
+            username_modificado = true;
+            if (usuarioService.getone("username=" + usr.getUsername()) != null) {
                 System.out.println("Error al modificar el usuario, username repetido");
                 return null;
-             }
+            }
         }
-        if(!usr_old.getEmail().equals(usr.getEmail())) {            
-            if (usuarioService.getone("email="+usr.getEmail())!=null) {
+        if (!usr_old.getEmail().equals(usr.getEmail())) {
+            if (usuarioService.getone("email=" + usr.getEmail()) != null) {
                 System.out.println("Error al modificar el usuario, email repetido");
                 return null;
-            }            
-        } 
-        
-       // String passCodificada = PasswordEncoderGenerator.passwordGenerator(usr.getPassword());
+            }
+        }
 
+        // String passCodificada = PasswordEncoderGenerator.passwordGenerator(usr.getPassword());
         System.out.println("Modificando: " + usr);
-        usr_resultado = (Usuarios) usuarioService.update(usr_old, 
-                     "username="+usr.getUsername() +","+
-                     "password="+PasswordEncoderGenerator.passwordGenerator(usr.getPassword()) + ","+
-                     "enabled="+ ((usr.isEnabled())?1:0)+","+
-                     "nombre="+usr.getNombre()+","+
-                     "apellido1="+usr.getApellido1()+","+
-                     "apellido2="+usr.getApellido2()+","+
-                     "email="+usr.getEmail()+","+
-                     "rol="+usr.getRol()+","+
-                     "tipusAnimal="+ usr.getTipusAnimal());       
+        usr_resultado = (Usuarios) usuarioService.update(usr_old,
+                "username=" + usr.getUsername() + ","
+                + "password=" + PasswordEncoderGenerator.passwordGenerator(usr.getPassword()) + ","
+                + "enabled=" + ((usr.isEnabled()) ? 1 : 0) + ","
+                + "nombre=" + usr.getNombre() + ","
+                + "apellido1=" + usr.getApellido1() + ","
+                + "apellido2=" + usr.getApellido2() + ","
+                + "email=" + usr.getEmail() + ","
+                + "rol=" + usr.getRol() + ","
+                + "tipusAnimal=" + usr.getTipusAnimal());
 
         //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
-        
-        
         return usr_resultado;
-        
+
     }
 
     private void ejemplos() {

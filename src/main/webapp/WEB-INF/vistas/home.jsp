@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="static/css/bootstrap-4.4.1/bootstrap.css" />
         <script src="static/js/jquery/jquery-3.3.1.min.js"></script>
         <script src="static/js/jquery/jquery-ui.js"></script>
-        <script src="static/js/myjs/myjs.js"></script>
+        
         <title>Rescue Management</title>
     </head>
     <body>

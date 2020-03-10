@@ -60,15 +60,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #f2f4f3;
-}
-
-logo {
-    width: 400px;
-    height: 400px;
-    position: absolute;
-    right:0;
-    bottom:0;
+  background-color: #fff;
 }
 
 [tabindex="-1"]:focus:not(:focus-visible) {
@@ -80,11 +72,8 @@ hr {
   height: 0;
   overflow: visible;
 }
-h1{
-   color: #117a8b; 
-}
 
-h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
@@ -247,7 +236,7 @@ button,
 select,
 optgroup,
 textarea {
-  margin: 10;
+  margin: 0;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -267,45 +256,11 @@ select {
   word-wrap: normal;
 }
 
-button.usr {
-   background: #0066A2;
-    color: white;
-    border-style: outset;
-    border-color: #0066A2;
-    height: 80px;
-    width: 150px;
-    font: bold 15px arial, sans-serif;
-    text-shadow:none;
-    position: absolute;
-    right: 15px;
-    bottom: 55px; 
-}
-
 button,
+[type="button"],
 [type="reset"],
 [type="submit"] {
-  background: #0066A2;
-    color: white;
-    border-style: outset;
-    border-color: #0066A2;
-    height: 80px;
-    width: 150px;
-    font: bold 15px arial, sans-serif;
-    text-shadow:none;
-    position: absolute;
-    right: 15px;
-    top: 55px;
-}
-
-button {
-    background: #c3e6cb;
-    color: white;
-    border-style: outset;
-    border-color: #6c757d;
-    height: 100px;
-    width: 200px;
-    font: bold 25px arial, sans-serif;
-    text-shadow:none;
+  -webkit-appearance: button;
 }
 
 button:not(:disabled),
