@@ -141,7 +141,7 @@
                             Tipus d'animals: <br/>
                             <c:if test="${not empty listaTipusAnimal}">
                                 <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
-                                    <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
+                                    <input type="checkbox" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
                                     <label class="form-check-label" for="tipuaAnimal">
                                         <c:out value="${tipusAnimal.descripcio}" />
                                     </label>
@@ -166,9 +166,12 @@
                         <c:choose>
                             <c:when test="${error=='password_error'}">
                                 <br><span class="alert alert-danger">Contraseñas no coinciden</span>
+                            </c:when>                            
+                            <c:when test="${error=='username_repetido'}">
+                                <br><span class="alert alert-danger">Nombre usuari ya existe</span>
                             </c:when>
-                            <c:when test="${error=='create_error'}">
-                                <br><span class="alert alert-danger">Nombre usuario o email repetido</span>
+                            <c:when test="${error=='email_repetido'}">
+                                <br><span class="alert alert-danger">Email ya existe</span>
                             </c:when>
                         </c:choose>
                     </div>

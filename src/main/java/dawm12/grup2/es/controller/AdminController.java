@@ -177,11 +177,9 @@ public class AdminController {
                 System.out.println("\n\n--ERROR AL MODIFICAR EL USUARIO PASSWORD - EMAIL REPETIDO");
                 
             }
-        } else if (accion.equals("create")) {
-            
-           
-            if (createUsuario(usr) == null) {                
-                modelo.addAttribute("error", "create_error");
+        } else if (accion.equals("create")) {   
+            if (createUsuario(usr, modelo) == null) {                
+                //modelo.addAttribute("error", "create_error");
                 modelo.addAttribute("usuario", usr);
                 modelo.addAttribute("accion", accion);
                 ModelAndView mv = new ModelAndView("user");
@@ -270,18 +268,20 @@ public class AdminController {
         return json.toString();
     }
 
-    private Usuarios createUsuario(Usuarios usr) {
+    private Usuarios createUsuario(Usuarios usr, ModelMap modelo) {
 
         Usuarios usr_resultado;
-              
-        
         
 
         // Comprobamos que no exista ni el nombre de usuario ni el mail
         // Esta comprobación se podría quitar ya que mysql retornará null en el 
         // ... create del item al estar repetido cualquiera de los campos.
-        if (usuarioService.getOR("username=" + usr.getUsername() + ",email=" + usr.getEmail()).size() > 0) {
-            System.out.println("Error al crear el usuario, username o email repetido");
+        if (usuarioService.getone("username="+usr.getUsername())!=null ) {
+            modelo.addAttribute("error", "username_repetido");
+            return null;
+        }  
+        else if (usuarioService.getone("email=" + usr.getEmail()) != null) {
+            modelo.addAttribute("error", "email_repetido");
             return null;
         } else {
             usr.setEnabled(true);
