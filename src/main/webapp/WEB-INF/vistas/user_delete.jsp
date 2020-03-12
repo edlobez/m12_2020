@@ -15,57 +15,22 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="<c:url value="static/bootstrap-4.4.1-dist/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
-              integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-
-        <style>
-            @font-face {
-                font-family: 'Glyphicons Halflings';
-                src: url('../fonts/glyphicons-halflings-regular.eot');
-                src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') 
-                    format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') 
-                    format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') 
-                    format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') 
-                    format('svg');
-            }
-        </style>
+              integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">        
 
         <title>Formulario usuario</title>
     </head>
-    <body>  
 
     <body>
-
-        <header>            
-
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <span class="navbar-brand">
-                            <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
-                        </span>
-                        <span class="navbar-brand">RescueManagement</span>
-                    </div>
-                    <form class="nav navbar-nav navbar-right">
-                        <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
-                        <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Salir&nbsp;&nbsp;&nbsp;</i></a> 
-                    </form>
-                </div>
-            </nav>
-
-
-        </header>
 
         <div class="container">
 
             <div class="signup-form-container">
 
                 <!-- form start -->
-                <mvc:form method="post" role="form" id="register-form" autocomplete="off" 
-                          action="${pageContext.servletContext.contextPath}/admin/saveUser" modelAttribute="usuario">
+                <mvc:form method="post" role="form" id="register-form" autocomplete="off" action="${pageContext.servletContext.contextPath}/admin/saveUser" modelAttribute="usuario">
 
                     <div class="form-header">
                         <h3 class="form-title"><i class="fa fa-user"></i>
@@ -87,7 +52,7 @@
 
                         <div class="form-group">
                             <div class="input-group">
-                                <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                <div class="input-group-addon"></div>
                                     <mvc:input path="username" name="username" type="text" class="form-control" placeholder="Username"/>
                             </div>
                             <span class="help-block" id="error"></span>
@@ -95,7 +60,7 @@
 
                         <div class="form-group">
                             <div class="input-group">
-                                <div class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></div>
+                                <div class="input-group-addon"></div>
                                     <mvc:input path="email" name="email" type="text" class="form-control" placeholder="Email"/>
                             </div> 
                             <span class="help-block" id="error"></span>                     
@@ -105,7 +70,7 @@
 
                             <div class="form-group col-lg-4">
                                 <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <div class="input-group-addon"></div>
                                         <mvc:input path="nombre" name="nombre" id="nombre" type="text" class="form-control" placeholder="Nombre"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
@@ -113,7 +78,7 @@
 
                             <div class="form-group col-lg-4">
                                 <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <div class="input-group-addon"></div>
                                         <mvc:input path="apellido1" name="apellido1" type="text" class="form-control" placeholder="Apellido 1"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
@@ -121,7 +86,7 @@
 
                             <div class="form-group col-lg-4">
                                 <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                    <div class="input-group-addon"></div>
                                         <mvc:input path="apellido2" name="apellido2" type="text" class="form-control" placeholder="Apellido 2"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
@@ -132,7 +97,7 @@
 
                             <div class="form-group col-lg-6">
                                 <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                    <div class="input-group-addon"></div>
                                         <mvc:input path="password" name="password" id="password" type="password" class="form-control" placeholder="Password"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
@@ -140,7 +105,7 @@
 
                             <div class="form-group col-lg-6">
                                 <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                    <div class="input-group-addon"></div>
                                     <input name="cpassword" type="password" class="form-control" placeholder="Retype Password">
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
@@ -148,29 +113,35 @@
 
                         </div>
 
-                        <div class="form-check">
-                            Rols: <br/>
-                            <c:if test="${not empty listaRoles}">
-                                <c:forEach var="roles" items="${listaRoles}">
-                                    <input type="radio" class="form-check-input" name="rol" id="rol" value="${roles.idRol}">
-                                    <label class="form-check-label" for="rol">
-                                        <c:out value="${roles.rol}" />
-                                    </label>                                    
-                                </c:forEach>
-                            </c:if>
-                        </div>
+                        <div class="row">
 
-                        <br/>
-                        <div class="form-check">
-                            Tipus d'animals: <br/>
-                            <c:if test="${not empty listaTipusAnimal}">
-                                <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
-                                    <input type="checkbox" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
-                                    <label class="form-check-label" for="tipuaAnimal">
-                                        <c:out value="${tipusAnimal.descripcio}" />
-                                    </label>
-                                </c:forEach>
-                            </c:if>
+                            <div class="col-lg-6 form-check">
+                                Rols: <br/>
+                                <c:if test="${not empty listaRoles}">
+                                    <c:forEach var="roles" items="${listaRoles}">
+                                        <input type="radio" class="form-check-input" name="rol" id="rol" value="${roles.idRol}">
+                                        <label class="form-check-label" for="rol">
+                                            <c:out value="${roles.rol}" />
+                                        </label> 
+                                        <br/>
+                                    </c:forEach>
+                                </c:if>
+                            </div>
+
+                            <br/>
+
+                            <div class="col-lg-6 form-group form-check">
+                                Tipus d'animals: <br/>
+                                <c:if test="${not empty listaTipusAnimal}">
+                                    <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
+                                        <input type="checkbox" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
+                                        <label class="form-check-label" for="tipuaAnimal">
+                                            <c:out value="${tipusAnimal.descripcio}" />
+                                        </label>
+                                        <br/>
+                                    </c:forEach>
+                                </c:if>
+                            </div>
                         </div>
 
 
@@ -178,11 +149,9 @@
                     </div>
 
                     <div class="form-footer">
-                        <button type="submit" class="btn btn-info">
-                            <span class="glyphicon glyphicon-log-in"></span> Enviar
-                        </button>
-                        <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}'"                        
-                               value=' Volver'/>
+                        <br/>
+                        <button type="submit" class="btn btn-info">Enviar</button>
+
                         <input type="hidden" name="accion" value="${accion}"/> 
 
                         <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
@@ -198,6 +167,14 @@
                                 <br><span class="alert alert-danger">Email ya existe</span>
                             </c:when>
                         </c:choose>
+
+                        Errores: <br/>
+                        <c:if test="${not empty errores}">
+                            <c:forEach var="errores" items="${errores}">
+                                <c:out value="${errores}" />
+                                <br/>
+                            </c:forEach>
+                        </c:if>
                     </div>
 
 

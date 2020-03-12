@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dawm12.grup2.es.PasswordEncoderGenerator;
 import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.validation.Valid;
@@ -45,6 +46,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -142,15 +144,19 @@ public class AdminController {
             @RequestParam("password") String password,
             @RequestParam("cpassword") String cpassword,
             ModelMap modelo) {
+        
+        ArrayList <String> errores = new ArrayList();
 
         if (validacion.hasErrors()) {
             modelo.addAttribute("usuario", usr);
             modelo.addAttribute("accion", accion);
+            
             ModelAndView mv = new ModelAndView("user");
             List<Roles> roles = rolesService.getAll();
             mv.addObject("listaRoles", roles);
             List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
             mv.addObject("listaTipusAnimal", tipusAnimal);
+            
             return mv;
         }
 
