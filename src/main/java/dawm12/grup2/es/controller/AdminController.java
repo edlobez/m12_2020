@@ -335,7 +335,8 @@ public class AdminController {
         usr_resultado = (Usuarios) usuarioService.update(usr_old,
                 "username=" + usr.getUsername() + ","
                 + "password=" + PasswordEncoderGenerator.passwordGenerator(usr.getPassword()) + ","
-                + "enabled=" + ((usr.isEnabled()) ? 1 : 0) + ","
+                //+ "enabled=" + ((usr.isEnabled()) ? 1 : 0) + ","
+                + "changePass=" + 1 + ","
                 + "nombre=" + usr.getNombre() + ","
                 + "apellido1=" + usr.getApellido1() + ","
                 + "apellido2=" + usr.getApellido2() + ","

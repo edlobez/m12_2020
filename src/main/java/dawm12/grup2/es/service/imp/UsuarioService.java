@@ -57,6 +57,7 @@ public class UsuarioService extends ServiceImp <Usuarios> implements Service <Us
                          "username="+type.getUsername() +","+
                          "password="+PasswordEncoderGenerator.passwordGenerator(type.getPassword())+","+
                          "enabled="+ ((type.isEnabled())?1:0)+","+
+                         "changePass="+ 1 +","+
                          "nombre="+type.getNombre()+","+
                          "apellido1="+type.getApellido1()+","+
                          "apellido2="+type.getApellido2()+","+

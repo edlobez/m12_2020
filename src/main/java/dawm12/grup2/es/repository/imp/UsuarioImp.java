@@ -38,6 +38,7 @@ public class UsuarioImp extends MyRepositoryImp <Usuarios> implements MyReposito
                 rs.getString("username"),
                 "",
                 rs.getBoolean("enabled"),
+                rs.getBoolean("changePass"),
                 rs.getString("nombre"),
                 rs.getString("apellido1"),
                 rs.getString("apellido2"),

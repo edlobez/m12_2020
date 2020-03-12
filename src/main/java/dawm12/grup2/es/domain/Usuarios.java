@@ -35,6 +35,7 @@ public class Usuarios {
     private String password;
     
     private boolean enabled;
+    private boolean changePass;
     
     @NotNull
     @Size(min=3, max=30, message="Campo nombre no puede estar vacío")
@@ -55,10 +56,11 @@ public class Usuarios {
     private int rol;
     private int tipusAnimal;
 
-    public Usuarios(String username,String password, boolean enabled, String nombre, String apellido1, String apellido2, String email, int rol, int tipusAnimal) {
+    public Usuarios(String username,String password, boolean enabled, boolean changePass, String nombre, String apellido1, String apellido2, String email, int rol, int tipusAnimal) {
         this.username = username;
         this.password = password;
         this.enabled = enabled;
+        this.changePass = changePass;
         this.nombre = nombre;
         this.apellido1 = apellido1;
         this.apellido2 = apellido2;
@@ -74,6 +76,7 @@ public class Usuarios {
         this.username = usr.getUsername();
         this.password = usr.getPassword();
         this.enabled = usr.isEnabled();
+        this.enabled = usr.isChangePass();
         this.nombre = usr.getNombre();
         this.apellido1 = usr.getApellido1();
         this.apellido2 = usr.getApellido2();
@@ -104,6 +107,14 @@ public class Usuarios {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public boolean isChangePass() {
+        return changePass;
+    }
+
+    public void setChangePass(boolean changePass) {
+        this.changePass = changePass;
     }
 
     public String getNombre() {
@@ -160,7 +171,7 @@ public class Usuarios {
 
     @Override
     public String toString() {
-        return "Usuarios{" + "username=" + username + ", password=" + password + ", enabled=" + enabled + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", email=" + email + ", rol=" + rol + ", tipusAnimal=" + tipusAnimal + '}';
+        return "Usuarios{" + "username=" + username + ", password=" + password + ", enabled=" + enabled + ", changePass=" + changePass + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", email=" + email + ", rol=" + rol + ", tipusAnimal=" + tipusAnimal + '}';
     }
 
 }
