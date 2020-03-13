@@ -58,9 +58,10 @@ public class Query {
             campos = new String[0];
             throw new MyException(MyException.ERROR_UPDATE_1);
         }
-
-        campo = new String[campos.length];
-        valor = new String[campos.length];
+        
+        int aux_long = campos.length;
+        campo = new String[aux_long];
+        valor = new String[aux_long];
         key = normalizar(key);
         key = key.replace("=", "='");
         key = key + "'";
@@ -68,12 +69,33 @@ public class Query {
 
         String qry;
         //edlobez.es.Debug.printDebug("Nombre tabal: " + nomTabla + "\nCampos: ");
+        // Hacemo comprobaciones por si algun valor está en blanco
         int index = 0;
         for (String s : campos) {
             //s = s.toUpperCase();
-            campo[index] = s.split("=")[0];
-            valor[index] = s.split("=")[1];
-            index++;
+            //System.out.println(s.split("=").length);
+            if (s.split("=").length == 2) {
+                campo[index] = s.split("=")[0];
+                valor[index] = s.split("=")[1];
+
+                // System.out.println("Campo: " + campo[index]);
+                //  System.out.println("Valor: " + valor[index]);
+                index++;
+            }
+        }
+
+         if (index < aux_long) {
+            String _campo[] = new String[index];
+            String _valor[] = new String[index];
+            for (int i = 0; i < index; i++) {
+                _campo[i] = campo[i];
+                _valor[i] = valor[i];
+            }
+            campo = new String[index];
+            valor = new String[index];
+            campo = _campo;
+            valor = _valor;
+
         }
 
         qry = "UPDATE " + nomTabla + " SET ";
