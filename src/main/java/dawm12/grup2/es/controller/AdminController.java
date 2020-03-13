@@ -143,9 +143,8 @@ public class AdminController {
             @RequestParam("accion") String accion,
             @RequestParam("password") String password,
             @RequestParam("cpassword") String cpassword,
-            ModelMap modelo) {
-        
-        ArrayList <String> errores = new ArrayList();
+            ModelMap modelo) {        
+       
 
         if (validacion.hasErrors()) {
             modelo.addAttribute("usuario", usr);
@@ -176,14 +175,13 @@ public class AdminController {
         }
 
         if (accion.equals("update")) {
-            System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
-
+            //System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
             if (updateUsuario(usr, _usr_copy, modelo) == null) {
-                modelo.addAttribute("error", "error");                
+                modelo.addAttribute("error", "error_update");                
             }
         } else if (accion.equals("create")) {   
             if (createUsuario(usr, modelo) == null) {                
-                //modelo.addAttribute("error", "create_error");
+                modelo.addAttribute("error", "error_create");
                 modelo.addAttribute("usuario", usr);
                 modelo.addAttribute("accion", accion);
                 ModelAndView mv = new ModelAndView("user");
@@ -293,7 +291,7 @@ public class AdminController {
             if (usr_resultado == null) {
                 return null;
             }
-            System.out.println("\n\n\n\nUsuario creado: " + usr.toString());
+            //System.out.println("\n\n\n\nUsuario creado: " + usr.toString());
         }
 
         return usr_resultado;
@@ -309,8 +307,12 @@ public class AdminController {
         // Si se ha modificado el username o email
         // Comprobamos que no exista ni el nombre de usuario ni el mail
 
-        System.out.println("Modificando: " + usr_old.toString());
-        System.out.println("Valor nuevo: " + usr.toString());
+        //System.out.println("Modificando: " + usr_old.toString());
+        //System.out.println("Valor nuevo: " + usr.toString());
+        
+        //Campo rol o tipo animal si son 0 copiamos el antiguo
+        if (usr.getRol()== 0) usr.setRol(usr_old.getRol());
+        if (usr.getTipusAnimal() == 0 ) usr.setTipusAnimal(usr_old.getTipusAnimal());
         
         if (!usr_old.getEmail().equals(usr.getEmail())) {
             if (usuarioService.getone("email=" + usr.getEmail()) != null) {
@@ -321,11 +323,12 @@ public class AdminController {
         }
 
         // String passCodificada = PasswordEncoderGenerator.passwordGenerator(usr.getPassword());
-        System.out.println("Modificando: " + usr);
+        System.out.println("Modificando: " + usr_old);
+        System.out.println("Nuevo: " + usr);
         usr_resultado = (Usuarios) usuarioService.update(usr_old,
                 "username=" + usr.getUsername() + ","
                 + "password=" + PasswordEncoderGenerator.passwordGenerator(usr.getPassword()) + ","
-                //+ "enabled=" + ((usr.isEnabled()) ? 1 : 0) + ","
+                + "enabled="  + 1 + ","
                 + "changePass=" + 1 + ","
                 + "nombre=" + usr.getNombre() + ","
                 + "apellido1=" + usr.getApellido1() + ","

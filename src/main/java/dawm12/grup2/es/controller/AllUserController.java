@@ -109,7 +109,7 @@ public class AllUserController {
             //System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
 
             if (updateUsuario(usr, _usr_copy, modelo) == null) {
-                modelo.addAttribute("error", "error");
+                modelo.addAttribute("error", "error_update");
             }
         }
         else {
@@ -130,7 +130,11 @@ public class AllUserController {
         // Comprobamos que no exista ni el nombre de usuario ni el mail
 
         System.out.println("Modificando: " + usr_old.toString());
-        System.out.println("Valor nuevo: " + usr.toString());       
+        System.out.println("Valor nuevo: " + usr.toString());  
+        
+       //Campo rol o tipo animal si son 0 copiamos el antiguo
+        if (usr.getRol()== 0) usr.setRol(usr_old.getRol());
+        if (usr.getTipusAnimal() == 0 ) usr.setTipusAnimal(usr_old.getTipusAnimal());
         
         if (!usr_old.getEmail().equals(usr.getEmail())) {
             if (usuarioService.getone("email=" + usr.getEmail()) != null) {
@@ -140,7 +144,7 @@ public class AllUserController {
             }
         }
 
-        // String passCodificada = PasswordEncoderGenerator.passwordGenerator(usr.getPassword());
+        // String passCodificada = PasswordEncoderGenerator.passwordGenerator(usr.getPassword());        
         System.out.println("\n\nModificando: " + usr);
         usr_resultado = (Usuarios) usuarioService.update(usr_old,
                 "username=" + usr.getUsername() + ","

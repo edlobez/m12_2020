@@ -90,6 +90,7 @@
                             <c:if test="${accion=='create'}">
                                 <c:out value="Crear usuari"/>
                                 <c:set var="modificar_username" scope="page" value="${false}"/>
+                                <c:set var="_modificar_username" scope="page" value="${true}"/>
                             </c:if>                        
                         </h3>
 
@@ -105,7 +106,7 @@
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
                                     <mvc:input path="username" name="username" type="text" class="form-control" placeholder="Username" disabled="${modificar_username}"/>
-                                    <mvc:input path="username" name="username" type="hidden"/>
+                                    <mvc:input path="username" name="username" type="hidden" disabled="${_modificar_username}"/>
                             </div>
                             <span class="help-block" id="error"></span>
                         </div>
@@ -219,8 +220,11 @@
                                 <c:when test="${error=='email_repetido'}">
                                     <br><span class="alert alert-danger">Email ya existe</span>
                                 </c:when>
-                                <c:when test="${error=='error'}">
+                                <c:when test="${error=='error_update'}">
                                     <br><span class="alert alert-danger">Error al modificar usuario</span>
+                                </c:when>
+                                 <c:when test="${error=='error_create'}">
+                                    <br><span class="alert alert-danger">Error al crear usuario</span>
                                 </c:when>
                             </c:choose>
                         </div>
