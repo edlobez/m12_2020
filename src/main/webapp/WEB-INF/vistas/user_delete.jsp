@@ -20,7 +20,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
               integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">        
 
-        <title>Formulario usuario</title>
+        <title>Manteniment d'usuaris</title>
     </head>
 
     <body>
@@ -35,10 +35,10 @@
                     <div class="form-header">
                         <h3 class="form-title"><i class="fa fa-user"></i>
                             <c:if test="${accion=='update'}">
-                                <c:out value="Modificando usuario"/>
+                                <c:out value="Edició d'usuari"/>
                             </c:if>
                             <c:if test="${accion=='create'}">
-                                <c:out value="Creando nuevo usuario"/>
+                                <c:out value="Nou usuari"/>
                             </c:if>                        
                         </h3>
 
@@ -98,7 +98,7 @@
                             <div class="form-group col-lg-6">
                                 <div class="input-group">
                                     <div class="input-group-addon"></div>
-                                        <mvc:input path="password" name="password" id="password" type="password" class="form-control" placeholder="Password"/>
+                                        <mvc:input path="password" name="password" id="password" type="password" class="form-control" placeholder="Contrasenya"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -106,7 +106,7 @@
                             <div class="form-group col-lg-6">
                                 <div class="input-group">
                                     <div class="input-group-addon"></div>
-                                    <input name="cpassword" type="password" class="form-control" placeholder="Retype Password">
+                                    <input name="cpassword" type="password" class="form-control" placeholder="Confirma contrasenya">
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -135,7 +135,7 @@
                                 <c:if test="${not empty listaTipusAnimal}">
                                     <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
                                         <input type="checkbox" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
-                                        <label class="form-check-label" for="tipuaAnimal">
+                                        <label class="form-check-label" for="tipusAnimal">
                                             <c:out value="${tipusAnimal.descripcio}" />
                                         </label>
                                         <br/>
@@ -158,13 +158,13 @@
                         <br>
                         <c:choose>
                             <c:when test="${error=='password_error'}">
-                                <br><span class="alert alert-danger">Contraseñas no coinciden</span>
+                                <br><span class="alert alert-danger">Contrasenyes no coincidents</span>
                             </c:when>                            
                             <c:when test="${error=='username_repetido'}">
-                                <br><span class="alert alert-danger">Nombre usuari ya existe</span>
+                                <br><span class="alert alert-danger">Nom d'usuari ja existent</span>
                             </c:when>
                             <c:when test="${error=='email_repetido'}">
-                                <br><span class="alert alert-danger">Email ya existe</span>
+                                <br><span class="alert alert-danger">Email ja existent</span>
                             </c:when>
                         </c:choose>
 

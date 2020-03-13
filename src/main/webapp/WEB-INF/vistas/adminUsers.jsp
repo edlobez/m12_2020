@@ -39,7 +39,7 @@
         <script src="../static/jquery.bootgrid-1.3.1/js/jquery.bootgrid.fa.js"></script>
 
 
-        <title>Página del administrador</title>
+        <title>Llistat d'usuaris</title>
     </head>
     <body>
 
@@ -78,8 +78,10 @@
                         </li>-->
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
+                        <p>Loguejat com a usuari:    </p>
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
-                        <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Salir</i></a> 
+                        <span>
+                            <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir</i></a> </span>
                     </form>
                 </div>
             </nav>
@@ -100,7 +102,7 @@
                                     <th data-column-id="nombre">Nom</th>
                                     <th data-column-id="apellido1">Cognom</th>
                                     <th data-column-id="email">e-mail</th>
-                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Commands</th>
+                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Accions</th>
                                 </tr>
                             </thead>
                         </table>  
@@ -114,7 +116,7 @@
             <footer>                
                 <div>                    
                     <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}'"                        
-                           value=' Volver'/>
+                           value=' Tornar'/>
                 </div>
 
             </footer>

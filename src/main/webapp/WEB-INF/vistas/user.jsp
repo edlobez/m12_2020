@@ -37,8 +37,21 @@
         <title>Formulario usuario</title>
     </head>
     <body>  
-
-    <body>
+<!-- amagar checkbox tipusanimal si rol != admin, veterinari o responsable -->
+                            <script type="text/javascript" language="javascript">
+                                function isVoluntary() {                                  
+                                  let div = document.getElementsByClassName('hideable');
+                                  let radio = document.getElementsByClassName('form-check-input');
+                                  
+                                  if(radio[2].checked){
+                                  console.log(radio);
+                                  radio[4].disabled = true;
+                                  radio[5].disabled = true;}
+                              else {
+                                  radio[4].disabled = false;
+                                  radio[5].disabled = false;
+                         }}
+                            </script>
 
         <header>            
 
@@ -52,7 +65,7 @@
                     </div>
                     <form class="nav navbar-nav navbar-right">
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
-                        <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Salir&nbsp;&nbsp;&nbsp;</i></a> 
+                        <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir&nbsp;&nbsp;&nbsp;</i></a> 
                     </form>
                 </div>
             </nav>
@@ -75,7 +88,7 @@
                                 <c:set var="modificar_username" scope="page" value="${true}"/>
                             </c:if>
                             <c:if test="${accion=='create'}">
-                                <c:out value="Creando nuevo usuario"/>
+                                <c:out value="Crear usuari"/>
                                 <c:set var="modificar_username" scope="page" value="${false}"/>
                             </c:if>                        
                         </h3>
@@ -110,7 +123,7 @@
                             <div class="form-group col-lg-4">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                        <mvc:input path="nombre" name="nombre" id="nombre" type="text" class="form-control" placeholder="Nombre"/>
+                                        <mvc:input path="nombre" name="nombre" id="nombre" type="text" class="form-control" placeholder="Nom"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -118,7 +131,7 @@
                             <div class="form-group col-lg-4">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                        <mvc:input path="apellido1" name="apellido1" type="text" class="form-control" placeholder="Apellido 1"/>
+                                        <mvc:input path="apellido1" name="apellido1" type="text" class="form-control" placeholder="Cognom 1"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -126,7 +139,7 @@
                             <div class="form-group col-lg-4">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                        <mvc:input path="apellido2" name="apellido2" type="text" class="form-control" placeholder="Apellido 2"/>
+                                        <mvc:input path="apellido2" name="apellido2" type="text" class="form-control" placeholder="Cognom 2"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -137,7 +150,7 @@
                             <div class="form-group col-lg-6">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                                        <mvc:input path="password" name="password" id="password" type="password" class="form-control" placeholder="Password"/>
+                                        <mvc:input path="password" name="password" id="password" type="password" class="form-control" placeholder="Contrasenya"/>
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -145,7 +158,7 @@
                             <div class="form-group col-lg-6">
                                 <div class="input-group">
                                     <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
-                                    <input name="cpassword" type="password" class="form-control" placeholder="Retype Password">
+                                    <input name="cpassword" type="password" class="form-control" placeholder="Confirma contrasenya">
                                 </div>  
                                 <span class="help-block" id="error"></span>                    
                             </div>
@@ -157,7 +170,7 @@
                                 Rols: <br/>
                                 <c:if test="${not empty listaRoles}">
                                     <c:forEach var="roles" items="${listaRoles}">
-                                        <input type="radio" class="form-check-input" name="rol" id="rol" value="${roles.idRol}">
+                                        <input type="radio" class="form-check-input" name="rol" id="rol" value="${roles.idRol}" onclick="isVoluntary()">
                                         <label class="form-check-label" for="rol">
                                             <c:out value="${roles.rol}" />
                                         </label>                                    
@@ -168,16 +181,20 @@
 
                         <sec:authorize access="hasAnyAuthority('admin')">  
                             <br/>
+                            
+                           
+                            <div class="hideable">
                             <div class="form-check">
                                 Tipus d'animals: <br/>
                                 <c:if test="${not empty listaTipusAnimal}">
                                     <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
                                         <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
-                                        <label class="form-check-label" for="tipuaAnimal">
+                                        <label class="form-check-label" for="tipusAnimal">
                                             <c:out value="${tipusAnimal.descripcio}" />
                                         </label>
                                     </c:forEach>
                                 </c:if>
+                            </div>
                             </div>
                         </sec:authorize>
 
@@ -214,6 +231,6 @@
 
             </div>
         </div>          
-
+                    
     </body>
 </html>

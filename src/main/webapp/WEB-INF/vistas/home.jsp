@@ -45,13 +45,13 @@
                                 <a href="#usuarisSubmenu" data-toggle="collapse" aria-expanded="false" 
                                    class="list-group-item list-group-item-action bg-light dropdown-toggle">
                                     <i class="fas fa-users"></i>
-                                    <strong>Usuarios</strong>
+                                    <strong>Usuaris</strong>
                                 </a>
                                 <ul class="collapse list-unstyled" id="usuarisSubmenu">
                                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/users" id="usuarisList">
                                             <i class="fas fa-list"></i>
-                                            &nbsp;Lista
+                                            &nbsp;Llista
                                         </a>
                                     </li>
                                 </ul>
@@ -74,13 +74,13 @@
                             <a href="#mascotasSubmenu" data-toggle="collapse" aria-expanded="false" 
                                class="list-group-item list-group-item-action bg-light dropdown-toggle">
                                 <i class="fas fa-users"></i>
-                                <strong>Mascotas</strong>
+                                <strong>Animals</strong>
                             </a>
                             <ul class="collapse list-unstyled" id="mascotasSubmenu">
                                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a class="logout-link" href="#" id="animalesList">
                                         <i class="fas fa-list"></i>
-                                        &nbsp;Lista
+                                        &nbsp;Llista
                                     </a>
                                 </li>
                                 <sec:authorize access="hasAnyAuthority('responsable','admin')">  
@@ -108,7 +108,7 @@
                                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a class="logout-link" href="#" id="miPerfil">
                                         <i class="fas fa-list"></i>
-                                        &nbsp;Mi perfil
+                                        &nbsp;El meu perfil
                                     </a>
                                 </li>
                             </ul>                                
@@ -154,19 +154,20 @@
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                             <li class="nav-item">
                                 <span>
+                                    <p>Loguejat com a usuari:</p>
                                     <span id="username"><sec:authentication property="principal.username" /></span>&nbsp;&nbsp;&nbsp;
                                     <span><sec:authentication property="principal.authorities"/></span>&nbsp;&nbsp;&nbsp;
                                 </span>
-                                <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Salir</i></a> 
+                                <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir</i></a> 
                             </li>
                         </ul>
                     </div>
                 </nav>
 
                 <div class="container-fluid" id="contenido">
-                    <h1 class="mt-4">Simple Sidebar</h1>
-                    <p>The starting state of the menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will change.</p>
-                    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>. The top navbar is optional, and just for demonstration. Just create an element with the <code>#menu-toggle</code> ID which will toggle the menu when clicked.</p>
+                    <h1 class="mt-4">Benvingut/da!</h1>
+                    <p>Benvingut/da a la pàgina principal de l'aplicació Rescue Management.</p>
+                    <p>Des del menú de l'esquerra pots accedir als llistats i manteniment del personal i els animals que tens a càrrec, així com actualitzar el teu perfil.</p>
                 </div>
             </div>
             <!-- /#page-content-wrapper -->
