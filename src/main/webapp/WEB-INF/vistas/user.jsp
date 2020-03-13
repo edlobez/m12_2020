@@ -71,9 +71,11 @@
                         <h3 class="form-title"><i class="fa fa-user"></i>
                             <c:if test="${accion=='update'}">
                                 <c:out value="Modificando usuario"/>
+                                <c:set var="modificar_username" scope="page" value="${true}"/>
                             </c:if>
                             <c:if test="${accion=='create'}">
                                 <c:out value="Creando nuevo usuario"/>
+                                <c:set var="modificar_username" scope="page" value="${false}"/>
                             </c:if>                        
                         </h3>
 
@@ -88,8 +90,8 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <mvc:input path="username" name="username" type="text" class="form-control" placeholder="Username"/>
-                            </div>
+                                    <mvc:input path="username" name="username" type="text" class="form-control" placeholder="Username" disabled="${modificar_username}"/>
+                                </div>
                             <span class="help-block" id="error"></span>
                         </div>
 
@@ -159,17 +161,17 @@
                             </c:if>
                         </div>
                         <br/>
-                            <div class="form-check">
-                                 Tipus d'animals: <br/>
-                                 <c:if test="${not empty listaTipusAnimal}">
-                                     <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
-                                         <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
-                                         <label class="form-check-label" for="tipuaAnimal">
-                                             <c:out value="${tipusAnimal.descripcio}" />
-                                         </label>
-                                     </c:forEach>
-                                 </c:if>
-                             </div>
+                        <div class="form-check">
+                            Tipus d'animals: <br/>
+                            <c:if test="${not empty listaTipusAnimal}">
+                                <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
+                                    <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
+                                    <label class="form-check-label" for="tipuaAnimal">
+                                        <c:out value="${tipusAnimal.descripcio}" />
+                                    </label>
+                                </c:forEach>
+                            </c:if>
+                        </div>
                         <br/> <br/>
                         <div class="form-footer">
                             <button type="submit" class="btn btn-info">
@@ -195,7 +197,7 @@
                         </div>
 
 
-                   
+
 
                     </div>
 

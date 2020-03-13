@@ -60,7 +60,7 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable()
             .authorizeRequests()
                 .antMatchers("/static/**").permitAll()
-                .antMatchers("/", "/home").authenticated()
+                .antMatchers("/", "/home", "/user").authenticated()
                 .antMatchers("/admin/**").hasAuthority("admin")
                 .antMatchers("/voluntari/**").hasAnyAuthority("voluntari","admin")
                 .antMatchers("/veterinari/**").hasAnyAuthority("veterinari", "admin")

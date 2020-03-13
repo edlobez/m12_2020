@@ -65,17 +65,58 @@
                                 </ul>
                             </li>
                         </ul>
-
-
-
-
                     </sec:authorize>
 
 
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-                    <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+
+                    <ul class="list-unstyled components">
+                        <li class="active">
+                            <a href="#mascotasSubmenu" data-toggle="collapse" aria-expanded="false" 
+                               class="list-group-item list-group-item-action bg-light dropdown-toggle">
+                                <i class="fas fa-users"></i>
+                                <strong>Mascotas</strong>
+                            </a>
+                            <ul class="collapse list-unstyled" id="mascotasSubmenu">
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="logout-link" href="#" id="animalesList">
+                                        <i class="fas fa-list"></i>
+                                        &nbsp;Lista
+                                    </a>
+                                </li>
+                                <sec:authorize access="hasAnyAuthority('responsable','admin')">  
+                                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="logout-link" href="#" id="animalesCrear">
+                                            <i class="fas fa-list"></i>
+                                            &nbsp;Crear
+                                        </a>
+                                    </li>
+                                </sec:authorize>
+                            </ul>                                
+                        </li>
+                    </ul>
+
+
+
+                    <ul class="list-unstyled components">
+                        <li class="active">
+                            <a href="#perfilSubmenu" data-toggle="collapse" aria-expanded="false" 
+                               class="list-group-item list-group-item-action bg-light dropdown-toggle">
+                                <i class="fas fa-users"></i>
+                                <strong>Perfil</strong>
+                            </a>
+                            <ul class="collapse list-unstyled" id="perfilSubmenu">
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="logout-link" href="#" id="miPerfil">
+                                        <i class="fas fa-list"></i>
+                                        &nbsp;Mi perfil
+                                    </a>
+                                </li>
+                            </ul>                                
+                        </li>
+                    </ul>
+
+
+
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -113,8 +154,8 @@
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                             <li class="nav-item">
                                 <span>
-                                    <sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;
-                                    <sec:authentication property="principal.authorities"/>&nbsp;&nbsp;&nbsp;
+                                    <span id="username"><sec:authentication property="principal.username" /></span>&nbsp;&nbsp;&nbsp;
+                                    <span><sec:authentication property="principal.authorities"/></span>&nbsp;&nbsp;&nbsp;
                                 </span>
                                 <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Salir</i></a> 
                             </li>
@@ -142,47 +183,52 @@
         <!-- Menu Toggle Script -->
         <script>
             jQuery(document).ready(function ($) {
-              /*  if ($_GET("accion") == "create") {
-                    alert("recargar");
-                    $("#contenido").load("${pageContext.servletContext.contextPath}/admin/newUser");
-                }*/
-
+            /* if ($_GET("accion") == "create") {
+            alert("recargar");
+            $("#contenido").load("${pageContext.servletContext.contextPath}/admin/newUser");
+            }*/
+            $("#contenido").load("${pageContext.servletContext.contextPath}/admin/adminUser_delete");
             });
 
 
             $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+            });
+
+            $("#miPerfil").click(function (e) {
+            e.preventDefault();                  
+            location.href="${pageContext.servletContext.contextPath}/user/editUser?username="+$("#username").text();
             });
 
             function $_GET(param)
             {
-                /* Obtener la url completa */
-                url = document.URL;
-                /* Buscar a partir del signo de interrogación ? */
-                url = String(url.match(/\?+.+/));
-                /* limpiar la cadena quitándole el signo ? */
-                url = url.replace("?", "");
-                /* Crear un array con parametro=valor */
-                url = url.split("&");
+            /* Obtener la url completa */
+            url = document.URL;
+            /* Buscar a partir del signo de interrogación ? */
+            url = String(url.match(/\?+.+/));
+            /* limpiar la cadena quitándole el signo ? */
+            url = url.replace("?", "");
+            /* Crear un array con parametro=valor */
+            url = url.split("&");
 
-                /* 
-                 Recorrer el array url
-                 obtener el valor y dividirlo en dos partes a través del signo = 
-                 0 = parametro
-                 1 = valor
-                 Si el parámetro existe devolver su valor
-                 */
-                x = 0;
-                while (x < url.length)
-                {
-                    p = url[x].split("=");
-                    if (p[0] == param)
-                    {
-                        return decodeURIComponent(p[1]);
-                    }
-                    x++;
-                }
+            /* 
+            Recorrer el array url
+            obtener el valor y dividirlo en dos partes a través del signo = 
+            0 = parametro
+            1 = valor
+            Si el parámetro existe devolver su valor
+            */
+            x = 0;
+            while (x < url.length)
+            {
+            p = url[x].split("=");
+            if (p[0] == param)
+            {
+            return decodeURIComponent(p[1]);
+            }
+            x++;
+            }
             }
 
         </script>
