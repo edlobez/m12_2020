@@ -8,6 +8,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="mvc" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <!DOCTYPE html>
 <html>
@@ -65,7 +66,7 @@
 
                 <!-- form start -->
                 <mvc:form method="post" role="form" id="register-form" autocomplete="off" 
-                          action="${pageContext.servletContext.contextPath}/admin/saveUser" modelAttribute="usuario">
+                          action="saveUser" modelAttribute="usuario">
 
                     <div class="form-header">
                         <h3 class="form-title"><i class="fa fa-user"></i>
@@ -91,7 +92,8 @@
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
                                     <mvc:input path="username" name="username" type="text" class="form-control" placeholder="Username" disabled="${modificar_username}"/>
-                                </div>
+                                    <mvc:input path="username" name="username" type="hidden"/>
+                            </div>
                             <span class="help-block" id="error"></span>
                         </div>
 
@@ -149,32 +151,39 @@
                             </div>
 
                         </div>
-                        <div class="form-check">
-                            Rols: <br/>
-                            <c:if test="${not empty listaRoles}">
-                                <c:forEach var="roles" items="${listaRoles}">
-                                    <input type="radio" class="form-check-input" name="rol" id="rol" value="${roles.idRol}">
-                                    <label class="form-check-label" for="rol">
-                                        <c:out value="${roles.rol}" />
-                                    </label>                                    
-                                </c:forEach>
-                            </c:if>
-                        </div>
-                        <br/>
-                        <div class="form-check">
-                            Tipus d'animals: <br/>
-                            <c:if test="${not empty listaTipusAnimal}">
-                                <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
-                                    <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
-                                    <label class="form-check-label" for="tipuaAnimal">
-                                        <c:out value="${tipusAnimal.descripcio}" />
-                                    </label>
-                                </c:forEach>
-                            </c:if>
-                        </div>
+
+                        <sec:authorize access="hasAuthority('admin')">           
+                            <div class="form-check">
+                                Rols: <br/>
+                                <c:if test="${not empty listaRoles}">
+                                    <c:forEach var="roles" items="${listaRoles}">
+                                        <input type="radio" class="form-check-input" name="rol" id="rol" value="${roles.idRol}">
+                                        <label class="form-check-label" for="rol">
+                                            <c:out value="${roles.rol}" />
+                                        </label>                                    
+                                    </c:forEach>
+                                </c:if>
+                            </div>
+                        </sec:authorize>  
+
+                        <sec:authorize access="hasAnyAuthority('admin')">  
+                            <br/>
+                            <div class="form-check">
+                                Tipus d'animals: <br/>
+                                <c:if test="${not empty listaTipusAnimal}">
+                                    <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
+                                        <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
+                                        <label class="form-check-label" for="tipuaAnimal">
+                                            <c:out value="${tipusAnimal.descripcio}" />
+                                        </label>
+                                    </c:forEach>
+                                </c:if>
+                            </div>
+                        </sec:authorize>
+
                         <br/> <br/>
                         <div class="form-footer">
-                            <button type="submit" class="btn btn-info">
+                            <button type="submit" id="btn_enviar" class="btn btn-info">
                                 <span class="glyphicon glyphicon-log-in"></span> Enviar
                             </button>
                             <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}'"                        
@@ -193,17 +202,18 @@
                                 <c:when test="${error=='email_repetido'}">
                                     <br><span class="alert alert-danger">Email ya existe</span>
                                 </c:when>
+                                <c:when test="${error=='error'}">
+                                    <br><span class="alert alert-danger">Error al modificar usuario</span>
+                                </c:when>
                             </c:choose>
                         </div>
-
-
-
 
                     </div>
 
                 </mvc:form>
 
             </div>
-        </div>
+        </div>          
+
     </body>
 </html>

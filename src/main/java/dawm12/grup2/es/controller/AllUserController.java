@@ -16,15 +16,21 @@
  */
 package dawm12.grup2.es.controller;
 
+import dawm12.grup2.es.PasswordEncoderGenerator;
 import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
 import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
+import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -69,6 +75,88 @@ public class AllUserController {
         List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
         mv.addObject("listaTipusAnimal", tipusAnimal);
         return mv;
+    }
+    
+    /*
+    Validación del resultado formulario user.jsp
+    TO-DO ELIMINAR TANTOS BLOQUES DE CÓDIGO REPETIDO
+     */
+    @RequestMapping(value = "/saveUser")
+    public ModelAndView guardarUser(
+            @Valid @ModelAttribute("usuario") Usuarios usr,
+            BindingResult validacion,
+            @RequestParam("accion") String accion,
+            @RequestParam("password") String password,
+            @RequestParam("cpassword") String cpassword,
+            ModelMap modelo) {
+        
+        ArrayList <String> errores = new ArrayList();
+
+        if (validacion.hasErrors()) {
+            modelo.addAttribute("usuario", usr);
+            modelo.addAttribute("accion", accion);
+            
+            ModelAndView mv = new ModelAndView("user");
+            List<Roles> roles = rolesService.getAll();
+            mv.addObject("listaRoles", roles);
+            List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+            mv.addObject("listaTipusAnimal", tipusAnimal);
+            
+            return mv;
+        }
+
+        if (accion.equals("update")) {
+            //System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
+
+            if (updateUsuario(usr, _usr_copy, modelo) == null) {
+                modelo.addAttribute("error", "error");
+            }
+        }
+        else {
+            System.out.println("Error!!! controlador alluser");
+        }
+
+        return new ModelAndView("redirect:/home");
+    }
+    
+    
+     // TO - DO REACER DESPUES DEL CAMBIO DE LA TABLA ROLES
+    private Usuarios updateUsuario(Usuarios usr, Usuarios usr_old, ModelMap modelo) {
+
+        Usuarios usr_resultado = null;
+        Roles rl_resultado;
+        boolean username_modificado = false;
+        // Si se ha modificado el username o email
+        // Comprobamos que no exista ni el nombre de usuario ni el mail
+
+        System.out.println("Modificando: " + usr_old.toString());
+        System.out.println("Valor nuevo: " + usr.toString());       
+        
+        if (!usr_old.getEmail().equals(usr.getEmail())) {
+            if (usuarioService.getone("email=" + usr.getEmail()) != null) {
+                modelo.addAttribute("error", "email_repetido");
+                //System.out.println("Error al modificar el usuario, email repetido");
+                return null;
+            }
+        }
+
+        // String passCodificada = PasswordEncoderGenerator.passwordGenerator(usr.getPassword());
+        System.out.println("\n\nModificando: " + usr);
+        usr_resultado = (Usuarios) usuarioService.update(usr_old,
+                "username=" + usr.getUsername() + ","
+                + "password=" + PasswordEncoderGenerator.passwordGenerator(usr.getPassword()) + ","
+                //+ "enabled=" + ((usr.isEnabled()) ? 1 : 0) + ","
+                + "changePass=" + 1 + ","
+                + "nombre=" + usr.getNombre() + ","
+                + "apellido1=" + usr.getApellido1() + ","
+                + "apellido2=" + usr.getApellido2() + ","
+                + "email=" + usr.getEmail() + ","
+                + "rol=" + usr.getRol() + ","
+                + "tipusAnimal=" + usr.getTipusAnimal());
+
+        //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
+        return usr_resultado;
+
     }
 
 }

@@ -148,7 +148,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         if (result == 0 ) {
             throw new Exception ("Error creando elemento");
         }
-        System.out.println("\nCreate - update correct!!!!!!!!!!");
+        //System.out.println("\nCreate - update correct!!!!!!!!!!");
         return getone(nomTabla, campos);
     }
    

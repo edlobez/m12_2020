@@ -187,7 +187,7 @@
             alert("recargar");
             $("#contenido").load("${pageContext.servletContext.contextPath}/admin/newUser");
             }*/
-            $("#contenido").load("${pageContext.servletContext.contextPath}/admin/adminUser_delete");
+            //$("#contenido").load("${pageContext.servletContext.contextPath}/admin/adminUser_delete");
             });
 
 

@@ -178,10 +178,8 @@ public class AdminController {
         if (accion.equals("update")) {
             System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
 
-            if (updateUsuario(usr, _usr_copy) == null) {
-                // TO - DO HABRÍA QUE MANDAR UN MENSAJE DE ERROR A LA VISTA
-                System.out.println("\n\n--ERROR AL MODIFICAR EL USUARIO PASSWORD - EMAIL REPETIDO");
-                
+            if (updateUsuario(usr, _usr_copy, modelo) == null) {
+                modelo.addAttribute("error", "error");                
             }
         } else if (accion.equals("create")) {   
             if (createUsuario(usr, modelo) == null) {                
@@ -197,7 +195,7 @@ public class AdminController {
             }
         }
 
-        return new ModelAndView("adminUsers");
+        return new ModelAndView("redirect:/home");
     }
 
     @RequestMapping(value = "/userList")
@@ -303,7 +301,7 @@ public class AdminController {
     }
 
     // TO - DO REACER DESPUES DEL CAMBIO DE LA TABLA ROLES
-    private Usuarios updateUsuario(Usuarios usr, Usuarios usr_old) {
+    private Usuarios updateUsuario(Usuarios usr, Usuarios usr_old, ModelMap modelo) {
 
         Usuarios usr_resultado = null;
         Roles rl_resultado;
@@ -313,19 +311,11 @@ public class AdminController {
 
         System.out.println("Modificando: " + usr_old.toString());
         System.out.println("Valor nuevo: " + usr.toString());
-        // Esta comprobaciónse podría quitar ya que se retornará null en el 
-        // ... update. Existe la restricción en mysql que ambos campos son únicos.
-        if (!usr_old.getUsername().equals(usr.getUsername())) {
-            //System.out.println("1: " + usuarioService.getone("username="+usr.getUsername()));
-            username_modificado = true;
-            if (usuarioService.getone("username=" + usr.getUsername()) != null) {
-                System.out.println("Error al modificar el usuario, username repetido");
-                return null;
-            }
-        }
+        
         if (!usr_old.getEmail().equals(usr.getEmail())) {
             if (usuarioService.getone("email=" + usr.getEmail()) != null) {
-                System.out.println("Error al modificar el usuario, email repetido");
+                //System.out.println("Error al modificar el usuario, email repetido");
+                modelo.addAttribute("error", "email_repetido");
                 return null;
             }
         }

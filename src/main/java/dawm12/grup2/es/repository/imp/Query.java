@@ -228,13 +228,13 @@ public class Query {
         String condicion_busqueda = tipo_busqueda;
         String campos[] = null;
 
-        System.out.println("En querySelect antes de split: " + _campos);
+        //System.out.println("En querySelect antes de split: " + _campos);
         if (_campos != null) {
             campos = _campos.split(",");
-            System.out.println("En querySelect después de split: ");
-            for (String s : campos) {
-                System.out.println(s);
-            }
+            //System.out.println("En querySelect después de split: ");
+            //for (String s : campos) {
+              //  System.out.println(s);
+           // }
         } else {
             campos = new String[0];
         }
