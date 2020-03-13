@@ -37,21 +37,21 @@
         <title>Formulario usuario</title>
     </head>
     <body>  
-<!-- amagar checkbox tipusanimal si rol != admin, veterinari o responsable -->
-                            <script type="text/javascript" language="javascript">
-                                function isVoluntary() {                                  
-                                  let div = document.getElementsByClassName('hideable');
-                                  let radio = document.getElementsByClassName('form-check-input');
-                                  
-                                  if(radio[2].checked){
-                                  console.log(radio);
-                                  radio[4].disabled = true;
-                                  radio[5].disabled = true;}
-                              else {
-                                  radio[4].disabled = false;
-                                  radio[5].disabled = false;
-                         }}
-                            </script>
+        <!-- amagar checkbox tipusanimal si rol != admin, veterinari o responsable -->
+        <script type="text/javascript" language="javascript">
+            function isVoluntary() {
+                let div = document.getElementsByClassName('hideable');
+                let radio = document.getElementsByClassName('form-check-input');
+
+                if (radio[2].checked) {
+                    console.log(radio);
+                    radio[4].disabled = true;
+                    radio[5].disabled = true;
+                } else {
+                    radio[4].disabled = false;
+                    radio[5].disabled = false;
+                }}
+        </script>
 
         <header>            
 
@@ -182,20 +182,20 @@
 
                         <sec:authorize access="hasAnyAuthority('admin')">  
                             <br/>
-                            
-                           
+
+
                             <div class="hideable">
-                            <div class="form-check">
-                                Tipus d'animals: <br/>
-                                <c:if test="${not empty listaTipusAnimal}">
-                                    <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
-                                        <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
-                                        <label class="form-check-label" for="tipusAnimal">
-                                            <c:out value="${tipusAnimal.descripcio}" />
-                                        </label>
-                                    </c:forEach>
-                                </c:if>
-                            </div>
+                                <div class="form-check">
+                                    Tipus d'animals: <br/>
+                                    <c:if test="${not empty listaTipusAnimal}">
+                                        <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
+                                            <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}">
+                                            <label class="form-check-label" for="tipusAnimal">
+                                                <c:out value="${tipusAnimal.descripcio}" />
+                                            </label>
+                                        </c:forEach>
+                                    </c:if>
+                                </div>
                             </div>
                         </sec:authorize>
 
@@ -223,8 +223,14 @@
                                 <c:when test="${error=='error_update'}">
                                     <br><span class="alert alert-danger">Error al modificar usuario</span>
                                 </c:when>
-                                 <c:when test="${error=='error_create'}">
+                                <c:when test="${error=='error_create'}">
                                     <br><span class="alert alert-danger">Error al crear usuario</span>
+                                </c:when>
+                                <c:when test="${error=='error_rol'}">
+                                    <br><span class="alert alert-danger">No hay rol seleccionado</span>
+                                </c:when>
+                                <c:when test="${error=='error_tAnimal'}">
+                                    <br><span class="alert alert-danger">Para ese rol debe seleccionar un tipo de animal</span>
                                 </c:when>
                             </c:choose>
                         </div>
@@ -235,6 +241,6 @@
 
             </div>
         </div>          
-                    
+
     </body>
 </html>

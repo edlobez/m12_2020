@@ -148,8 +148,7 @@ public class AdminController {
 
         if (validacion.hasErrors()) {
             modelo.addAttribute("usuario", usr);
-            modelo.addAttribute("accion", accion);
-            
+            modelo.addAttribute("accion", accion);            
             ModelAndView mv = new ModelAndView("user");
             List<Roles> roles = rolesService.getAll();
             mv.addObject("listaRoles", roles);
@@ -181,7 +180,7 @@ public class AdminController {
             }
         } else if (accion.equals("create")) {   
             if (createUsuario(usr, modelo) == null) {                
-                modelo.addAttribute("error", "error_create");
+                //modelo.addAttribute("error", "error_create");
                 modelo.addAttribute("usuario", usr);
                 modelo.addAttribute("accion", accion);
                 ModelAndView mv = new ModelAndView("user");
@@ -282,17 +281,34 @@ public class AdminController {
             modelo.addAttribute("error", "username_repetido");
             return null;
         }  
-        else if (usuarioService.getone("email=" + usr.getEmail()) != null) {
+        if (usuarioService.getone("email=" + usr.getEmail()) != null) {
             modelo.addAttribute("error", "email_repetido");
             return null;
-        } else {
+        }
+        if (usr.getRol() == 0) { 
+            System.out.println("Error en rol");
+            modelo.addAttribute("error", "error_rol");
+            return null;
+        }
+        if (usr.getRol() == 2 || usr.getRol() == 3 ) {
+            if (usr.getTipusAnimal() == 0 ) {
+                System.out.println("Error en tipo animal");
+                modelo.addAttribute("error", "error_tAnimal");
+                return null;
+            }
+        }
+        if (usr.getRol() == 1 || usr.getRol() == 4 ) {
+            //usr.setTipusAnimal(null);
+        }
+      //  else {
+            System.out.println("Creando usuario");
             usr.setEnabled(true);
             usr_resultado = (Usuarios) usuarioService.create(usr);
             if (usr_resultado == null) {
                 return null;
             }
             //System.out.println("\n\n\n\nUsuario creado: " + usr.toString());
-        }
+     //   }
 
         return usr_resultado;
 
