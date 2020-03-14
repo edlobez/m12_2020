@@ -120,7 +120,7 @@
                             <br>
                             <c:choose>
                                 <c:when test="${error=='password_error'}">
-                                    <br><span class="alert alert-danger">Contraseñas no coinciden</span>
+                                    <br><span class="alert alert-danger">Error al crear la contraseña</span>
                                 </c:when>
                             </c:choose>
                         </div>

@@ -128,7 +128,7 @@ public class AllUserController {
         ModelAndView mw = new ModelAndView();
         Usuarios usr = (Usuarios) usuarioService.getone("username="+username);
         
-        if (!password.equals(cpassword) || password.length() == 0) {
+        if (!password.equals(cpassword) || password.length() == 0 || password.length() < 4) {
             //    System.out.println("\n\n--ERROR AL CREAR CONTRASEÑAS NO COINCIDEN");
             mw.addObject("usuario", usr);
             mw.addObject("error", "password_error");
@@ -176,7 +176,7 @@ public class AllUserController {
                 "username=" + usr.getUsername() + ","
                 + "password=" + PasswordEncoderGenerator.passwordGenerator(usr.getPassword()) + ","
                 //+ "enabled=" + ((usr.isEnabled()) ? 1 : 0) + ","
-                + "changePass=" + 1 + ","
+                //+ "changePass=" + 1 + ","
                 + "nombre=" + usr.getNombre() + ","
                 + "apellido1=" + usr.getApellido1() + ","
                 + "apellido2=" + usr.getApellido2() + ","
