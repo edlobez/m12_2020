@@ -119,6 +119,33 @@ public class AllUserController {
         return new ModelAndView("redirect:/home");
     }
     
+    @RequestMapping(value = "/savePassword")
+    public ModelAndView savePassword (ModelMap modelo, 
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam("cpassword") String cpassword) {
+        
+        ModelAndView mw = new ModelAndView();
+        Usuarios usr = (Usuarios) usuarioService.getone("username="+username);
+        
+        if (!password.equals(cpassword) || password.length() == 0) {
+            //    System.out.println("\n\n--ERROR AL CREAR CONTRASEÑAS NO COINCIDEN");
+            mw.addObject("usuario", usr);
+            mw.addObject("error", "password_error");
+            mw.setViewName("redirect:/home");
+            return mw;
+            
+        }
+        
+        
+        System.out.println("Guardando password: " + password + " para usuario " + usr.toString());
+        usuarioService.update(usr, "changePass=0");
+        usuarioService.update(usr, "password=" + PasswordEncoderGenerator.passwordGenerator(password));
+        
+        return new ModelAndView("redirect:/home");
+        
+    }
+    
     
      // TO - DO REACER DESPUES DEL CAMBIO DE LA TABLA ROLES
     private Usuarios updateUsuario(Usuarios usr, Usuarios usr_old, ModelMap modelo) {
@@ -135,8 +162,7 @@ public class AllUserController {
        //Campo rol o tipo animal si son 0 copiamos el antiguo
         if (usr.getRol()== 0) usr.setRol(usr_old.getRol());
         if (usr.getTipusAnimal() == 0 ) usr.setTipusAnimal(usr_old.getTipusAnimal());
-        
-        if (!usr_old.getEmail().equals(usr.getEmail())) {
+                if (!usr_old.getEmail().equals(usr.getEmail())) {
             if (usuarioService.getone("email=" + usr.getEmail()) != null) {
                 modelo.addAttribute("error", "email_repetido");
                 //System.out.println("Error al modificar el usuario, email repetido");

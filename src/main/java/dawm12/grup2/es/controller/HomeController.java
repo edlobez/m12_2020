@@ -17,6 +17,7 @@
 package dawm12.grup2.es.controller;
 
 import dawm12.grup2.es.domain.Accesos;
+import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -30,6 +31,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -43,11 +45,14 @@ public class HomeController {
     @Autowired @Qualifier("accesosService")
     private Service accesosService;
     
+    @Autowired @Qualifier("usuarioService")
+    private Service usuarioService;
+    
     @RequestMapping(value = {"/", "/home"})    
     public ModelAndView homeRequest (HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException { 
         
-        ModelAndView modelview = new ModelAndView();
+        ModelAndView modelview = null;
         String mv = "home";
         
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -61,8 +66,10 @@ public class HomeController {
             mv = "redirect:/voluntari/home";
         }
         */
-        guardarAcceso(auth.getName());         
-        modelview.setViewName(mv);
+        //modelview = 
+        guardarAcceso(auth.getName()); 
+        modelview = comprobarPassword(auth.getName(), request.getParameter("error"));
+        //modelview.setViewName(mv);
         //modelview.setViewName("presentacion"); 
         return modelview;
         
@@ -70,6 +77,7 @@ public class HomeController {
     
     private void guardarAcceso (String username) {
         accesosService.create(new Accesos(username, horaActual()));
+        //return new ModelAndView("home") ;
         
     }
     
@@ -79,5 +87,26 @@ public class HomeController {
         return date2;        
     }
     
+    /*
+    Si el usuario se logea por primera vez después de que el admin le creara
+    la cuenta, deberá cambiar la contraseña
+    */
+    private ModelAndView comprobarPassword(String username, @RequestParam ("error") String error) {
+        
+        ModelAndView mw = new ModelAndView();
+        
+        Usuarios usr = (Usuarios)usuarioService.getone("username="+username);
+        if ( usr.isChangePass() ) {
+            System.out.println("El usuario debe cambiar el password");  
+            mw.addObject("usuario", usr);
+            if ( error != null )
+                mw.addObject("error", "password_error");
+            mw.setViewName("chgPassword");
+            return mw;
+            
+        }
+        mw = new ModelAndView ("home");
+        return mw;
+    }
      
 }
