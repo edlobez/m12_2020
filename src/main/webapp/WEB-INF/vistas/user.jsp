@@ -22,6 +22,8 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
               integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
+        <script src="../static/js/jquery/jquery-3.3.1.min.js"></script>
+
         <style>
             @font-face {
                 font-family: 'Glyphicons Halflings';
@@ -39,6 +41,7 @@
     <body>  
         <!-- amagar checkbox tipusanimal si rol !=  veterinari o responsable -->
         <script type="text/javascript" language="javascript">
+
             function isVoluntary() {
                 let div = document.getElementsByClassName('hideable');
                 let radio = document.getElementsByClassName('form-check-input');
@@ -46,11 +49,12 @@
                     radio[4].disabled = true;
                     radio[5].disabled = true;
                     radio[4].checked = false;
-                    radio[5].checked = false;                  
+                    radio[5].checked = false;
                 } else {
                     radio[4].disabled = false;
                     radio[5].disabled = false;
-                }}
+                }
+            }
         </script>
 
         <header>            
@@ -86,11 +90,13 @@
                             <c:if test="${accion=='update'}">
                                 <c:out value="Editar usuari"/>
                                 <c:set var="modificar_username" scope="page" value="${true}"/>
+                                <c:set var="modificar_pass" scope="page" value="${true}"/>
                             </c:if>
                             <c:if test="${accion=='create'}">
                                 <c:out value="Crear usuari"/>
                                 <c:set var="modificar_username" scope="page" value="${false}"/>
                                 <c:set var="_modificar_username" scope="page" value="${true}"/>
+                                <c:set var="modificar_pass" scope="page" value="${false}"/>
                             </c:if>                        
                         </h3>
 
@@ -146,7 +152,7 @@
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row" id="_pass_create">
 
                             <div class="form-group col-lg-6">
                                 <div class="input-group">
@@ -165,6 +171,42 @@
                             </div>
 
                         </div>
+
+                        <div class="row" id="_pass_update">
+
+                            <div class="form-group col-lg-3">
+                                <input type="button" id="btn_chg_pass" class="btn btn-info" value=' Canviar contrasenya'/>
+                            </div>
+                            
+                            
+                            <div class="form-group col-lg-3">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                        <input name="password_upadate_old" id="password_update_old" type="password" class="form-control" placeholder="Contrasenya" disabled="true"/>
+                                </div>  
+                                <span class="help-block" id="error"></span>                    
+                            </div>
+                            
+                           
+
+                            <div class="form-group col-lg-3">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                        <input name="password_new" id="password_update" type="password" class="form-control" placeholder="Contrasenya nova" disabled="true"/>
+                                </div>  
+                                <span class="help-block" id="error"></span>                    
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <div class="input-group">
+                                    <div class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></div>
+                                    <input name="cpassword_new" type="password" id="cpassword_update" class="form-control" placeholder="Confirma contrasenya" disabled="true">
+                                </div>  
+                                <span class="help-block" id="error"></span>                    
+                            </div>
+
+                        </div>  
+
 
                         <sec:authorize access="hasAuthority('admin')">           
                             <div class="form-check">
@@ -243,7 +285,30 @@
                 </mvc:form>
 
             </div>
-        </div>          
+        </div>
+
+        <script>
+
+            jQuery(document).ready(function () {
+                if ("${accion}" === "create") {
+                    $("#_pass_create").removeAttr("style");
+                    $("#_pass_update").css("display", "none");
+                }
+                if ("${accion}" === "update") {
+                    $("#_pass_create").css("display", "none");
+                    $("#_pass_update").removeAttr("style");                   
+                }
+
+            });
+            
+            $("#btn_chg_pass").click (function (e) {
+                $("#password_update").removeAttr("disabled");
+                $("#cpassword_update").removeAttr("disabled");
+                $("#password_update_old").removeAttr("disabled");
+               
+            });
+
+        </script>
 
     </body>
 </html>

@@ -26,6 +26,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -86,11 +87,12 @@ public class AllUserController {
             @Valid @ModelAttribute("usuario") Usuarios usr,
             BindingResult validacion,
             @RequestParam("accion") String accion,
-            @RequestParam("password") String password,
-            @RequestParam("cpassword") String cpassword,
+            @RequestParam("password_upadate_old") String password_old,
+            @RequestParam("password_new") String password_new,
+            @RequestParam("cpassword_new") String cpassword_new,
             ModelMap modelo) {
 
-        ArrayList<String> errores = new ArrayList();
+        Usuarios _u = (Usuarios)usuarioService.getone("username="+usr.getUsername());
 
         if (validacion.hasErrors()) {
             modelo.addAttribute("usuario", usr);
@@ -105,16 +107,44 @@ public class AllUserController {
             return mv;
         }
 
-        /*   if (accion.equals("update")) {
+        if (accion.equals("update")) {
             //System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
-
+            // Modificar el password de un usuario
+            if (password_old.length() > 0 || password_new.length() > 0 || cpassword_new.length() > 0) {
+                System.out.println("Se va modificar el password un usuario: " + password_new);
+                System.out.println("Password nuevo: " + cpassword_new);
+                boolean error = false;
+                if (password_new.length() == 0 || password_new.length() < 4) {
+                    modelo.addAttribute("error", "password_error_long");
+                    error = true;
+                } else if (!password_new.equals(cpassword_new)) {
+                    modelo.addAttribute("error", "password_error");
+                    error = true;
+                } else if ( ! new BCryptPasswordEncoder().matches(password_old, _u.getPassword())  ) {
+                   error = true;
+                   modelo.addAttribute("error", "password_error");
+                }
+                if (error) {
+                    //    System.out.println("\n\n--ERROR AL CREAR CONTRASEÑAS NO COINCIDEN");
+                    modelo.addAttribute("error", "password_error");
+                    modelo.addAttribute("usuario", usr);
+                    modelo.addAttribute("accion", accion);
+                    ModelAndView mv = new ModelAndView("user");
+                    List<Roles> roles = rolesService.getAll();
+                    mv.addObject("listaRoles", roles);
+                    List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+                    mv.addObject("listaTipusAnimal", tipusAnimal);
+                    return mv;
+                }
+            }
+            // Si llega hasta aquí intentamos el update
+            // Cargamos el password
+            usr.setPassword(password_new);
             if (updateUsuario(usr, _usr_copy, modelo) == null) {
                 modelo.addAttribute("error", "error_update");
             }
-        }
-        else {
-            System.out.println("Error!!! controlador alluser");
-        }*/
+        
+      /*
         if (accion.equals("update")) {
             //System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
             // Modificar el password de un usuario
@@ -144,7 +174,7 @@ public class AllUserController {
             }
             if (updateUsuario(usr, _usr_copy, modelo) == null) {
                 modelo.addAttribute("error", "error_update");
-            }
+            }*/
         }
 
         return new ModelAndView("redirect:/home");

@@ -36,7 +36,7 @@ public class UsuarioImp extends MyRepositoryImp <Usuarios> implements MyReposito
     protected Usuarios buildDomainFromResultSet(ResultSet rs) throws SQLException {
         return new Usuarios (
                 rs.getString("username"),
-                "",
+                rs.getString("password"),
                 rs.getBoolean("enabled"),
                 rs.getBoolean("changePass"),
                 rs.getString("nombre"),
