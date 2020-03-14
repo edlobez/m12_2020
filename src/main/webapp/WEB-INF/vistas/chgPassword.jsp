@@ -53,7 +53,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-lg-4">
-                                    <b>Ha de crear una contrasenya d'inici de sessió.</b>
+                                    <b>Si us plau, crea una nova contrasenya.</b>
                                 </div>
                             </div>
                             
@@ -88,18 +88,18 @@
 
                     <div class="form-body">
                         <div class="form-group">
-                            <label>Password</label>
+                            <label>Contrasenya</label>
                             <div class="input-group" id="show_hide_password">
-                                <mvc:input path="password" class="form-control" type="password" name="password" placeholder="password"/>
+                                <mvc:input path="password" class="form-control" type="password" name="password" placeholder="Contrasenya"/>
                                 <div class="input-group-addon">
                                     <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>New Password</label>
+                            <label>Nova contrasenya</label>
                             <div class="input-group" id="show_hide_password">
-                                <input class="form-control" type="password" name="cpassword" placeholder="password">
+                                <input class="form-control" type="password" name="cpassword" placeholder="Contrasenya">
                                 <div class="input-group-addon">
                                     <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                 </div>
@@ -111,7 +111,7 @@
                                 Guardar
                             </button>
                             <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/logout'"                        
-                                   value=' Salir'/>                            
+                                   value=' Sortir'/>                            
 
                             
                             <input type="hidden" name="username" value="${usuario.username}"/>
@@ -120,7 +120,7 @@
                             <br>
                             <c:choose>
                                 <c:when test="${error=='password_error'}">
-                                    <br><span class="alert alert-danger">Error al crear la contraseña</span>
+                                    <br><span class="alert alert-danger">Error en crear la contrasenya</span>
                                 </c:when>
                             </c:choose>
                         </div>

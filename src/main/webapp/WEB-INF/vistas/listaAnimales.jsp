@@ -11,10 +11,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Llistat d'animals</title>
     </head>
     <body>
-        <h1>Gestión de animales</h1>
+        <h1>Llistat d' animals</h1>
         <sec:authentication property="principal.username" /><br>
         <sec:authentication property="principal.authorities"/>
         <br>
