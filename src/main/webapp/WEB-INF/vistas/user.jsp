@@ -42,13 +42,11 @@
             function isVoluntary() {
                 let div = document.getElementsByClassName('hideable');
                 let radio = document.getElementsByClassName('form-check-input');
-
                 if (radio[0].checked || radio[3].checked) {
                     radio[4].disabled = true;
                     radio[5].disabled = true;
                     radio[4].checked = false;
-                    radio[5].checked = false;
-                    
+                    radio[5].checked = false;                  
                 } else {
                     radio[4].disabled = false;
                     radio[5].disabled = false;
@@ -107,7 +105,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                    <mvc:input path="username" name="username" type="text" class="form-control" placeholder="Username" disabled="${modificar_username}"/>
+                                    <mvc:input path="username" name="username" type="text" class="form-control" placeholder="ID usuari" disabled="${modificar_username}"/>
                                     <mvc:input path="username" name="username" type="hidden" disabled="${_modificar_username}"/>
                             </div>
                             <span class="help-block" id="error"></span>
@@ -207,7 +205,7 @@
                                 <span class="glyphicon glyphicon-log-in"></span> Enviar
                             </button>
                             <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}'"                        
-                                   value=' Volver'/>
+                                   value=' Tornar'/>
                             <input type="hidden" name="accion" value="${accion}"/> 
 
                             <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>

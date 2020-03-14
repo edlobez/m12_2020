@@ -98,10 +98,10 @@
                         <table id="grid-data" class="table table-condensed table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th data-column-id="username">Username</th>
+                                    <th data-column-id="username">ID usuari</th>
                                     <th data-column-id="nombre">Nom</th>
                                     <th data-column-id="apellido1">Cognom</th>
-                                    <th data-column-id="email">e-mail</th>
+                                    <th data-column-id="email">Email</th>
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Accions</th>
                                 </tr>
                             </thead>

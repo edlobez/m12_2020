@@ -28,29 +28,29 @@ import javax.validation.constraints.Size;
 public class Usuarios {
     
     @NotNull
-    @Size(min=3, max=8, message="Campo username no puede estar vacío, entre 3 y 8 carácteres")
+    @Size(min=3, max=8, message="L'ID d'usuari no pot estar buit, ha de tenir entre 3 y 8 caracters")
     private String username;
     
-    @Size(min=4, message="Longitud mínima password 4 carateres")
+    @Size(min=4, message="La contrasenya ha de tenir un mínim de 4 caracters")
     private String password;
     
     private boolean enabled;
     private boolean changePass;
     
     @NotNull
-    @Size(min=3, max=30, message="Campo nombre no puede estar vacío")
+    @Size(min=3, max=30, message="Camp nom no pot estar buit")
     private String nombre;
     
     @NotNull
-    @Size(min=3, max=30, message="Campo apellido no puede estar vacío")
+    @Size(min=3, max=30, message="Camp cognom no pot estar buit")
     private String apellido1;
     
-    @Size(max=30, message="Apellido 2 demasiado largo")
+    @Size(max=30, message="Cognom 2 massa llarg (max 30 caracters)")
     private String apellido2;
     
-    @NotEmpty (message="Campo email no puede estar vacío")
-    @Email(message = "La dirección de correo electrónico es incorrecta.")
-    @Size(max=30, message="Email demasiados caracteres")
+    @NotEmpty (message="Camp email no pot estar buit")
+    @Email(message = "E-mail incorrecte")
+    @Size(max=30, message="Email massa llarg (max 30 caracters)")
     private String email;
     
     private int rol;
