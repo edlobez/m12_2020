@@ -333,10 +333,10 @@ public class AdminController {
             }
         }
         if (usr.getRol() == 1 || usr.getRol() == 4) {
-            //usr.setTipusAnimal(null);
+            usr.setTipusAnimal(3);
         }
         //  else {
-        System.out.println("Creando usuario");
+        //System.out.println("Creando usuario");
         usr.setEnabled(true);
         usr_resultado = (Usuarios) usuarioService.create(usr);
         if (usr_resultado == null) {
