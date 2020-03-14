@@ -24,10 +24,12 @@ public class Raza {
     
     private int idRaza;
     private String descripcio;
+    private int idTipus;
 
-    public Raza(int idRaza, String descripcio) {
+    public Raza(int idRaza, String descripcio, int idTipus) {
         this.idRaza = idRaza;
         this.descripcio = descripcio;
+        this.idTipus = idTipus;
     }
 
     public int getIdRaza() {
@@ -45,4 +47,12 @@ public class Raza {
     public void setDescripcio(String descripcio) {
         this.descripcio = descripcio;
     } 
+
+    public int getIdTipus() {
+        return idTipus;
+    }
+
+    public void setIdTipus(int idTipus) {
+        this.idTipus = idTipus;
+    }
 }

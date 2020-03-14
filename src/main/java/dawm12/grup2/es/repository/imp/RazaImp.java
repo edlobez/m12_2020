@@ -34,7 +34,7 @@ public class RazaImp extends MyRepositoryImp <Raza> implements MyRepository <Raz
     @Override
     protected Raza buildDomainFromResultSet(ResultSet rs) throws SQLException {
         
-        return new Raza (rs.getInt("idraza"), rs.getString("descripcio"));
+        return new Raza (rs.getInt("idraza"), rs.getString("descripcio"), rs.getInt("idTipus"));
     }
     
 }

@@ -51,7 +51,8 @@ public class RazaService extends ServiceImp <Raza> implements Service <Raza> {
         
         Raza z = null;
         try {
-            z = (Raza) razaRepository.create(RAZA, "descripcio="+type.getDescripcio());
+            z = (Raza) razaRepository.create(RAZA, "descripcio="+type.getDescripcio()+","+
+                         "idTipus=" + type.getIdTipus());
         } catch (Exception e) {
             return null;
         }
