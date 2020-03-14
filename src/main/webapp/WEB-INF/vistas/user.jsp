@@ -213,7 +213,10 @@
                             <c:choose>
                                 <c:when test="${error=='password_error'}">
                                     <br><span class="alert alert-danger">Les contrasenyes no son coincidents</span>
-                                </c:when>                            
+                                </c:when>
+                                <c:when test="${error=='password_error_long'}">
+                                    <br><span class="alert alert-danger">Les contrasenyes no son coincidents</span>
+                                </c:when>
                                 <c:when test="${error=='username_repetido'}">
                                     <br><span class="alert alert-danger">Nom d'usuari ja existent</span>
                                 </c:when>

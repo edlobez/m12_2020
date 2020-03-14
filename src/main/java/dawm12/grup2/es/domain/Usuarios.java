@@ -31,7 +31,8 @@ public class Usuarios {
     @Size(min=3, max=8, message="L'ID d'usuari no pot estar buit, ha de tenir entre 3 y 8 caracters")
     private String username;
     
-    @Size(min=4, message="La contrasenya ha de tenir un mínim de 4 caracters")
+    //@Size(min=4, message="La contrasenya ha de tenir un mínim de 4 caracters")
+    //La validación del password la hacemos en el controller
     private String password;
     
     private boolean enabled;
