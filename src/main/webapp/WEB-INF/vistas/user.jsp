@@ -213,7 +213,7 @@
                                 Rols: <br/>
                                 <c:if test="${not empty listaRoles}">
                                     <c:forEach var="roles" items="${listaRoles}">
-                                        <input type="radio" class="form-check-input" name="rol" id="rol" value="${roles.idRol}" onclick="isVoluntary()" ${usuarios.rol == roles.idRol ? 'checked':''} >
+                                        <input type="radio" class="form-check-input" name="rol" id="rol" value="${roles.idRol}" onclick="isVoluntary()" ${usuario.rol == roles.idRol ? 'checked':''} >
                                         <label class="form-check-label" for="rol">
                                             <c:out value="${roles.rol}" />
                                         </label>                                    
@@ -231,7 +231,7 @@
                                     Tipus d'animals: <br/>
                                     <c:if test="${not empty listaTipusAnimal}">
                                         <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
-                                            <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}" ${usuarios.tipusAnimal == tipusAnimal.idTipus ? 'checked':''}>
+                                            <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}" ${usuario.tipusAnimal == tipusAnimal.idTipus ? 'checked':''}>
                                             <label class="form-check-label" for="tipusAnimal">
                                                 <c:out value="${tipusAnimal.descripcio}" />
                                             </label>
