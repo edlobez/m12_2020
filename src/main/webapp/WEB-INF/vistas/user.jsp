@@ -37,16 +37,18 @@
         <title>Formulario usuario</title>
     </head>
     <body>  
-        <!-- amagar checkbox tipusanimal si rol != admin, veterinari o responsable -->
+        <!-- amagar checkbox tipusanimal si rol !=  veterinari o responsable -->
         <script type="text/javascript" language="javascript">
             function isVoluntary() {
                 let div = document.getElementsByClassName('hideable');
                 let radio = document.getElementsByClassName('form-check-input');
 
-                if (radio[2].checked) {
-                    console.log(radio);
+                if (radio[0].checked || radio[3].checked) {
                     radio[4].disabled = true;
                     radio[5].disabled = true;
+                    radio[4].checked = false;
+                    radio[5].checked = false;
+                    
                 } else {
                     radio[4].disabled = false;
                     radio[5].disabled = false;
@@ -84,7 +86,7 @@
                     <div class="form-header">
                         <h3 class="form-title"><i class="fa fa-user"></i>
                             <c:if test="${accion=='update'}">
-                                <c:out value="Modificando usuario"/>
+                                <c:out value="Editar usuari"/>
                                 <c:set var="modificar_username" scope="page" value="${true}"/>
                             </c:if>
                             <c:if test="${accion=='create'}">
@@ -212,25 +214,25 @@
                             <br>
                             <c:choose>
                                 <c:when test="${error=='password_error'}">
-                                    <br><span class="alert alert-danger">Contraseñas no coinciden</span>
+                                    <br><span class="alert alert-danger">Les contrasenyes no son coincidents</span>
                                 </c:when>                            
                                 <c:when test="${error=='username_repetido'}">
-                                    <br><span class="alert alert-danger">Nombre usuari ya existe</span>
+                                    <br><span class="alert alert-danger">Nom d'usuari ja existent</span>
                                 </c:when>
                                 <c:when test="${error=='email_repetido'}">
-                                    <br><span class="alert alert-danger">Email ya existe</span>
+                                    <br><span class="alert alert-danger">Email ja existent</span>
                                 </c:when>
                                 <c:when test="${error=='error_update'}">
-                                    <br><span class="alert alert-danger">Error al modificar usuario</span>
+                                    <br><span class="alert alert-danger">Error al modificar usuari</span>
                                 </c:when>
                                 <c:when test="${error=='error_create'}">
-                                    <br><span class="alert alert-danger">Error al crear usuario</span>
+                                    <br><span class="alert alert-danger">Error al crear usuari</span>
                                 </c:when>
                                 <c:when test="${error=='error_rol'}">
-                                    <br><span class="alert alert-danger">No hay rol seleccionado</span>
+                                    <br><span class="alert alert-danger">És obligatori seleccionar un rol</span>
                                 </c:when>
                                 <c:when test="${error=='error_tAnimal'}">
-                                    <br><span class="alert alert-danger">Para ese rol debe seleccionar un tipo de animal</span>
+                                    <br><span class="alert alert-danger">Es obligatori triar un tipus d'animal per aquest rol</span>
                                 </c:when>
                             </c:choose>
                         </div>
