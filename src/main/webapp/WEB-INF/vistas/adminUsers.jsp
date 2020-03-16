@@ -61,22 +61,22 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a href="${pageContext.servletContext.contextPath}">
-                <span class="navbar-brand">
-                    <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
-                    RescueManagement
-                </span>
+                    <span class="navbar-brand">
+                        <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
+                        RescueManagement
+                    </span>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
                             <a class="nav-link" href="${pageContext.servletContext.contextPath}/admin/newUser">Crear usuari <span class="sr-only">(current)</span></a>
                         </li>
-                      <!--  <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#">Disabled</a>
-                        </li>-->
+                        <!--  <li class="nav-item">
+                              <a class="nav-link" href="#">Link</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link disabled" href="#">Disabled</a>
+                          </li>-->
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
@@ -128,7 +128,9 @@
 
         <script>
             jQuery(document).ready(function ($) {
-
+                
+                
+                
                 var grid = $("#grid-data").bootgrid({
                     rowCount: [-1, 1, 2],
                     ajax: true,
@@ -166,8 +168,51 @@
                         location.href = '${home}deleteUser?username=' + $(this).data("row-id");
                     });
                 });
+                
+                
+                var aux = $_GET("param");
 
+                if (aux.length > 0) {
+                    if (aux === "create_ok") {
+                        alert("Usuari creat amb èxit.");
+                    }
+                    if (aux === "update_ok") {
+                        alert("Els canvis s'han guardat amb èxit.");
+                    }
+                }
+                
             });
+
+
+            function $_GET(param)
+            {
+                /* Obtener la url completa */
+                url = document.URL;
+                /* Buscar a partir del signo de interrogación ? */
+                url = String(url.match(/\?+.+/));
+                /* limpiar la cadena quitándole el signo ? */
+                url = url.replace("?", "");
+                /* Crear un array con parametro=valor */
+                url = url.split("&");
+
+                /* 
+                 Recorrer el array url
+                 obtener el valor y dividirlo en dos partes a través del signo = 
+                 0 = parametro
+                 1 = valor
+                 Si el parámetro existe devolver su valor
+                 */
+                x = 0;
+                while (x < url.length)
+                {
+                    p = url[x].split("=");
+                    if (p[0] == param)
+                    {
+                        return decodeURIComponent(p[1]);
+                    }
+                    x++;
+                }
+            }
 
         </script>
 

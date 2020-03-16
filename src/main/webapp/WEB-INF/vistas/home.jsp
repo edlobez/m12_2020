@@ -36,9 +36,9 @@
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <a href="${pageContext.servletContext.contextPath}">
-                <div class="sidebar-heading"><img src="static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
-                    RescueManagement                       
-                </div>
+                    <div class="sidebar-heading"><img src="static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
+                        RescueManagement                       
+                    </div>
                 </a>
                 <div class="list-group list-group-flush">
                     <sec:authorize access="hasAuthority('admin')">  
@@ -185,52 +185,61 @@
         <!-- Menu Toggle Script -->
         <script>
             jQuery(document).ready(function ($) {
-            /* if ($_GET("accion") == "create") {
-            alert("recargar");
-            $("#contenido").load("${pageContext.servletContext.contextPath}/admin/newUser");
-            }*/
-            //$("#contenido").load("${pageContext.servletContext.contextPath}/admin/adminUser_delete");
+
+                var aux = $_GET("param");
+
+                if (aux.length > 0) {
+                    if (aux === "create_ok") {
+                        alert("Usuari creat amb èxit.")
+                    }
+                    if (aux === "update_ok") {
+                        alert("Els canvis s'han guardat amb èxit.");
+
+                    }
+                }
+
+
             });
 
 
             $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
             });
 
             $("#miPerfil").click(function (e) {
-            e.preventDefault();                  
-            location.href="${pageContext.servletContext.contextPath}/user/editUser?username="+$("#username").text();
+                e.preventDefault();
+                location.href = "${pageContext.servletContext.contextPath}/user/editUser?username=" + $("#username").text();
             });
 
             function $_GET(param)
             {
-            /* Obtener la url completa */
-            url = document.URL;
-            /* Buscar a partir del signo de interrogación ? */
-            url = String(url.match(/\?+.+/));
-            /* limpiar la cadena quitándole el signo ? */
-            url = url.replace("?", "");
-            /* Crear un array con parametro=valor */
-            url = url.split("&");
+                /* Obtener la url completa */
+                url = document.URL;
+                /* Buscar a partir del signo de interrogación ? */
+                url = String(url.match(/\?+.+/));
+                /* limpiar la cadena quitándole el signo ? */
+                url = url.replace("?", "");
+                /* Crear un array con parametro=valor */
+                url = url.split("&");
 
-            /* 
-            Recorrer el array url
-            obtener el valor y dividirlo en dos partes a través del signo = 
-            0 = parametro
-            1 = valor
-            Si el parámetro existe devolver su valor
-            */
-            x = 0;
-            while (x < url.length)
-            {
-            p = url[x].split("=");
-            if (p[0] == param)
-            {
-            return decodeURIComponent(p[1]);
-            }
-            x++;
-            }
+                /* 
+                 Recorrer el array url
+                 obtener el valor y dividirlo en dos partes a través del signo = 
+                 0 = parametro
+                 1 = valor
+                 Si el parámetro existe devolver su valor
+                 */
+                x = 0;
+                while (x < url.length)
+                {
+                    p = url[x].split("=");
+                    if (p[0] == param)
+                    {
+                        return decodeURIComponent(p[1]);
+                    }
+                    x++;
+                }
             }
 
         </script>

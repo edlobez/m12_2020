@@ -258,8 +258,15 @@ public class AdminController {
                 return mv;
             }
         }
+        
+        String param = "";
+        if ( accion.equals("create") )
+            param = "?param=create_ok";
+        if ( accion.equals("update") ) 
+            param = "?param=update_ok";
 
-        return new ModelAndView("redirect:/admin/users");
+        return new ModelAndView("redirect:/admin/users" + param);
+        
     }
 
     @RequestMapping(value = "/userList")
