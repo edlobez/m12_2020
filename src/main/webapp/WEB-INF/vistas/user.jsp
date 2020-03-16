@@ -41,7 +41,7 @@
     <body>  
         <!-- amagar checkbox tipusanimal si rol !=  veterinari o responsable -->
         <script type="text/javascript" language="javascript">
-
+            
             function isVoluntary() {
                 let div = document.getElementsByClassName('hideable');
                 let radio = document.getElementsByClassName('form-check-input');
@@ -50,6 +50,7 @@
                     radio[5].disabled = true;
                     radio[4].checked = false;
                     radio[5].checked = false;
+                    
                 } else {
                     radio[4].disabled = false;
                     radio[5].disabled = false;
@@ -232,7 +233,7 @@
                                 <div class="form-check">
                                     Tipus d'animals: <br/>
                                     <c:if test="${not empty listaTipusAnimal}">
-                                        <c:forEach var="tipusAnimal" items="${listaTipusAnimal}">
+                                        <c:forEach var="tipusAnimal" begin="0" end="1" items="${listaTipusAnimal}">
                                             <input type="radio" class="form-check-input" name="tipusAnimal" id="tipusAnimal" value="${tipusAnimal.idTipus}" ${usuario.tipusAnimal == tipusAnimal.idTipus ? 'checked':''}>
                                             <label class="form-check-label" for="tipusAnimal">
                                                 <c:out value="${tipusAnimal.descripcio}" />
