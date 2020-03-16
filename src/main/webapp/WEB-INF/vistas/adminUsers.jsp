@@ -98,10 +98,11 @@
                         <table id="grid-data" class="table table-condensed table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th data-column-id="username">ID usuari</th>
+                                    <th data-column-id="username">Username</th>
                                     <th data-column-id="nombre">Nom</th>
                                     <th data-column-id="apellido1">Cognom</th>
-                                    <th data-column-id="email">Email</th>
+                                    <th data-column-id="email">Email</th>                                    
+                                    <th data-column-id="tAnimal">Animal</th> 
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Accions</th>
                                 </tr>
                             </thead>
@@ -129,11 +130,12 @@
         <script>
             jQuery(document).ready(function ($) {
                 
-                
+                var _sort = "username";
                 
                 var grid = $("#grid-data").bootgrid({
-                    rowCount: [-1, 1, 2],
+                    rowCount: [-1, 5, 10],
                     ajax: true,
+                    sort: _sort,
                     post: function ()
                     {
                         return {
@@ -153,20 +155,30 @@
                                     "\"><i class=\"far fa-trash-alt\"></i></button>";
                         }
                     },
+                    labels: {
+                        all : "Tots",
+                        search: _sort,
+                        infos: "Mostrant {{ctx.start}} a {{ctx.end}} de {{ctx.total}} entrades"
+                        
+                    }
 
-                }).on("loaded.rs.jquery.bootgrid", function ()
-                {
+                }).on("loaded.rs.jquery.bootgrid", function () {
                     /* Executes after data is loaded and rendered */
-                    grid.find(".command-edit").on("click", function (e)
-                    {
+                    grid.find(".command-edit").on("click", function (e) {
                         //alert("You pressed edit on row: " + $(this).data("row-id"));
                         location.href = '${home}editUser?username=' + $(this).data("row-id");
-
-                    }).end().find(".command-delete").on("click", function (e)
-                    {
+                    }).end().find(".command-delete").on("click", function (e) {
                         //alert("You pressed delete on row: " + $(this).data("row-id"));
                         location.href = '${home}deleteUser?username=' + $(this).data("row-id");
-                    });
+                    }).end().find(".text").on("click", function(e) {
+                        e.preventDefault();
+                        _sort = this.innerHTML;
+                        $(".search-field").attr("placeholder", _sort);
+                       //alert("click username " + _sort.parent());
+                                           
+                    });                  
+                   
+                    
                 });
                 
                 
