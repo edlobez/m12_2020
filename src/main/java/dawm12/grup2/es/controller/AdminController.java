@@ -143,15 +143,12 @@ public class AdminController {
             BindingResult validacion,
             @RequestParam("accion") String accion,
             @RequestParam("password") String password,
-            @RequestParam("cpassword") String cpassword,            
-            @RequestParam("password_upadate_old") String password_old,
-            @RequestParam("password_new") String password_new,
-            @RequestParam("cpassword_new") String cpassword_new,            
-            ModelMap modelo) {
+            @RequestParam("cpassword") String cpassword,
+            ModelMap modelo,
+            HttpServletRequest request) {
 
-        Usuarios _u = (Usuarios)usuarioService.getone("username="+usr.getUsername());
+        Usuarios _u = (Usuarios) usuarioService.getone("username=" + usr.getUsername());
 
-        
         if (validacion.hasErrors()) {
             modelo.addAttribute("usuario", usr);
             modelo.addAttribute("accion", accion);
@@ -201,11 +198,21 @@ public class AdminController {
                 }
             }
         }
-        
+
         if (accion.equals("update")) {
-            //System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
+
+            System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
+
+            String password_old = request.getParameter("password_update_old");
+            String password_new = request.getParameter("password_new");
+            String cpassword_new = request.getParameter("cpassword_new");
+
+            System.out.println(" " + password_old + " " + password_new + " " + cpassword_new);
+
             // Modificar el password de un usuario
-            if (password_old.length() > 0 || password_new.length() > 0 || cpassword_new.length() > 0) {
+            if ((password_old != null && password_new != null && cpassword_new != null)
+                    && (password_old.length() > 0 || password_new.length() > 0 || cpassword_new.length() > 0)) {
+
                 System.out.println("Se va modificar el password un usuario: " + password_new);
                 System.out.println("Password nuevo: " + cpassword_new);
                 boolean error = false;
@@ -233,47 +240,23 @@ public class AdminController {
                     mv.addObject("listaTipusAnimal", tipusAnimal);
                     return mv;
                 }
+            } else {
+                // Si llega hasta aquí intentamos el update
+                // Cargamos el password
+                usr.setPassword(password_new);
             }
-            // Si llega hasta aquí intentamos el update
-            // Cargamos el password
-            usr.setPassword(password_new);
+
             if (updateUsuario(usr, _usr_copy, modelo) == null) {
-                modelo.addAttribute("error", "error_update");
+                //modelo.addAttribute("error", "error_update");
+                modelo.addAttribute("usuario", usr);
+                modelo.addAttribute("accion", accion);
+                ModelAndView mv = new ModelAndView("user");
+                List<Roles> roles = rolesService.getAll();
+                mv.addObject("listaRoles", roles);
+                List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
+                mv.addObject("listaTipusAnimal", tipusAnimal);
+                return mv;
             }
-        
-        
-/*
-        if (accion.equals("update")) {
-            //System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
-            // Modificar el password de un usuario
-            if (usr.getPassword().length() > 0) {
-                //System.out.println("Se va modificar el password un usuario: " +password);
-                //System.out.println("Password nuevo: " + cpassword);
-                boolean error = false;                
-                if ( password.length() == 0 || password.length()<4) {
-                    modelo.addAttribute("error", "password_error_long");
-                    error = true;
-                }
-                else if (!password.equals(cpassword)) {
-                    modelo.addAttribute("error","password_error");
-                    error = true;
-                }
-                if (error) {
-                    //    System.out.println("\n\n--ERROR AL CREAR CONTRASEÑAS NO COINCIDEN");
-                    modelo.addAttribute("error", "password_error");
-                    modelo.addAttribute("usuario", usr);
-                    modelo.addAttribute("accion", accion);
-                    ModelAndView mv = new ModelAndView("user");
-                    List<Roles> roles = rolesService.getAll();
-                    mv.addObject("listaRoles", roles);
-                    List<TipusAnimal> tipusAnimal = tipusAnimalService.getAll();
-                    mv.addObject("listaTipusAnimal", tipusAnimal);
-                    return mv;
-                }                
-            }
-            if (updateUsuario(usr, _usr_copy, modelo) == null) {
-                modelo.addAttribute("error", "error_update");
-            }*/
         }
 
         return new ModelAndView("redirect:/home");
@@ -415,6 +398,16 @@ public class AdminController {
         if (usr.getTipusAnimal() == 0) {
             usr.setTipusAnimal(usr_old.getTipusAnimal());
         }
+        if (usr.getRol() == 2 || usr.getRol() == 3) {
+            if (usr.getTipusAnimal() == 0) {
+                //System.out.println("Error en tipo animal");
+                modelo.addAttribute("error", "error_tAnimal");
+                return null;
+            }
+        }
+        if (usr.getRol() == 1 || usr.getRol() == 4) {
+            usr.setTipusAnimal(3);
+        }
 
         if (!usr_old.getEmail().equals(usr.getEmail())) {
             if (usuarioService.getone("email=" + usr.getEmail()) != null) {
@@ -426,15 +419,14 @@ public class AdminController {
 
         String password;
         boolean changePass = true;
-        if (usr.getPassword().length() == 0) {
+        if (usr.getPassword() == null || usr.getPassword().length() == 0) {
             //System.out.println("Se mantiene le password");
             //usr.setPassword(usr_old.getPassword());
             password = "";
-        }
-        else {
+        } else {
             //System.out.println("Se modifica el password");
             password = PasswordEncoderGenerator.passwordGenerator(usr.getPassword());
-            
+
         }
 
         // String passCodificada = PasswordEncoderGenerator.passwordGenerator(usr.getPassword());
@@ -444,7 +436,7 @@ public class AdminController {
                 "username=" + usr.getUsername() + ","
                 + "password=" + password + ","
                 //+ "enabled="  + 1 + ","
-                + "changePass=" + ((changePass)?1:0) + ","
+                + "changePass=" + ((changePass) ? 1 : 0) + ","
                 + "nombre=" + usr.getNombre() + ","
                 + "apellido1=" + usr.getApellido1() + ","
                 + "apellido2=" + usr.getApellido2() + ","

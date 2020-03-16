@@ -62,10 +62,12 @@
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <span class="navbar-brand">
-                            <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
+                        <a href="${pageContext.servletContext.contextPath}">
+                        <span class="navbar-brand">                        
+                            <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">                            
                         </span>
                         <span class="navbar-brand">RescueManagement</span>
+                        </a>
                     </div>
                     <form class="nav navbar-nav navbar-right">
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>

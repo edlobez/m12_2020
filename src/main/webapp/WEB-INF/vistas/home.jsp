@@ -35,9 +35,11 @@
 
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
+                <a href="${pageContext.servletContext.contextPath}">
                 <div class="sidebar-heading"><img src="static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
                     RescueManagement                       
                 </div>
+                </a>
                 <div class="list-group list-group-flush">
                     <sec:authorize access="hasAuthority('admin')">  
                         <ul class="list-unstyled components">
@@ -154,7 +156,6 @@
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                             <li class="nav-item">
                                 <span>
-                                    <p>Loguejat com a usuari:</p>
                                     <span id="username"><sec:authentication property="principal.username" /></span>&nbsp;&nbsp;&nbsp;
                                     <span><sec:authentication property="principal.authorities"/></span>&nbsp;&nbsp;&nbsp;
                                 </span>

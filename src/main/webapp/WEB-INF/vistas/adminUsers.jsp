@@ -60,11 +60,12 @@
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                <a href="${pageContext.servletContext.contextPath}">
                 <span class="navbar-brand">
                     <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
                     RescueManagement
                 </span>
-
+                </a>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
@@ -78,7 +79,6 @@
                         </li>-->
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
-                        <p>Loguejat com a usuari:    </p>
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
                         <span>
                             <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir</i></a> </span>
