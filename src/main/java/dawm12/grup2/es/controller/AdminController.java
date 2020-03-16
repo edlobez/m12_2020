@@ -259,7 +259,7 @@ public class AdminController {
             }
         }
 
-        return new ModelAndView("redirect:/home");
+        return new ModelAndView("redirect:/admin/users");
     }
 
     @RequestMapping(value = "/userList")
