@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dawm12.grup2.es.PasswordEncoderGenerator;
 import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -274,6 +275,7 @@ public class AdminUserController {
             @RequestBody String search,
             @RequestParam("current") String actual,
             @RequestParam("rowCount") String numFilas,
+            HttpServletRequest request,
             @RequestParam("searchPhrase") String cadenaBusqueda) throws JSONException {
 
         //System.out.println("Cadena completa:" + search);
@@ -285,6 +287,33 @@ public class AdminUserController {
         //System.out.println("Sin argumentos:" + usuarioService.get("nombre=%tec%"));
         //System.out.println(usuarioService.get("BETWEEN 4 AND 5", "apellido1"));
         //ejemplos();
+        
+        
+        
+        String busqueda_por = "username";
+        Enumeration <String> par = request.getParameterNames();
+        while (par.hasMoreElements()) {
+            String aux = par.nextElement();
+            if (aux.indexOf("sort") != -1) {
+                busqueda_por = aux.substring(5, aux.length()-1);                
+                if ( busqueda_por.equals("tAnimal") ) {
+                    busqueda_por = "tipusAnimal";
+                }
+            }
+        }
+        
+        //System.out.println("\n\n"+busqueda_por);
+        
+        if ( busqueda_por.equals("tipusAnimal")) {
+            if ( cadenaBusqueda.toLowerCase().startsWith("g") ) 
+                cadenaBusqueda = "1";
+            else if ( cadenaBusqueda.toLowerCase().startsWith("c") )
+                cadenaBusqueda = "2";
+            else if ( cadenaBusqueda.toLowerCase().startsWith("t") ) 
+                cadenaBusqueda = "3";
+        }
+        
+        
         List<Usuarios> lista = new ArrayList<>();
         if (cadenaBusqueda.length() == 0) {
             String aux = "";
@@ -294,9 +323,16 @@ public class AdminUserController {
             //lista = usuarioService.getAll(("ORDER BY username ASC " + aux).trim());
             lista = usuarioService.get(aux, "enabled=1");
         } else {
-            lista = usuarioService.getAND("ORDER BY apellido1 ASC", "username=%" + cadenaBusqueda + "%,enabled=1");
+            lista = usuarioService.getAND("ORDER BY apellido1 ASC", busqueda_por + "=%" + cadenaBusqueda + "%,enabled=1");
         }
 
+        if ( lista!= null && lista.size() > 0 ) {
+            for (int i = 0; i < lista.size(); i++) {
+                TipusAnimal t = (TipusAnimal) tipusAnimalService.getone("idtipus=" + lista.get(i).getTipusAnimal());
+                lista.get(i).settAnimal(  t.getDescripcio()  );
+            }
+        }
+        
         ObjectMapper JSON_MAPPER = new ObjectMapper();
         JSONObject member = null;
         JSONArray array = new JSONArray();
@@ -312,8 +348,8 @@ public class AdminUserController {
         //System.out.println("Json array: " + array.toString());
         JSONObject json = new JSONObject();
         try {
-            json.put("rows", array);
             json.put("total", lista.size());
+            json.put("rows", array);            
             json.put("rowCount", numFilas);
             json.put("current", actual);
         } catch (JSONException ex) {

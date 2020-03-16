@@ -56,6 +56,8 @@ public class Usuarios {
     
     private int rol;
     private int tipusAnimal;
+    
+    private String tAnimal;
 
     public Usuarios(String username,String password, boolean enabled, boolean changePass, String nombre, String apellido1, String apellido2, String email, int rol, int tipusAnimal) {
         this.username = username;
@@ -170,9 +172,26 @@ public class Usuarios {
         this.tipusAnimal = tipusAnimal;
     }
 
-    @Override
+    public String gettAnimal() {
+        return tAnimal;
+    }
+
+    public void settAnimal(String tAnimal) {
+        this.tAnimal = tAnimal;
+    }
+    
+    
+
+  /*  @Override
     public String toString() {
         return "Usuarios{" + "username=" + username + ", password=" + password + ", enabled=" + enabled + ", changePass=" + changePass + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", email=" + email + ", rol=" + rol + ", tipusAnimal=" + tipusAnimal + '}';
+    }*/
+
+    @Override
+    public String toString() {
+        return "Usuarios{" + "username=" + username + ", password=" + password + ", enabled=" + enabled + ", changePass=" + changePass + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", email=" + email + ", rol=" + rol + ", tipusAnimal=" + tipusAnimal + ", tAnimal=" + tAnimal + '}';
     }
+    
+    
 
 }
