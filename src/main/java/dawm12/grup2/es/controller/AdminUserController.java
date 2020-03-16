@@ -59,7 +59,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RestController
 @RequestMapping("/admin")
-public class AdminController {
+public class AdminUserController {
 
     @Autowired
     @Qualifier("usuarioService")
@@ -305,7 +305,7 @@ public class AdminController {
                 member = new JSONObject(JSON_MAPPER.writeValueAsString(user));
                 array.put(member);
             } catch (JsonProcessingException ex) {
-                Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -317,7 +317,7 @@ public class AdminController {
             json.put("rowCount", numFilas);
             json.put("current", actual);
         } catch (JSONException ex) {
-            Logger.getLogger(AdminController.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         /*  String result = "{\"current\":1, "
