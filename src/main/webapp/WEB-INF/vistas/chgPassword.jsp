@@ -55,32 +55,8 @@
                                 <div class="col-lg-4">
                                     <b>Si us plau, crea una nova contrasenya.</b>
                                 </div>
-                            </div>
-                            
-                            <!--<table border="0" cellpadding="2" cellspacint="0">
-                                <tbody>
-                                    <tr>
-                                        <td nowrap colspan="3">
-                                            <b>Bienvenido a</b>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap colspan="3">
-                                            <b>RescueManagement</b>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap colspan="3">
-                                           Crear una contraseña
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td nowrap colspan="3">
-                                            <br/>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>-->
+                            </div>                            
+                         
                         </div>
 
 

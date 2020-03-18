@@ -319,50 +319,7 @@ public class Query {
         return qry;
     }
 
-    /*
-    public String createQuerySelect (String nomTabla, String tipo_busqueda, String... campos) {
-        
-        String operador_busqueda = EQUAL;
-        String condicion_busqueda = tipo_busqueda;
-        
-        //nombre=xx,apellido=2
-        campo= new String [campos.length];
-        valor= new String [campos.length];
-        
-        nomTabla = normalizar(nomTabla);
-        
-      //  edlobez.es.Debug.printDebug("Nombre tabla: " + nomTabla + "\nCampos: ");
-        int index = 0;
-        for (String s: campos ) {  
-            s = normalizar(s);
-            campo[index] = s.split("=")[0];
-            valor[index] = s.split("=")[1];
-            if ( valor[index].contains("%") )
-                operador_busqueda = LIKE;
-            index++;
-        }
-      /*  for ( int i = 0; i < index; i++) {
-            edlobez.es.Debug.printDebug("Campo: " + campo[i]);
-            edlobez.es.Debug.printDebug("Valor: " + valor[i]);
-        }*//*
-      String qry;
-      if (campo.length == 0 )
-         qry = "SELECT * FROM " + nomTabla;
-      else 
-        qry = "SELECT * FROM " + nomTabla + " WHERE ";  
-        int aux = campo.length;
-        for ( int i = 0; i < aux; i++ ) {
-            qry = qry + campo[i] + " "+ operador_busqueda +" ? ";
-            if ( i < (aux -1 )) {
-                qry = qry + " " + condicion_busqueda + " ";
-            }
-        }
-      
-       qry = qry.trim();
-      // edlobez.es.Debug.printDebug(qry);
-       return qry;
-    }*/
-
+   
  /*
      Sustituye acentos y cualquier vocal acentuada por un símbolo comodín
      */

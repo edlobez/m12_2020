@@ -46,17 +46,13 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery("SELECT username, password, true FROM usuarios WHERE username = ?")
                 .authoritiesByUsernameQuery("select usuarios.username, roles.rol from usuarios, roles where usuarios.username = ? and usuarios.rol=roles.idrol");
-               //.authoritiesByUsernameQuery("SELECT username, role FROM roles WHERE username = ?");
-        // SELECT rol from roles where idrol = (select rol form usuarios where username = ?"
+              
         dataSource.getConnection().close();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        /*
-          
-         */
         http.csrf().disable()
             .authorizeRequests()
                 .antMatchers("/static/**").permitAll()

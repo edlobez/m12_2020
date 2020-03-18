@@ -66,7 +66,7 @@ public class HomeController {
             mv = "redirect:/voluntari/home";
         }
         */
-        //modelview = 
+        //modelview =         
         guardarAcceso(auth.getName()); 
         modelview = comprobarPassword(auth.getName(), request.getParameter("error"));
         //modelview.setViewName(mv);

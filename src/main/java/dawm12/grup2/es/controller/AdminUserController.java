@@ -278,18 +278,7 @@ public class AdminUserController {
             HttpServletRequest request,
             @RequestParam("searchPhrase") String cadenaBusqueda) throws JSONException {
 
-        //System.out.println("Cadena completa:" + search);
-        //System.out.println("Un parámetro (current): " + actual);
-        //System.out.println("num filas a mostrar: " + numFilas);
-        //System.out.println("Buscar: " + cadenaBusqueda);
-        //System.out.println("Todos los usuarios: " + usuarioService.getAll());
-        //System.out.println("Con argumentos:" + usuarioService.getAND("nombre=%m%,apellido1=%1%"));
-        //System.out.println("Sin argumentos:" + usuarioService.get("nombre=%tec%"));
-        //System.out.println(usuarioService.get("BETWEEN 4 AND 5", "apellido1"));
-        //ejemplos();
-        
-        
-        
+               
         String busqueda_por = "username";
         Enumeration <String> par = request.getParameterNames();
         while (par.hasMoreElements()) {
