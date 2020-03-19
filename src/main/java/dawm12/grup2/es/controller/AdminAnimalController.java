@@ -18,7 +18,9 @@ package dawm12.grup2.es.controller;
 
 import dawm12.grup2.es.domain.Animal;
 import dawm12.grup2.es.domain.Raza;
+import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
+import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,6 +48,12 @@ public class AdminAnimalController {
     @Autowired @Qualifier("razaService")
     private Service razaService;  
     
+    @Autowired @Qualifier("usuarioService")
+    private Service usuarioService;
+    
+    @Autowired @Qualifier("rolesService")
+    private Service rolesService;
+    
     @RequestMapping("/newAnimal")
     public ModelAndView newAnimal () {
         ModelAndView mv = new ModelAndView("animal");
@@ -65,14 +73,36 @@ public class AdminAnimalController {
         List <String> laRaza = new ArrayList <>();
         for (Object raza : razaService.getAll() ) {
             laRaza.add ( ((Raza) raza).getDescripcio() );
-        }
-        
+        }        
         mv.addObject("laRaza", laRaza);
+        
+        // Los veterinarios a asignar
+        List <String> vet = new ArrayList <> ();        
+        for (Object unUser : usuarioService.get("rol="+ ( (Roles)rolesService.getone("rol=veterinari") ).getIdRol() ) ) {
+            vet.add ( ((Usuarios) unUser).getUsername() + " " + ((Usuarios) unUser).getNombre() + " " + ((Usuarios) unUser).getApellido1());            
+        }        
+        mv.addObject("vet", vet);       
         
         return mv;
         
     }
     
+    /*
+    En el momento de guardar un animal nuevo se deben crear los campos
+    - createddate; fecha de creacion
+    - createduser; el usuario que lo crea
+    - inactiu = true
+    - isalta = false
+    - dataalta = null;
+    - isadoptat = false;
+    
+    Y si no están rellenos los campos siguientes, se rellenan con el siguiente 
+    ...valor
+    - isvacunat = false;
+    - isesterilitzat = false;
+    - haschip = false;
+    - numchip = null;
+    */
     @RequestMapping("/saveAnimal") 
     public ModelAndView saveAnimal (
            @ Valid @ModelAttribute ("animal") Animal animal,

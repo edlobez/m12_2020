@@ -19,22 +19,10 @@
         <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>
         <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>" rel="stylesheet" type="text/css"/>
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" 
-              integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/42bb3417c7.js" crossorigin="anonymous"></script>
 
         <script src="../static/js/jquery/jquery-3.3.1.min.js"></script>
 
-        <style>
-            @font-face {
-                font-family: 'Glyphicons Halflings';
-                src: url('../fonts/glyphicons-halflings-regular.eot');
-                src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') 
-                    format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') 
-                    format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') 
-                    format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') 
-                    format('svg');
-            }
-        </style>
 
         <title>Formulari Animal</title>
     </head>
@@ -70,7 +58,7 @@
                           action="saveAnimal" modelAttribute="animal">
 
                     <div class="form-header">
-                        <h3 class="form-title"><i class="fa fa-user"></i>
+                        <h3 class="form-title"><i class="fas fa-paw"></i>
                             <c:if test="${accion=='update'}">
                                 <c:out value="Editar animal"/>
                             </c:if>
@@ -86,38 +74,90 @@
                         <div class="row">
 
                             <div class="form-group col-lg-3">
-                                <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                <mvc:label path="nom" for="nom">Nom</mvc:label>
+                                    <div class="input-group">                                  
+                                        <div class="input-group-addon"><i class="fas fa-cat"></i></div>                                                                     
                                         <mvc:input path="nom" name="nom" type="text" class="form-control" placeholder="Nom" />                                   
                                 </div>
                                 <span class="help-block" id="error"></span>
                             </div>
 
                             <div class="form-group col-lg-3">
-                                <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
-                                        <mvc:input path="dataNaix" name="dataNaix" type="text" class="form-control" placeholder="Data de naixement (AAAA-MM-DD)" />                                   
+                                <mvc:label path="dataNaix" for="dataNaix">Data de naixement</mvc:label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="far fa-calendar-alt"></i></div>
+                                        <mvc:input path="dataNaix" name="dataNaix" type="date" class="form-control" placeholder="Data de naixement (AAAA-MM-DD)" />    
+
                                 </div>
                                 <span class="help-block" id="error"></span>
                             </div>
 
                             <div class="form-group col-lg-3">
-                                <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                <mvc:label path="tAnimal" for="tAnimal">Tipus d'animal</mvc:label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fas fa-paw"></i></div>
                                         <mvc:select path="tAnimal" name="tipusAnimal" class="form-control" items="${tAnimal}" />                                   
                                 </div>
                                 <span class="help-block" id="error"></span>
                             </div>
 
                             <div class="form-group col-lg-3">
-                                <div class="input-group">
-                                    <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
+                                <mvc:label path="laRaza" for="laRaza">Raza</mvc:label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon"><i class="fas fa-dog"></i></div>
                                         <mvc:select path="laRaza" name="raza" class="form-control" items="${laRaza}" />                                   
                                 </div>
                                 <span class="help-block" id="error"></span>
                             </div>
 
                         </div>
+
+                        <div class ='row'>
+                            <div class="form-group col-lg-3">
+                                <mvc:label path="sexe" for="sexe">Sexe</mvc:label>
+                                    <div class="input-group">                                  
+                                        <div class="input-group-addon"><i class="fas fa-kiwi-bird"></i></div>                                                                     
+                                        <mvc:input path="sexe" name="sexe" type="text" class="form-control" placeholder="sexe" />                                   
+                                </div>
+                                <span class="help-block" id="error"></span>
+                            </div>
+                            <div class="form-group col-lg-3">
+                                <mvc:label path="tamany" for="tamany">Tamany</mvc:label>
+                                    <div class="input-group">                                  
+                                        <div class="input-group-addon"><i class="fas fa-hippo"></i></div>                                                                     
+                                        <mvc:input path="tamany" name="tamany" type="text" class="form-control" placeholder="tamany" />                                   
+                                </div>
+                                <span class="help-block" id="error"></span>
+                            </div>
+
+                            <div class="form-group col-lg-3">
+                                <mvc:label path="veterinari" for="veterinar">Veterinari</mvc:label>
+                                    <div class="input-group">                                  
+                                        <div class="input-group-addon"><i class="fas fa-user-md"></i></div>                                                                     
+                                        <mvc:select path="veterinari" name="veterinari" class="form-control" items="${vet}" /> 
+
+                                </div>
+                                <span class="help-block" id="error"></span>
+                            </div>
+
+                        </div> 
+
+                        <div class="row">
+                            
+                            <div class="form-check col-lg-3">
+                                <mvc:label path="isVacunat" for="isVacunat"><i class="fas fa-syringe"></i>&nbsp;Està vacunat?</mvc:label>
+                                        <br/>                                       
+                                        <mvc:radiobutton path="isVacunat" name="isVacunat" class="form-check-input" value="0" />
+                                        <mvc:label path="isVacunat" class="form-check-label">No</mvc:label>
+                                        <mvc:radiobutton path="isVacunat" name="isVacunat" class="form-check-input" value="1" />
+                                        <mvc:label path="isVacunat" class="form-check-label">Sí</mvc:label>
+
+                              
+                                <span class="help-block" id="error"></span>
+                            </div>
+
+                        </div>
+
 
                         <br/> <br/>
                         <div class="form-footer">
@@ -126,7 +166,7 @@
                             </button>
                             <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}'"                        
                                    value=' Tornar'/>
-                           <!-- <input type="hidden" name="accion" value="${accion}"/> -->
+                            <input type="hidden" name="accion" value="${accion}"/>
 
 
                         </div>
