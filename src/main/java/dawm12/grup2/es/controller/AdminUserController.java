@@ -115,9 +115,23 @@ public class AdminUserController {
     }
 
     @RequestMapping(value = "/deleteUser")
-    public String deleteUser(@RequestParam("username") String username) {
-        //System.out.println ("Borrar usuario: " + username);
-        return "Borrar usuario " + username;
+    public ModelAndView deleteUser(
+            @ModelAttribute("usuario") Usuarios usr) {
+        System.out.println ("Borrar usuario: " + usr.toString());
+        
+        // Para borrar el usuario lo deshabílitamos
+        Usuarios _usr = (Usuarios) usuarioService.update(usr, "enabled=0");
+        
+        String param;
+        if ( _usr == null) {
+            param = "?param=delete_Nok";
+        }
+        else {
+            param = "?param=delete_ok";
+        }
+        
+        
+        return new ModelAndView("redirect:/admin/users" + param);
     }
 
     @RequestMapping(value = "/newUser")
@@ -202,7 +216,7 @@ public class AdminUserController {
 
         if (accion.equals("update")) {
 
-            System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
+            //System.out.println("\n\nVamos hacer update de " + usr + " y " + _usr_copy);
 
             String password_old = request.getParameter("password_update_old");
             String password_new = request.getParameter("password_new");

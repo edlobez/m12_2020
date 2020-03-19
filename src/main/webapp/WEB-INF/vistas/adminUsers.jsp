@@ -169,7 +169,10 @@
                         location.href = '${home}editUser?username=' + $(this).data("row-id");
                     }).end().find(".command-delete").on("click", function (e) {
                         //alert("You pressed delete on row: " + $(this).data("row-id"));
-                        location.href = '${home}deleteUser?username=' + $(this).data("row-id");
+                        var opcion = confirm("Esteu segur que vol esborrar l'usuari "+ $(this).data("row-id") + "?");
+                        if ( opcion === true ) {
+                            location.href = '${home}deleteUser?username=' + $(this).data("row-id");
+                        }
                     }).end().find(".text").on("click", function(e) {
                         e.preventDefault();
                         _sort = this.innerHTML;
@@ -190,6 +193,12 @@
                     }
                     if (aux === "update_ok") {
                         alert("Els canvis s'han guardat amb èxit.");
+                    }
+                    if (aux === "delete_ok") {
+                        alert("Usuari esborrat amb èxit.");
+                    }
+                    if (aux === "delete_Nok") {
+                        alert("Error a l'esborrar l'usuari.");
                     }
                 }
                 
