@@ -16,7 +16,8 @@
  */
 package dawm12.grup2.es.domain;
 
-import java.util.Date;
+import java.sql.Date;
+import javax.validation.constraints.NotNull;
 
 
 /**
@@ -27,7 +28,10 @@ public class Animal {
     
     private int idAnimal;
     private String nom;
+    
+    @NotNull    
     private Date dataNaix;
+    
     private String sexe;
     private String tamany;
     private int tipusAnimal;
@@ -70,6 +74,10 @@ public class Animal {
         this.createdUser = createdUser;
         this.imatge = imatge;
     }
+
+    public Animal() {
+    }
+    
     
 
     public int getIdAnimal() {
@@ -239,12 +247,11 @@ public class Animal {
     public void setLaRaza(String laRaza) {
         this.laRaza = laRaza;
     }
-    
-    
 
     @Override
     public String toString() {
-        return "Animal{" + "idAnimal=" + idAnimal + ", nom=" + nom + ", dataNaix=" + dataNaix + ", sexe=" + sexe + ", tamany=" + tamany + ", tipusAnimal=" + tipusAnimal + ", raza=" + raza + ", isAlta=" + isAlta + ", dataAlta=" + dataAlta + ", isAdoptat=" + isAdoptat + ", isVacunat=" + isVacunat + ", isEsterlitzat=" + isEsterlitzat + ", hasChip=" + hasChip + ", numChip=" + numChip + ", vetAssignat=" + vetAssignat + ", inactiu=" + inactiu + ", createdDate=" + createdDate + ", createdUser=" + createdUser + ", imatge=" + imatge + '}';
+        return "Animal{" + "idAnimal=" + idAnimal + ", nom=" + nom + ", dataNaix=" + dataNaix + ", sexe=" + sexe + ", tamany=" + tamany + ", tipusAnimal=" + tipusAnimal + ", raza=" + raza + ", isAlta=" + isAlta + ", dataAlta=" + dataAlta + ", isAdoptat=" + isAdoptat + ", isVacunat=" + isVacunat + ", isEsterlitzat=" + isEsterlitzat + ", hasChip=" + hasChip + ", numChip=" + numChip + ", vetAssignat=" + vetAssignat + ", inactiu=" + inactiu + ", createdDate=" + createdDate + ", createdUser=" + createdUser + ", imatge=" + imatge + ", tAnimal=" + tAnimal + ", laRaza=" + laRaza + '}';
     }
+   
        
 }

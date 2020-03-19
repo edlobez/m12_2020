@@ -103,7 +103,7 @@ public class AllAnimalController {
             }
         }
         
-        System.out.println("\n\n"+busqueda_por);
+       // System.out.println("\n\n"+busqueda_por);
         
         List <Raza> lasRazas = new ArrayList <>();
         
@@ -133,10 +133,10 @@ public class AllAnimalController {
                 lista = animalService.get("ORDER BY nom ASC", busqueda_por + "=%" + cadenaBusqueda + "%");
             else {
                 for (Raza unaRaza: lasRazas) {
-                    System.out.println("\nRazas: " + unaRaza.getDescripcio());
+                    //System.out.println("\nRazas: " + unaRaza.getDescripcio());
                     List<Animal> lista_aux = new ArrayList<>();
                     cadenaBusqueda = Integer.toString( ( (Raza) razaService.getone("descripcio=" + unaRaza.getDescripcio())).getIdRaza());
-                    System.out.println("buscar por " + busqueda_por + ": " + cadenaBusqueda);
+                   // System.out.println("buscar por " + busqueda_por + ": " + cadenaBusqueda);
                     lista_aux = animalService.get("ORDER BY nom ASC", busqueda_por + "=%" + cadenaBusqueda + "%");
                     lista.addAll(lista_aux);
                 }

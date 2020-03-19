@@ -87,7 +87,7 @@
                                 </li>
                                 <sec:authorize access="hasAnyAuthority('responsable','admin')">  
                                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a class="logout-link" href="#" id="animalesCrear">
+                                        <a class="logout-link" href="${pageContext.servletContext.contextPath}/responsable/newAnimal" id="animalesCrear">
                                             <i class="fas fa-list"></i>
                                             &nbsp;Crear
                                         </a>

@@ -50,7 +50,7 @@
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <sec:authorize access="hasAnyAuthority('responsable','admin')">   
                             <li class="nav-item active">                            
-                                <a class="nav-link" href="#">Crear animal <span class="sr-only">(current)</span></a>
+                                <a class="nav-link" href="${pageContext.servletContext.contextPath}/responsable/newAnimal">Crear animal <span class="sr-only">(current)</span></a>
                             </li>
                         </sec:authorize>
                         <!--  <li class="nav-item">
