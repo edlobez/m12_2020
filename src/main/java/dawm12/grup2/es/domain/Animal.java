@@ -44,6 +44,10 @@ public class Animal {
     private Date createdDate;
     private String createdUser;
     private String imatge;
+    
+    // Guardamos el literal de la raza y tipo animal
+    private String tAnimal;
+    private String laRaza;
 
     public Animal(int idAnimal, String nom, Date dataNaix, String sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, boolean inactiu, Date createdDate, String createdUser, String imatge) {
         this.idAnimal = idAnimal;
@@ -219,6 +223,24 @@ public class Animal {
     public void setInactiu(boolean inactiu) {
         this.inactiu = inactiu;
     }
+
+    public String gettAnimal() {
+        return tAnimal;
+    }
+
+    public void settAnimal(String tAnimal) {
+        this.tAnimal = tAnimal;
+    }
+
+    public String getLaRaza() {
+        return laRaza;
+    }
+
+    public void setLaRaza(String laRaza) {
+        this.laRaza = laRaza;
+    }
+    
+    
 
     @Override
     public String toString() {

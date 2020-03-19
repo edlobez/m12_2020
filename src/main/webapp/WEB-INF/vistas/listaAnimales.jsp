@@ -80,10 +80,10 @@
                         <table id="grid-data" class="table table-condensed table-hover table-striped">
                             <thead>
                                 <tr>
-                                    <th data-column-id="idanimal">Id</th>
+                                    <th data-column-id="idAnimal">Id</th>
                                     <th data-column-id="nom">Nom</th>
-                                    <th data-column-id="tipusanimal">Animal</th>
-                                    <th data-column-id="raza">Raza</th>
+                                    <th data-column-id="tAnimal">Animal</th>
+                                    <th data-column-id="laRaza">Raza</th>
                                 <!--    <th data-column-id="email">Email</th>                                    
                                     <th data-column-id="tAnimal">Animal</th> -->
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Accions</th>
