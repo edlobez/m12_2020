@@ -212,7 +212,13 @@
                                    value=' Tornar'/>
                             <input type="hidden" name="accion" value="${accion}"/>
 
-
+                            <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
+                            <br>
+                            <c:choose>
+                                <c:when test="${error=='error_create'}">
+                                    <br><span class="alert alert-danger">Error a l'crear l'animal.</span>
+                                </c:when>
+                            </c:choose>
                         </div>
 
                     </div>

@@ -73,7 +73,7 @@ public class AnimalService extends ServiceImp <Animal> implements Service <Anima
                     "inactiu="+((type.isInactiu())?1:0)+","+
                     "createddate="+type.getCreatedDate()+","+
                     "createduser="+type.getCreatedUser()+","+
-                    "image="+type.getImatge()                    
+                    "imatge="+type.getImatge()                    
                     );
         }catch (Exception e) {
             return a;

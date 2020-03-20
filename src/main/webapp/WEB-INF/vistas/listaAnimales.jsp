@@ -182,7 +182,7 @@
 
                 if (aux.length > 0) {
                     if (aux === "create_ok") {
-                        alert("Usuari creat amb èxit.");
+                        alert("Animal creat amb èxit.");
                     }
                     if (aux === "update_ok") {
                         alert("Els canvis s'han guardat amb èxit.");

@@ -33,12 +33,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -62,15 +65,20 @@ public class AdminAnimalController {
     @Autowired @Qualifier("rolesService")
     private Service rolesService;
     
+    @Autowired @Qualifier("animalService")
+    private Service animalService;
+    
     @RequestMapping("/newAnimal")
-    public ModelAndView newAnimal () {
+    public ModelAndView newAnimal (ModelMap modelo) {
         ModelAndView mv = new ModelAndView("animal");
         Animal an = new Animal();
         mv.addObject("animal", an);
         mv.addObject("accion", "create");
         
+        cargarDatosEnVista ( modelo );
+        
         //El literal del tipo de animal
-        List <String> tAnimal = new ArrayList <>();
+      /*  List <String> tAnimal = new ArrayList <>();
         for (Object unAnimal : tipusAnimalService.getAll() ) {
             tAnimal.add( ((TipusAnimal) unAnimal).getDescripcio() );
         }
@@ -89,7 +97,7 @@ public class AdminAnimalController {
         for (Object unUser : usuarioService.get("rol="+ ( (Roles)rolesService.getone("rol=veterinari") ).getIdRol() ) ) {
             vet.add ( ((Usuarios) unUser).getUsername() + " " + ((Usuarios) unUser).getNombre() + " " + ((Usuarios) unUser).getApellido1());            
         }        
-        mv.addObject("vet", vet);       
+        mv.addObject("vet", vet);    */   
         
         return mv;
         
@@ -110,34 +118,131 @@ public class AdminAnimalController {
     - isesterilitzat = false;
     - haschip = false;
     - numchip = null;
+    
+    Se deben rellenar los valores correctos para 
+     - tipusAnimal
+     - raza
+     - vetAsignat
+    esto lo realizamos con el método completarCampos
     */
     @RequestMapping(value = "/saveAnimal", method = RequestMethod.POST) 
     public ModelAndView saveAnimal (
            @Valid @ModelAttribute ("animal") Animal animal,
            BindingResult validacion, 
-           HttpServletRequest request
+           HttpServletRequest request,
+           @RequestParam("accion") String accion,
+           ModelMap modelo
     )  {
         
         if (validacion.hasErrors()) {
             System.out.println("Error validaciones");
         }
         
-     /*   String aux = null;
-        try {
-            aux = new String ( animal.getLaRaza().getBytes("ISO-8859-1"), "UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(AdminAnimalController.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
+        animal = completarCampos (animal); 
+        
+        // Creamos un nuevo animal
+        if ( accion.equals("create")) {            
+            if ( createAnimal(animal, modelo) == null ) {
+                modelo.addAttribute("animal", animal);
+                modelo.addAttribute("accion", accion);
+                modelo.addAttribute("error", "create_error");
+                cargarDatosEnVista ( modelo );
+                return new ModelAndView("animal");
+            }
+            
+            
+        }
+        
+        String param = "";
+        if ( accion.equals("create") )
+            param = "?param=create_ok";
+        if ( accion.equals("update") ) 
+            param = "?param=update_ok";
         
         
+        return new ModelAndView("redirect:/animal/animalList" + param);
+    }
+    
+    /*
+    Carga los datos en la vista de diferentes campos
+    */
+    private void cargarDatosEnVista ( ModelMap modelo ) {
         
-        System.out.println("Codificacion: " + request.getCharacterEncoding());
-        System.out.println("la raza " + request.getParameter("laRaza"));
+         //El literal del tipo de animal
+        List <String> tAnimal = new ArrayList <>();
+        for (Object unAnimal : tipusAnimalService.getAll() ) {
+            tAnimal.add( ((TipusAnimal) unAnimal).getDescripcio() );
+        }
+        tAnimal.remove("Tots");
+        modelo.addAttribute("tAnimal", tAnimal);
+               
+        //El literal de la raza
+        List <String> laRaza = new ArrayList <>();
+        for (Object raza : razaService.getAll() ) {
+            laRaza.add ( ((Raza) raza).getDescripcio() );
+        }
+        modelo.addAttribute("laRaza", laRaza);
         
-        System.out.println("Animal a guardar: " + animal.toString());
+        // Los veterinarios a asignar
+        List <String> vet = new ArrayList <> ();        
+        for (Object unUser : usuarioService.get("rol="+ ( (Roles)rolesService.getone("rol=veterinari") ).getIdRol() ) ) {
+            vet.add ( ((Usuarios) unUser).getUsername() + " " + ((Usuarios) unUser).getNombre() + " " + ((Usuarios) unUser).getApellido1());            
+        } 
+        modelo.addAttribute("vet", vet);
         
         
-        return null;
+    }
+    
+    /*
+    Hay alguno campos de la estructura de datos que se deben rellenar en 
+    función del otros. Estos son:
+    - tipusAnimal, es el ID que referencia a la tabla tipusAnimal. Este campo 
+    se debe rellenar en función del valor tAnimal.
+    - raza, es el ID que referencia a la tabal raza. Este campo se debe rellenar
+    en función del valor laRaza
+    - vetAsignat, es el ID que referencia a la tabla usuarios. Este campo se debe
+    rellenar en función del valor veterinari.
+    */
+    private Animal completarCampos ( Animal animal ) {
+        
+        TipusAnimal ta = (TipusAnimal) tipusAnimalService.getone( "descripcio=" + animal.gettAnimal() );
+        animal.setTipusAnimal( ta.getIdTipus() );
+        
+        Raza r = (Raza) razaService.getone("descripcio=" + animal.getLaRaza() );
+        animal.setRaza( r.getIdRaza() );
+        
+        Usuarios u = (Usuarios) usuarioService.getone( "username=" + animal.getVeterinari().split(" ")[0] );
+        animal.setVetAssignat( u.getUsername() );
+        
+        return animal;
+        
+    }
+    
+    /*
+    Método que insertará el animal en la BBDD. Enviamos a parte del animal
+    el modelo por si hay que lanzar alǵun error a la vista
+    */
+    private Animal createAnimal (Animal animal, ModelMap modelo ) {
+        
+        // Siempre que se cree un animal nuevo es con baja médica 
+        // ... y adoptado a false
+        animal.setIsAlta(false);
+        animal.setIsAdoptat(false);
+        animal.setInactiu(false);
+        
+        // La fecha de creación y el usuario que lo crea
+        java.util.Date d = new java.util.Date(); 
+        java.sql.Date d2 = new java.sql.Date(d.getTime());
+        animal.setCreatedDate(d2);
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        animal.setCreatedUser(auth.getName());
+        
+        animal.setDataAlta(new java.sql.Date(1999-01-01));
+        
+        //System.out.println("Animal a guardar: " + animal.toString());
+        
+        return (Animal) animalService.create(animal);
     }
     
     
