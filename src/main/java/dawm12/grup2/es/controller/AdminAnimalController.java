@@ -122,14 +122,14 @@ public class AdminAnimalController {
             System.out.println("Error validaciones");
         }
         
-        String aux = null;
+     /*   String aux = null;
         try {
             aux = new String ( animal.getLaRaza().getBytes("ISO-8859-1"), "UTF-8");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(AdminAnimalController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        }*/
         
-        System.out.println("\n"+ aux);
+        
         
         System.out.println("Codificacion: " + request.getCharacterEncoding());
         System.out.println("la raza " + request.getParameter("laRaza"));
