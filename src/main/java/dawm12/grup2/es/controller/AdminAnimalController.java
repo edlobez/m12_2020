@@ -22,15 +22,23 @@ import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
 import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
+import java.io.UnsupportedEncodingException;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -103,23 +111,34 @@ public class AdminAnimalController {
     - haschip = false;
     - numchip = null;
     */
-    @RequestMapping("/saveAnimal") 
+    @RequestMapping(value = "/saveAnimal", method = RequestMethod.POST) 
     public ModelAndView saveAnimal (
-           @ Valid @ModelAttribute ("animal") Animal animal,
-           BindingResult validacion             
-    ) {
+           @Valid @ModelAttribute ("animal") Animal animal,
+           BindingResult validacion, 
+           HttpServletRequest request
+    )  {
         
         if (validacion.hasErrors()) {
             System.out.println("Error validaciones");
         }
         
+        String aux = null;
+        try {
+            aux = new String ( animal.getLaRaza().getBytes("ISO-8859-1"), "UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(AdminAnimalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println("\n"+ aux);
+        
+        System.out.println("Codificacion: " + request.getCharacterEncoding());
+        System.out.println("la raza " + request.getParameter("laRaza"));
         
         System.out.println("Animal a guardar: " + animal.toString());
         
         
         return null;
     }
-    
     
     
  }
