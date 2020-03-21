@@ -85,7 +85,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         try {
             PreparedStatement preparedStatement = getPreparedStatement(qry);
             for ( int i = 0; i < q.getValor().length; i++) {
-                //edlobez.es.Debug.printDebug(q.getValor()[i]);
+                //System.out.println(q.getValor()[i]);
                 preparedStatement.setString(i+1, q.getValor()[i]);
             }
             result = findUniqueResult(preparedStatement);
@@ -94,7 +94,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
             System.err.println("Error buscando en getByX");
         }
         
-        if ( getConnection() != null ) closeConnection();
+        if ( getConnection() != null ) closeConnection();        
         
         return result;
     }
@@ -168,11 +168,14 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
 
     private T findUniqueResult(PreparedStatement preparedStatement) throws Exception {
 
+        //System.out.println("Buscando único elemento");
         List<T> type = executeQuery(preparedStatement);
         if (type.isEmpty()) {
+            //System.out.println("La lista está vacia");
             return null;
         }
-        if (type.size() > 1) {            
+        if (type.size() > 1) {   
+            //System.out.println("Hay vario elementos en la lista");
             throw new Exception("Only one result expected");
         }
          return type.get(0);

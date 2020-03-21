@@ -199,7 +199,9 @@
                         <div class="row">
                             <div class="form-group col-lg-12">
                                 <label  for="comentari"><i class="far fa-keyboard"></i>&nbsp;Comentari:</label> 
-                                <textarea name="comentari" class="form-control" id="comentari" rows="10"></textarea>
+                                <textarea name="comentari" class="form-control" id="comentari" rows="10">
+                                    
+                                </textarea>
                             </div>
                         </div>
 
@@ -231,7 +233,10 @@
         <script>
 
             jQuery(document).ready(function () {           
-
+                var comentarios = "${comentarios}";
+                if ( comentarios !== null ) {
+                    console.log(comentarios);
+                }
 
             });
             

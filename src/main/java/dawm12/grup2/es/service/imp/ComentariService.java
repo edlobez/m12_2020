@@ -58,6 +58,7 @@ public class ComentariService extends ServiceImp <Comentari> implements Service 
                     "createddate="+type.getCreatedDate()+","+
                     "createduser="+type.getCreatedUser());
         }catch (Exception e) {
+            System.out.println("Error al crear el comentario en comentariService");
             return null;
         }
         return c;

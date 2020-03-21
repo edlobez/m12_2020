@@ -17,6 +17,7 @@
 package dawm12.grup2.es.controller;
 
 import dawm12.grup2.es.domain.Animal;
+import dawm12.grup2.es.domain.Comentari;
 import dawm12.grup2.es.domain.Raza;
 import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
@@ -25,6 +26,7 @@ import dawm12.grup2.es.service.Service;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -68,6 +70,9 @@ public class AdminAnimalController {
     @Autowired @Qualifier("animalService")
     private Service animalService;
     
+    @Autowired @Qualifier("comentariService")
+    private Service comentariService;
+    
     @RequestMapping("/newAnimal")
     public ModelAndView newAnimal (ModelMap modelo) {
         ModelAndView mv = new ModelAndView("animal");
@@ -109,6 +114,7 @@ public class AdminAnimalController {
            BindingResult validacion, 
            HttpServletRequest request,
            @RequestParam("accion") String accion,
+           @RequestParam("comentari") String comentario,
            ModelMap modelo
     )  {
         
@@ -118,16 +124,23 @@ public class AdminAnimalController {
         
         animal = completarCampos (animal); 
         
+        System.out.println("El comentario: " + comentario);
+        
         // Creamos un nuevo animal
-        if ( accion.equals("create")) {            
-            if ( createAnimal(animal, modelo) == null ) {
+        if ( accion.equals("create")) {
+            Animal an = createAnimal(animal, modelo);
+            if ( an == null ) {
                 modelo.addAttribute("animal", animal);
                 modelo.addAttribute("accion", accion);
                 modelo.addAttribute("error", "create_error");
                 cargarDatosEnVista ( modelo );
                 return new ModelAndView("animal");
-            }
-            
+            }else {
+                // Debemos guardar el comentario
+                if ( comentario!= null && comentario.length() > 0 )
+                    if ( guardarComentario ( an, comentario) == null )
+                        System.out.println("Error en creando comentario");
+            }            
             
         }
         
@@ -245,5 +258,30 @@ public class AdminAnimalController {
         return (Animal) animalService.create(animal);
     }
     
+    /*
+    Guarda el comentario para un animal nuevo
+    Se almacenará
+    [FECHA - HORA][USERNAME] - COMENTARIO
+    */
+    private Comentari guardarComentario (Animal an, String comentario) {
+        
+        String usuario = an.getCreatedUser();
+        java.util.Date d = new java.util.Date(); 
+        java.sql.Date d2 = new java.sql.Date(d.getTime());
+        java.sql.Timestamp date = new java.sql.Timestamp(d.getTime());
+        
+        comentario = "[" + date + "] [" + usuario + "] - " + comentario;
+        
+       // System.out.println("\nComentario:" + comentario +"\n para animal id " + an.getIdAnimal());
+        
+        // public Comentari(int idComentari, String descripcio, int idAnimal, Date createdDate, String createdUser)
+        
+        Comentari c = (Comentari) comentariService.create( new Comentari ( comentario, an.getIdAnimal(), d2, an.getCreatedUser()) );
+        
+        //System.out.println ("Comentario " + c.toString());
+        return c;
+        
+    }    
+   
     
  }

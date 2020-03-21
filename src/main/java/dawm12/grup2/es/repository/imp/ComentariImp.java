@@ -39,8 +39,8 @@ public class ComentariImp extends MyRepositoryImp <Comentari> implements MyRepos
                 rs.getInt("idcomentari"),
                 rs.getString("descripcio"),
                 rs.getInt("idanimal"),
-                rs.getDate("createdate"),
-                rs.getString("createuser")
+                rs.getDate("createddate"),
+                rs.getString("createduser")
         );
         return c;
     }

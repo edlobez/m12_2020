@@ -23,6 +23,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dawm12.grup2.es.domain.Animal;
+import dawm12.grup2.es.domain.Comentari;
 import dawm12.grup2.es.domain.Raza;
 import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
@@ -75,7 +76,11 @@ public class AllAnimalController {
     
     @Autowired
     @Qualifier("razaService")
-    private Service razaService;    
+    private Service razaService;  
+    
+    @Autowired
+    @Qualifier("comentariService")
+    private Service comentariService;
     
     @RequestMapping(value = "/animalList")
     public ModelAndView animalList() {
@@ -99,6 +104,7 @@ public class AllAnimalController {
         modelo.addAttribute("animal", an);
         modelo.addAttribute("accion", "update");
         cargarDatosEnVista ( an, modelo);
+        cargarComentarios ( an, modelo);
         
         System.out.println("Editando animal: " + an.toString());
         
@@ -118,6 +124,19 @@ public class AllAnimalController {
         return null;
     }
     
+    /*
+    Carga los comentarios que exists en la tabla comentarios para el animal
+    en concreto.
+    */
+    private void cargarComentarios ( Animal an, ModelMap modelo ) {
+        // Comamos los comentarios para ese animal
+        List <Comentari> comentarios = comentariService.getAND("ORDER BY CREATEDDATE", "idanimal="+an.getIdAnimal());
+        if ( comentarios != null && comentarios.size() > 0 ) {
+            modelo.addAttribute("comentarios", comentarios);
+        }
+        
+        
+    }
     
     /*
     Carga los datos en la vista de diferentes campos

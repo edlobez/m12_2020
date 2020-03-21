@@ -16,7 +16,7 @@
  */
 package dawm12.grup2.es.domain;
 
-import java.util.Date;
+import java.sql.Date;
 
 
 /**
@@ -38,6 +38,15 @@ public class Comentari {
         this.createdUser = createdUser;
         this.createdDate = createdDate;
     }
+
+    public Comentari(String descripcio, int idAnimal, Date createdDate, String createdUser) {
+        this.descripcio = descripcio;
+        this.idAnimal = idAnimal;
+        this.createdDate = createdDate;
+        this.createdUser = createdUser;
+    }
+    
+    
 
     public int getIdComentari() {
         return idComentari;
@@ -78,4 +87,11 @@ public class Comentari {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+
+    @Override
+    public String toString() {
+        return "Comentari{" + "idComentari=" + idComentari + ", descripcio=" + descripcio + ", idAnimal=" + idAnimal + ", createdDate=" + createdDate + ", createdUser=" + createdUser + '}';
+    }
+    
+    
 }
