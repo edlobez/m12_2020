@@ -35,13 +35,16 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -113,15 +116,85 @@ public class AllAnimalController {
         return mv;
     }
     
-    @RequestMapping(value="/saveAnimal") 
+    @RequestMapping(value="/saveAnimal", method = RequestMethod.POST) 
     public ModelAndView saveAnimal (
-            @ModelAttribute("animal") Animal animal
-    ) {
+           @Valid @ModelAttribute ("animal") Animal animal,
+           BindingResult validacion, 
+           HttpServletRequest request,
+           @RequestParam("accion") String accion,
+           @RequestParam("comentari") String comentario,
+           ModelMap modelo
+    )  {
         
-        System.out.println ("Salvando de un update el animal: " + animal.toString());
+        if (validacion.hasErrors()) {
+            System.out.println("Error validaciones");
+        }
+        
+        animal = completarCampos (animal); 
+        
+        System.out.println("El comentario: " + comentario);
+        
+        // Creamos un nuevo animal
+        if (accion.equals("update")) {
+            Animal an = updateAnimal(animal, modelo);
+            if ( an == null ) {
+                modelo.addAttribute("animal", animal);
+                modelo.addAttribute("accion", accion);
+                modelo.addAttribute("error", "create_error");
+                cargarDatosEnVista (animal, modelo);
+                return new ModelAndView("animal");
+            }else {
+                // Debemos guardar el comentario
+                if ( comentario!= null && comentario.length() > 0 ){
+                    if ( guardarComentario ( an, comentario) == null ){
+                        System.out.println("Error en creando comentario");
+                    }
+                }
+            }            
+            
+        }
+        
+        String param = "";
+        if (accion.equals("update")) 
+            param = "?param=update_ok";
         
         
-        return null;
+        return new ModelAndView("redirect:/animal/animalList" + param);
+        
+        
+        
+        //System.out.println ("Salvando de un update el animal: " + animal.toString());
+        
+        
+        //return null;
+    }
+    
+        private Animal updateAnimal (Animal animal, ModelMap modelo) {
+        
+        // TODO --> En la modificación debería de coger de la vista si le da el alta, si esta adoptado y si es inactivo
+        animal.setIsAlta(false);
+        animal.setIsAdoptat(false);
+        animal.setInactiu(false);
+        
+        // TODO --> La fecha la debe coger del formulario
+        animal.setDataAlta(new java.sql.Date(1999-01-01));
+        
+        return (Animal) animalService.update(animal, 
+                "nom=" + animal.getNom() + ","+
+                "datanaix=" + animal.getDataNaix() + ","+
+                "sexe="+animal.getSexe()+","+
+                "tamany="+animal.getTamany()+","+
+                "tipusAnimal="+animal.getTipusAnimal()+","+
+                "raza="+animal.getRaza()+","+
+                "isalta="+((animal.isIsAlta())?1:0)+","+
+                "dataalta="+animal.getDataAlta()+","+
+                "isadoptat="+((animal.isIsAdoptat())?1:0)+","+
+                "isvacunat="+((animal.isIsVacunat())?1:0)+","+
+                "isesterilitzat="+((animal.isIsEsterlitzat())?1:0)+","+
+                "haschip="+((animal.isHasChip())?1:0)+","+
+                "numchip="+animal.getNumChip()+","+       
+                "vetassignat="+animal.getVetAssignat()+","+
+                "inactiu="+((animal.isInactiu())?1:0));
     }
     
     /*
@@ -178,7 +251,55 @@ public class AllAnimalController {
         
         
     }
+        /*
+    Hay alguno campos de la estructura de datos que se deben rellenar en 
+    función del otros. Estos son:
+    - tipusAnimal, es el ID que referencia a la tabla tipusAnimal. Este campo 
+    se debe rellenar en función del valor tAnimal.
+    - raza, es el ID que referencia a la tabal raza. Este campo se debe rellenar
+    en función del valor laRaza
+    - vetAsignat, es el ID que referencia a la tabla usuarios. Este campo se debe
+    rellenar en función del valor veterinari.
+    */
+    private Animal completarCampos ( Animal animal ) {
+        
+        TipusAnimal ta = (TipusAnimal) tipusAnimalService.getone( "descripcio=" + animal.gettAnimal() );
+        animal.setTipusAnimal( ta.getIdTipus() );
+        
+        Raza r = (Raza) razaService.getone("descripcio=" + animal.getLaRaza() );
+        animal.setRaza( r.getIdRaza() );
+        
+        Usuarios u = (Usuarios) usuarioService.getone( "username=" + animal.getVeterinari().split(" ")[0] );
+        animal.setVetAssignat( u.getUsername() );
+        
+        return animal;
+        
+    }
     
+        /*
+    Guarda el comentario para un animal nuevo
+    Se almacenará
+    [FECHA - HORA][USERNAME] - COMENTARIO
+    */
+    private Comentari guardarComentario (Animal an, String comentario) {
+        
+        String usuario = an.getCreatedUser();
+        java.util.Date d = new java.util.Date(); 
+        java.sql.Date d2 = new java.sql.Date(d.getTime());
+        java.sql.Timestamp date = new java.sql.Timestamp(d.getTime());
+        
+        //comentario = "[" + date + "] [" + usuario + "] - " + comentario;
+ 
+       // System.out.println("\nComentario:" + comentario +"\n para animal id " + an.getIdAnimal());
+        
+        // public Comentari(int idComentari, String descripcio, int idAnimal, Date createdDate, String createdUser)
+        
+        Comentari c = (Comentari) comentariService.create( new Comentari ( comentario, an.getIdAnimal(), d2, an.getCreatedUser()) );
+        
+        //System.out.println ("Comentario " + c.toString());
+        return c;
+        
+    } 
     
     
     /*

@@ -68,7 +68,8 @@
                         </h3>
 
                     </div>
-
+                    
+                    <mvc:input path="idAnimal" name="idAnimal" type="hidden" class="form-control" /> 
                     <div class="form-body">
 
                         <div class="row">
@@ -195,15 +196,33 @@
 
                             </div>
                         </div>
-
+                                
+                        <c:if test="${accion=='update'}">
                         <div class="row">
                             <div class="form-group col-lg-12">
-                                <label  for="comentari"><i class="far fa-keyboard"></i>&nbsp;Comentari:</label> 
-                                <textarea name="comentari" class="form-control" id="comentari" rows="10">
-                                    
-                                </textarea>
+                                <c:if test="${not empty comentarios}">
+                                    <label  for="llistaComentari">Llistat de comentaris:</label> </br>
+                                    <c:forEach var="comentario" begin="0" items="${comentarios}">
+                                        <label  for="comentari"><i class="far fa-hand-point-right"></i>&nbsp;${comentario.createdDate} - ${comentario.createdUser}</label> 
+                                        </br><c:out value="${comentario.descripcio}"></c:out></br>
+                                    </c:forEach>
+                                </c:if>
                             </div>
-                        </div>
+                        </div> 
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <button type="button" id="nuevoComentario" class="btn btn-default">
+                                    Nou comentari
+                                </button>
+                            </div>
+                        </div> 
+                        </c:if>
+                        <div class="row" id="newComentari" style="display:none;">
+                            <div class="form-group col-lg-12">
+                                <label  for="comentari"><i class="far fa-keyboard"></i>&nbsp;Comentari:</label> 
+                                <textarea name="comentari" class="form-control" id="comentari" rows="10"></textarea>
+                            </div>
+                        </div>  
 
                         <br/> <br/>
                         <div class="form-footer">
@@ -213,12 +232,13 @@
                             <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}'"                        
                                    value=' Tornar'/>
                             <input type="hidden" name="accion" value="${accion}"/>
+                            
 
                             <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
                             <br>
                             <c:choose>
                                 <c:when test="${error=='error_create'}">
-                                    <br><span class="alert alert-danger">Error a l'crear l'animal.</span>
+                                    <br><span class="alert alert-danger">Error a crear l'animal.</span>
                                 </c:when>
                             </c:choose>
                         </div>
@@ -237,6 +257,20 @@
                 if ( comentarios !== null ) {
                     console.log(comentarios);
                 }
+                
+                /*Si es la pantalla de creación muestra el textarea de comentario*/
+                var accion = "${accion}";
+                if(accion == "create"){
+                    $("#newComentari").show("slow");
+                }
+                
+                /*Habilita/Deshabilita el campo Num chip al cargar segun si tiene o no chip*/
+                if ($("._chipRadio:checked").val() == 1 ) {
+                    $("#numChip").removeAttr("disabled");
+                }else{
+                  $("#numChip").attr("disabled", "true");  
+                }
+                
 
             });
             
@@ -249,8 +283,11 @@
                     $("#numChip").attr("disabled", "true");
                 }
             });
+            
 
-
+            $("#nuevoComentario").click(function() {
+                $("#newComentari").show("slow");
+            });
 
 
 
