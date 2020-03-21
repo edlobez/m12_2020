@@ -84,8 +84,6 @@
                                     <th data-column-id="nom">Nom</th>
                                     <th data-column-id="tAnimal">Animal</th>
                                     <th data-column-id="laRaza">Raza</th>
-                                <!--    <th data-column-id="email">Email</th>                                    
-                                    <th data-column-id="tAnimal">Animal</th> -->
                                     <th data-column-id="commands" data-formatter="commands" data-sortable="false">Accions</th>
                                 </tr>
                             </thead>
@@ -132,16 +130,16 @@
                         {
                             if ( ($("#rol").val() === "[admin]") || ($("#rol").val() === "[responsable]") ) {
                                 return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\""
-                                        + row.idanimal +
+                                        + row.idAnimal +
                                         "\"><i class=\"far fa-edit\"></i></button> "
                                         +
                                         "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\""
-                                        + row.idanimal +
+                                        + row.idAnimal +
                                         "\"><i class=\"far fa-trash-alt\"></i></button>";
                                 }   
                             else if ( ($("#rol").val() === "[veterinari]") || ($("#rol").val() === "[voluntari]") ) {
                                 return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\""
-                                        + row.idanimal +
+                                        + row.idAnimal +
                                         "\"><i class=\"far fa-edit\"></i></button> ";
                             }
                             else {
@@ -159,10 +157,14 @@
                 }).on("loaded.rs.jquery.bootgrid", function () {
                     /* Executes after data is loaded and rendered */
                     grid.find(".command-edit").on("click", function (e) {
-                        alert("You pressed edit on row: " + $(this).data("row-id"));
-                        //location.href = '${home}editUser?username=' + $(this).data("row-id");
+                        //alert("You pressed edit on row: " + $(this).data("row-id"));
+                        location.href = '${home}editAnimal?idanimal=' + $(this).data("row-id");
                     }).end().find(".command-delete").on("click", function (e) {
-                        alert("You pressed delete on row: " + $(this).data("row-id"));
+                        //alert("You pressed delete on row: " + $(this).data("row-id"));
+                        var opcion = confirm("Esteu segur que vol esborrar l'animal "+ $(this).data("row-id") + "?");
+                        if ( opcion === true ) {
+                            location.href = '${pageContext.servletContext.contextPath}/responsable/deleteAnimal?idanimal=' + $(this).data("row-id");
+                        }
                         //location.href = '${home}deleteUser?username=' + $(this).data("row-id");
                     }).end().find(".text").on("click", function(e) {
                         e.preventDefault();
@@ -170,13 +172,8 @@
                         $(".search-field").attr("placeholder", _sort);
                        //alert("click username " + _sort.parent());
                                            
-                    });                  
-                   
-                    
+                    });   
                 });
-                
-                
-                
                 
                 var aux = $_GET("param");
 
@@ -186,6 +183,12 @@
                     }
                     if (aux === "update_ok") {
                         alert("Els canvis s'han guardat amb èxit.");
+                    }
+                    if (aux === "delete_ok") {
+                        alert("Animal esborrat amb èxit.");
+                    }
+                    if (aux === "delete_Nok") {
+                        alert("Error a l'esborrar l'animal.");
                     }
                 }
                 

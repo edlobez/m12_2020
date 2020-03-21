@@ -77,28 +77,6 @@ public class AdminAnimalController {
         
         cargarDatosEnVista ( modelo );
         
-        //El literal del tipo de animal
-      /*  List <String> tAnimal = new ArrayList <>();
-        for (Object unAnimal : tipusAnimalService.getAll() ) {
-            tAnimal.add( ((TipusAnimal) unAnimal).getDescripcio() );
-        }
-        tAnimal.remove("Tots");
-        mv.addObject("tAnimal", tAnimal);
-        
-        //El literal de la raza
-        List <String> laRaza = new ArrayList <>();
-        for (Object raza : razaService.getAll() ) {
-            laRaza.add ( ((Raza) raza).getDescripcio() );
-        }        
-        mv.addObject("laRaza", laRaza);
-        
-        // Los veterinarios a asignar
-        List <String> vet = new ArrayList <> ();        
-        for (Object unUser : usuarioService.get("rol="+ ( (Roles)rolesService.getone("rol=veterinari") ).getIdRol() ) ) {
-            vet.add ( ((Usuarios) unUser).getUsername() + " " + ((Usuarios) unUser).getNombre() + " " + ((Usuarios) unUser).getApellido1());            
-        }        
-        mv.addObject("vet", vet);    */   
-        
         return mv;
         
     }
@@ -158,6 +136,28 @@ public class AdminAnimalController {
             param = "?param=create_ok";
         if ( accion.equals("update") ) 
             param = "?param=update_ok";
+        
+        
+        return new ModelAndView("redirect:/animal/animalList" + param);
+    }
+    
+    @RequestMapping(value = "/deleteAnimal")
+    public ModelAndView deleteAnimal(
+            @RequestParam("idanimal") int idanimal) {
+        
+        Animal an = (Animal) animalService.getone("idanimal="+idanimal);
+        System.out.println ("Borrar animal: " + an.toString());
+        
+        // Para borrar el animal lo deshabílitamos        
+        an = (Animal) animalService.update(an, "inactiu=1");
+        
+        String param;
+        if ( an == null) {
+            param = "?param=delete_Nok";
+        }
+        else {
+            param = "?param=delete_ok";
+        }
         
         
         return new ModelAndView("redirect:/animal/animalList" + param);

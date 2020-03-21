@@ -16,6 +16,8 @@
  */
 package dawm12.grup2.es.appConfig;
 
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebApplicationInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -34,4 +36,13 @@ public class WebApplicationInitializer extends AbstractAnnotationConfigDispatche
     protected String[] getServletMappings() {
         return new String[]{"/"};
     }
+
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        super.onStartup(servletContext); //To change body of generated methods, choose Tools | Templates.
+        servletContext.addListener(new SessionListener());
+    }
+    
+    
+    
 }

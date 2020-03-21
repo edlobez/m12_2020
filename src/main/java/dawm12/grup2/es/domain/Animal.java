@@ -76,6 +76,7 @@ public class Animal {
         this.imatge = imatge;
     }
 
+    
     public Animal() {
     }
     

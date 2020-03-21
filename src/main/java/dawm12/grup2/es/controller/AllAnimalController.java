@@ -24,7 +24,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dawm12.grup2.es.domain.Animal;
 import dawm12.grup2.es.domain.Raza;
+import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
+import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -36,6 +38,8 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,6 +84,84 @@ public class AllAnimalController {
         return modelview;
     }
 
+    @RequestMapping(value = "/editAnimal")
+    public ModelAndView editAnimal (
+            @RequestParam ("idanimal") int idAnimal, ModelMap modelo
+    ) {
+        ModelAndView mv = new ModelAndView("animal");
+        Animal an = (Animal) animalService.getone("idAnimal=" + idAnimal);
+        //Completamos campos para añadir a la vista
+        an.setLaRaza( ((Raza)razaService.getone("idraza="+an.getRaza())).getDescripcio() );
+        Usuarios usr = (Usuarios)usuarioService.getone("username="+an.getVetAssignat());
+        an.setVeterinari( usr.getUsername() + " " + usr.getNombre() + " " + usr.getApellido1() );
+        an.settAnimal( ((TipusAnimal)tipusAnimalService.getone("idtipus=" + an.getTipusAnimal())).getDescripcio() );
+        
+        modelo.addAttribute("animal", an);
+        modelo.addAttribute("accion", "update");
+        cargarDatosEnVista ( an, modelo);
+        
+        System.out.println("Editando animal: " + an.toString());
+        
+        
+        
+        return mv;
+    }
+    
+    @RequestMapping(value="/saveAnimal") 
+    public ModelAndView saveAnimal (
+            @ModelAttribute("animal") Animal animal
+    ) {
+        
+        System.out.println ("Salvando de un update el animal: " + animal.toString());
+        
+        
+        return null;
+    }
+    
+    
+    /*
+    Carga los datos en la vista de diferentes campos
+    El primer elemento a mostra es el valor actual guardado
+    */
+    private void cargarDatosEnVista ( Animal an, ModelMap modelo ) {  
+        
+         //El literal del tipo de animal
+        List <String> tAnimal = new ArrayList <>();
+        tAnimal.add(an.gettAnimal());
+        for (Object unAnimal : tipusAnimalService.getAll() ) {
+            String aux = ((TipusAnimal) unAnimal).getDescripcio();
+            if ( !aux.equals(an.gettAnimal()) )
+                tAnimal.add( aux );
+        }
+        tAnimal.remove("Tots");
+               
+        modelo.addAttribute("tAnimal", tAnimal);
+               
+        //El literal de la raza
+        List <String> laRaza = new ArrayList <>();
+        laRaza.add ( an.getLaRaza() ); 
+        for (Object raza : razaService.getAll() ) {
+            String aux = ((Raza) raza).getDescripcio();
+            if ( !aux.equals(an.getLaRaza()) )
+                 laRaza.add ( aux );
+        }
+       
+        modelo.addAttribute("laRaza", laRaza);
+        
+        // Los veterinarios a asignar
+        List <String> vet = new ArrayList <> ();
+        vet.add ( an.getVeterinari() );
+        for (Object unUser : usuarioService.get("rol="+ ( (Roles)rolesService.getone("rol=veterinari") ).getIdRol() ) ) {
+            if ( !((Usuarios)unUser).getUsername().equals(an.getVetAssignat())  )
+                 vet.add ( ((Usuarios) unUser).getUsername() + " " + ((Usuarios) unUser).getNombre() + " " + ((Usuarios) unUser).getApellido1());            
+        } 
+        modelo.addAttribute("vet", vet);
+        
+        
+    }
+    
+    
+    
     /*
     Retorna en formato Json la lista de animales solicitada
      */
@@ -127,17 +209,17 @@ public class AllAnimalController {
             if ( Integer.parseInt(numFilas) != -1 ) {
                 aux = "LIMIT " + numFilas;
             }
-            lista = animalService.getAll(aux);
+            lista = animalService.get(aux, "inactiu=0");
         } else {
             if (lasRazas == null || lasRazas.isEmpty())
-                lista = animalService.get("ORDER BY nom ASC", busqueda_por + "=%" + cadenaBusqueda + "%");
+                lista = animalService.get("ORDER BY nom ASC", busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0");
             else {
                 for (Raza unaRaza: lasRazas) {
                     //System.out.println("\nRazas: " + unaRaza.getDescripcio());
                     List<Animal> lista_aux = new ArrayList<>();
                     cadenaBusqueda = Integer.toString( ( (Raza) razaService.getone("descripcio=" + unaRaza.getDescripcio())).getIdRaza());
                    // System.out.println("buscar por " + busqueda_por + ": " + cadenaBusqueda);
-                    lista_aux = animalService.get("ORDER BY nom ASC", busqueda_por + "=%" + cadenaBusqueda + "%");
+                    lista_aux = animalService.get("ORDER BY nom ASC", busqueda_por + "=%" + cadenaBusqueda + "%.inactiu=0");
                     lista.addAll(lista_aux);
                 }
                 

@@ -24,6 +24,7 @@ import java.sql.Timestamp;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSessionListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
@@ -49,7 +50,7 @@ public class HomeController {
     private Service usuarioService;
     
     @RequestMapping(value = {"/", "/home"})    
-    public ModelAndView homeRequest (HttpServletRequest request, HttpServletResponse response)
+    public ModelAndView homeRequest (HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException { 
         
         ModelAndView modelview = null;
@@ -70,7 +71,8 @@ public class HomeController {
         guardarAcceso(auth.getName()); 
         modelview = comprobarPassword(auth.getName(), request.getParameter("error"));
         //modelview.setViewName(mv);
-        //modelview.setViewName("presentacion"); 
+        //modelview.setViewName("presentacion");
+        
         return modelview;
         
     }  
@@ -96,7 +98,7 @@ public class HomeController {
         ModelAndView mw = new ModelAndView();
         
         Usuarios usr = (Usuarios)usuarioService.getone("username="+username);
-        if ( usr.isChangePass() ) {
+        if ( usr!= null && usr.isChangePass() ) {
             System.out.println("El usuario debe cambiar el password");  
             mw.addObject("usuario", usr);
             if ( error != null )

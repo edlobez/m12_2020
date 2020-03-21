@@ -236,8 +236,7 @@
             });
             
             //Control del chip
-            $("._chipRadio").click(function (e) {
-                alert(this.value);
+            $("._chipRadio").click(function (e) {                
                 if (this.value == 1 ) {
                     $("#numChip").removeAttr("disabled");
                 }
