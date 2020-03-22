@@ -22,7 +22,7 @@
         <script src="https://kit.fontawesome.com/42bb3417c7.js" crossorigin="anonymous"></script>
 
         <script src="../static/js/jquery/jquery-3.3.1.min.js"></script>
-
+        <script src="../static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
         <title>Formulari Animal</title>
     </head>
@@ -198,24 +198,55 @@
                         </div>
                                 
                         <c:if test="${accion=='update'}">
-                        <div class="row">
+                        <br>
+                       <!-- Boton -->
+                       
+
+                       <div class="row">
                             <div class="form-group col-lg-12">
-                                <c:if test="${not empty comentarios}">
-                                    <label  for="llistaComentari">Llistat de comentaris:</label> </br>
-                                    <c:forEach var="comentario" begin="0" items="${comentarios}">
-                                        <label  for="comentari"><i class="far fa-hand-point-right"></i>&nbsp;${comentario.createdDate} - ${comentario.createdUser}</label> 
-                                        </br><c:out value="${comentario.descripcio}"></c:out></br>
-                                    </c:forEach>
-                                </c:if>
-                            </div>
-                        </div> 
-                        <div class="row">
-                            <div class="form-group col-lg-12">
+                                <button data-toggle="modal" href="#mi_modal" class="btn btn-default" type="button">
+                                    Veure comentaris
+                                </button>
                                 <button type="button" id="nuevoComentario" class="btn btn-default">
                                     Nou comentari
                                 </button>
                             </div>
-                        </div> 
+                        </div>
+                       <!-- si se necesita cambiar tamaño de modal agregar modal-lg a la linea 
+                       <div class="modal-dialog"> por <div class="modal-dialog modal-lg">-->
+
+                         <!-- Modal-->
+                         <div class="modal fade" id="mi_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                           <div class="modal-dialog">
+                             <div class="modal-content">
+                               <div class="modal-header">
+                                 <button type="button" class="close" data-dismiss="modal">
+                                   <span aria-hidden="true">&times;</span><span class="sr-only">Tanca</span>
+                                 </button>
+                                 <h4 class="modal-title" id="myModalLabel">Llistat de comentaris</h4>
+                               </div>
+                               <div class="modal-body">
+                                 <div class="row" style="padding:15px">
+                                   <c:if test="${not empty comentarios}">
+                                    <c:forEach var="comentario" begin="0" items="${comentarios}">
+                                        <a class="list-group-item">
+                                            <h4 class="list-group-item-heading">${comentario.createdDate} - ${comentario.createdUser}</h4>
+                                            <p class="list-group-item-text">${comentario.descripcio}</p>
+                                        </a>        
+                                    </c:forEach>
+                                </c:if>
+                                 </div>
+                               </div>
+                               <div class="modal-footer">
+                                 <button type="button" class="btn btn-default" data-dismiss="modal">Tanca</button>
+                               </div>
+                             </div>
+                           </div>
+                         </div>
+                         <!-- Fin modal -->
+
+
+                        
                         </c:if>
                         <div class="row" id="newComentari" style="display:none;">
                             <div class="form-group col-lg-12">
