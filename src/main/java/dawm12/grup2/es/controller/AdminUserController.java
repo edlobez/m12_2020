@@ -382,6 +382,90 @@ public class AdminUserController {
         return json.toString();
     }
 
+    @RequestMapping(value = "/userList_v2")
+    public String getSearchResultViaAjaxV2(           
+            HttpServletRequest request
+         ) throws JSONException {
+        
+        System.out.println("\nRecibiendo petición");
+        Enumeration <String> par = request.getParameterNames();
+        while (par.hasMoreElements()) {
+            String aux = par.nextElement();
+            System.out.println(aux +": " + request.getParameter(aux));
+        }
+        
+        int draw = Integer.parseInt(request.getParameter("draw")) + 1;
+        //System.out.println("Draw: " + draw);
+        
+        int num_registros = Integer.parseInt(request.getParameter("length"));
+        System.out.println("Num regisros: " + num_registros);
+        
+        int inicio = Integer.parseInt(request.getParameter("start"));
+        System.out.println("Inicio: " + inicio);
+        
+        // Obtenemos todos los usuarios sin ningun filtro
+        List <Usuarios> _usuarios = usuarioService.get("enabled=1");
+        int total_registros = _usuarios.size();
+        
+        // Miramos si hay algún filtro
+        String filtro = request.getParameter("search[value]");
+        System.out.println("Filtrar por: " + filtro);
+        
+        int reg_final = inicio + num_registros;
+        if ( reg_final > _usuarios.size() ) reg_final = _usuarios.size();            
+        List <Usuarios> usuarios = _usuarios.subList(inicio, reg_final );
+        
+        if ( usuarios!= null && usuarios.size() > 0 ) {
+            for (int i = 0; i < usuarios.size(); i++) {
+                TipusAnimal t = (TipusAnimal) tipusAnimalService.getone("idtipus=" + usuarios.get(i).getTipusAnimal());
+                usuarios.get(i).settAnimal(  t.getDescripcio()  );
+            }
+        }
+        
+        ObjectMapper JSON_MAPPER = new ObjectMapper();
+        JSONObject member = null;
+        JSONArray array = new JSONArray();
+        for (Usuarios user : usuarios) {
+            try {
+                member = new JSONObject(JSON_MAPPER.writeValueAsString(user));
+                array.put(member);
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        //System.out.println("Json array: " + array.toString());
+        JSONObject json = new JSONObject();
+        try {            
+            json.put("recordsFiltered", _usuarios.size());            
+            json.put("recordsTotal", _usuarios.size());
+            json.put("draw", draw);
+            json.put("data", array);
+        } catch (JSONException ex) {
+            Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        /*  String resultado = "{"
+                + "\"draw\": " + draw +","
+                + "\"recordsTotal\":1,"
+                + "\"recordsFiltered\":1,"
+                + "\"data\": ["
+                + "{"
+                + "\"username\": \"edlobez\","
+                + "\"nombre\": \"edu\","
+                + "\"apellido1\": \"lopez\","
+                + "\"email\": \"edo@do.com\","
+                + "\"tAnimal\": \"gato\" "
+                + "}"
+                + "]"
+                + "}";*/
+        
+        System.out.println(json.toString());
+        return json.toString();
+    }
+    
+    
+    
     private Usuarios createUsuario(Usuarios usr, ModelMap modelo) {
 
         Usuarios usr_resultado;
