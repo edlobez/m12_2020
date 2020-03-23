@@ -116,11 +116,12 @@
             
             //https://datatables.net/examples/index
             //https://datatables.net/manual/server-side
-            var table;
-            
+           
             $(document).ready(function () {
-               
-                table = $('#tabla_usuarios').DataTable({
+                
+                var aux = 0;
+                
+                var table = $('#tabla_usuarios').DataTable({
                     "processing" : true,
                     "serverSide" : true,                    
                     "ajax" : { 
@@ -133,24 +134,30 @@
                         {"data": "apellido1"},
                         {"data": "email"},
                         {"data": "tAnimal"}
-                    ]                    
+                    ],
+                    "columnDefs": [
+                        { "searchable": false, "targets": 0 },
+                        { "searchable": false, "targets": 1 },
+                        { "searchable": false, "targets": 2 },
+                        { "searchable": false, "targets": 3 },
+                        { "searchable": false, "targets": 4 } 
+                    ]
                 }); 
+                
+                $('#tabla_usuarios tbody').on('click', 'tr', function () {
+                    //alert($(this).text());
+                     var data = table.row(this).data();
+                     //console.log(Object.values(data)[10]);                     
+                     location.href = '${home}editUser?username=' + Object.values(data)[10];
+                     //alert( 'You clicked on '+data[5] +'\'s row' );
+                    } );                     
+                    $("th").click(function () {
+                        //alert ($(this).text());                        
+                    }); 
+                
                     
                 });
                 
-                 $('#tabla_usuarios tbody').on('click', 'tr', function () {
-                    alert($(this).text());
-                     var data = table.row().data();
-                     alert( 'You clicked on '+data[0] +'\'s row' );
-                    } ); 
-                    
-                   $("th").click(function () {
-                        alert ($(this).text());
-                    });
-            
-                
-                
-             
 
         </script>
 

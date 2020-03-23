@@ -387,29 +387,61 @@ public class AdminUserController {
             HttpServletRequest request
          ) throws JSONException {
         
-        System.out.println("\nRecibiendo petición");
+        String campos_tabla [] = {"username", "nombre", "apellido1", "email", "tipusAnimal"};
+        
+      /*  System.out.println("\nRecibiendo petición");
         Enumeration <String> par = request.getParameterNames();
         while (par.hasMoreElements()) {
             String aux = par.nextElement();
             System.out.println(aux +": " + request.getParameter(aux));
-        }
+        }*/
         
+        // Cada petición debemos sumar 1 a este parámetro
         int draw = Integer.parseInt(request.getParameter("draw")) + 1;
         //System.out.println("Draw: " + draw);
         
+        // Número de registros a mostrar
         int num_registros = Integer.parseInt(request.getParameter("length"));
-        System.out.println("Num regisros: " + num_registros);
+        //System.out.println("Num regisros: " + num_registros);
         
+        // Primer registro a mostrar, depende de la página donde estamos
         int inicio = Integer.parseInt(request.getParameter("start"));
-        System.out.println("Inicio: " + inicio);
+        //System.out.println("Inicio: " + inicio);      
         
-        // Obtenemos todos los usuarios sin ningun filtro
-        List <Usuarios> _usuarios = usuarioService.get("enabled=1");
-        int total_registros = _usuarios.size();
         
         // Miramos si hay algún filtro
-        String filtro = request.getParameter("search[value]");
-        System.out.println("Filtrar por: " + filtro);
+        String cadenaBusqueda = request.getParameter("search[value]");
+        //System.out.println("Filtrar por: " + cadenaBusqueda);
+        
+        // La columna por la que buscar
+        int buscar_por = Integer.parseInt( request.getParameter("order[0][column]") );
+        String busqueda_por = campos_tabla[buscar_por];
+        //System.out.println("Buscar por: " + campos_tabla[buscar_por]);
+        
+        //Ordernar ascendenteo o descendente
+        String order_dir = request.getParameter("order[0][dir]");
+        //System.out.println("Order dir: " + order_dir);
+        
+        // Si vamos a buscar por tipo de animal, debemos cambiar la cadena
+        // ... de búsqueda
+        if ( busqueda_por.equals("tipusAnimal")) {
+            if ( cadenaBusqueda.toLowerCase().startsWith("g") ) 
+                cadenaBusqueda = "1";
+            else if ( cadenaBusqueda.toLowerCase().startsWith("c") )
+                cadenaBusqueda = "2";
+            else if ( cadenaBusqueda.toLowerCase().startsWith("t") ) 
+                cadenaBusqueda = "3";
+        }
+        
+        // Cadena complementario a la busqueda      
+        String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";
+        List <Usuarios> _usuarios = new ArrayList <>();
+        _usuarios = usuarioService.get (aux, "enabled=1");
+        // Obtenemos todos los usuarios sin ningun filtro        
+        int total_registros = _usuarios.size();
+        if (cadenaBusqueda.length() > 0 ) {            
+            _usuarios = usuarioService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,enabled=1");
+        } 
         
         int reg_final = inicio + num_registros;
         if ( reg_final > _usuarios.size() ) reg_final = _usuarios.size();            
@@ -438,7 +470,7 @@ public class AdminUserController {
         JSONObject json = new JSONObject();
         try {            
             json.put("recordsFiltered", _usuarios.size());            
-            json.put("recordsTotal", _usuarios.size());
+            json.put("recordsTotal", total_registros);
             json.put("draw", draw);
             json.put("data", array);
         } catch (JSONException ex) {

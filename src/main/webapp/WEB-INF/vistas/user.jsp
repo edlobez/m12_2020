@@ -249,7 +249,7 @@
                             <button type="submit" id="btn_enviar" class="btn btn-info">
                                 <span class="glyphicon glyphicon-log-in"></span> Enviar
                             </button>
-                            <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}'"                        
+                            <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/admin/users'"                        
                                    value=' Tornar'/>
                             <input type="hidden" name="accion" value="${accion}"/> 
 

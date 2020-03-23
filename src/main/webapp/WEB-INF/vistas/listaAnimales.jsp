@@ -17,20 +17,13 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
         <link href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet"/>
-        <link href="../static/jquery.bootgrid-1.3.1/css/jquery.bootgrid.css" rel="stylesheet" />
-        
-        <script src="<c:url value="../static/js/jquery/jquery-3.3.1.min.js"/>"></script>        
-        <script src="<c:url value="../static/js/jquery/jquery-ui.js"/>"></script>
+        <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/>       
 
-        <script src="../static/bootstrap-4.4.1-dist/js/popper.min.js"></script>
-       
-
+        <script src="../static/js/jquery/jquery-3.3.1.min.js"></script>        
+        <script src="../static/js/jquery/jquery-ui.js"></script>
         <script src="../static/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
-        <script src="../static/jquery.bootgrid-1.3.1/js/moderniz.2.8.1.js"></script>
-        <script src="../static/jquery.bootgrid-1.3.1/js/jquery.bootgrid.js"></script>
-        <script src="../static/jquery.bootgrid-1.3.1/js/jquery.bootgrid.fa.js"></script>
-
-
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+        
         <title>Llistat d'animals</title>
     </head>
     <body>
@@ -75,155 +68,72 @@
         <!-- http://www.jquery-bootgrid.com/ -->
         <div class="container"> 
             <seccion>
-                <div class="row">
+                  <div class="row">
                     <div class="col-md-12">
-                        <table id="grid-data" class="table table-condensed table-hover table-striped">
-                            <thead>
+                        <table id="tabla_animales" class="display" style="width:100%"><thead>
                                 <tr>
-                                    <th data-column-id="idAnimal">Id</th>
-                                    <th data-column-id="nom">Nom</th>
-                                    <th data-column-id="tAnimal">Animal</th>
-                                    <th data-column-id="laRaza">Raza</th>
-                                    <th data-column-id="commands" data-formatter="commands" data-sortable="false">Accions</th>
+                                    <th>Id</th>
+                                    <th>Nom</th>
+                                    <th>Tipus</th>
+                                    <th>Raza</th>                
                                 </tr>
                             </thead>
-                        </table>  
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <<th>Id</th>
+                                    <th>Nom</th>
+                                    <th>Tipus</th>
+                                    <th>Raza</th> 
+                                </tr>
+                            </tfoot>
+                        </table>
+                        
                     </div>
-                </div>
-
-                <div class="row">
-
-                </div>
+                </div>                
             </seccion>
             <footer>                
                 <div>                    
                     <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}'"                        
                            value=' Tornar'/>
                 </div>
-
             </footer>
-
         </div>
-
-
-
-
+                           
         <script>
             jQuery(document).ready(function ($) {
-                
-                var _sort = "nom";
-                
-                
-                var grid = $("#grid-data").bootgrid({
-                    rowCount: [-1, 5, 10],
-                    ajax: true,
-                    sort: _sort,
-                    post: function ()
-                    {
-                        return {
-                            id: "b0df282a-0d67-40e5-8558-c9e93b7befed"
-                        };
+
+                var table = $('#tabla_animales').DataTable({
+                    "processing" : true,
+                    "serverSide" : true,                    
+                    "ajax" : { 
+                        url: "${home}getAnimalList_v2"
+                        ,type: 'POST'
                     },
-                    url: "${home}getAnimalList",
-                    formatters: {
-                        "commands": function (column, row)
-                        {
-                            if ( ($("#rol").val() === "[admin]") || ($("#rol").val() === "[responsable]") ) {
-                                return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\""
-                                        + row.idAnimal +
-                                        "\"><i class=\"far fa-edit\"></i></button> "
-                                        +
-                                        "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\""
-                                        + row.idAnimal +
-                                        "\"><i class=\"far fa-trash-alt\"></i></button>";
-                                }   
-                            else if ( ($("#rol").val() === "[veterinari]") || ($("#rol").val() === "[voluntari]") ) {
-                                return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\""
-                                        + row.idAnimal +
-                                        "\"><i class=\"far fa-edit\"></i></button> ";
-                            }
-                            else {
-                                return "";
-                            }
-                        }
-                    },
-                    labels: {
-                        all : "Tots",
-                        search: _sort,
-                        infos: "Mostrant {{ctx.start}} a {{ctx.end}} de {{ctx.total}} entrades"
-                        
-                    }
-
-                }).on("loaded.rs.jquery.bootgrid", function () {
-                    /* Executes after data is loaded and rendered */
-                    grid.find(".command-edit").on("click", function (e) {
-                        //alert("You pressed edit on row: " + $(this).data("row-id"));
-                        location.href = '${home}editAnimal?idanimal=' + $(this).data("row-id");
-                    }).end().find(".command-delete").on("click", function (e) {
-                        //alert("You pressed delete on row: " + $(this).data("row-id"));
-                        var opcion = confirm("Esteu segur que vol esborrar l'animal "+ $(this).data("row-id") + "?");
-                        if ( opcion === true ) {
-                            location.href = '${pageContext.servletContext.contextPath}/responsable/deleteAnimal?idanimal=' + $(this).data("row-id");
-                        }
-                        //location.href = '${home}deleteUser?username=' + $(this).data("row-id");
-                    }).end().find(".text").on("click", function(e) {
-                        e.preventDefault();
-                        _sort = this.innerHTML;
-                        $(".search-field").attr("placeholder", _sort);
-                       //alert("click username " + _sort.parent());
-                                           
-                    });   
-                });
+                    "columns" : [
+                        {"data": "idAnimal"},
+                        {"data": "nom"},
+                        {"data": "tAnimal"},
+                        {"data": "laRaza"}
+                    ],
+                    "columnDefs": [
+                        { "searchable": false, "targets": 0 },
+                        { "searchable": false, "targets": 1 },
+                        { "searchable": false, "targets": 2 },
+                        { "searchable": false, "targets": 3 }
+                    ]
+                }); 
                 
-                var aux = $_GET("param");
-
-                if (aux.length > 0) {
-                    if (aux === "create_ok") {
-                        alert("Animal creat amb èxit.");
-                    }
-                    if (aux === "update_ok") {
-                        alert("Els canvis s'han guardat amb èxit.");
-                    }
-                    if (aux === "delete_ok") {
-                        alert("Animal esborrat amb èxit.");
-                    }
-                    if (aux === "delete_Nok") {
-                        alert("Error a l'esborrar l'animal.");
-                    }
-                }
-                
-            });
-
-            function $_GET(param)
-            {
-                /* Obtener la url completa */
-                url = document.URL;
-                /* Buscar a partir del signo de interrogación ? */
-                url = String(url.match(/\?+.+/));
-                /* limpiar la cadena quitándole el signo ? */
-                url = url.replace("?", "");
-                /* Crear un array con parametro=valor */
-                url = url.split("&");
-
-                /* 
-                 Recorrer el array url
-                 obtener el valor y dividirlo en dos partes a través del signo = 
-                 0 = parametro
-                 1 = valor
-                 Si el parámetro existe devolver su valor
-                 */
-                x = 0;
-                while (x < url.length)
-                {
-                    p = url[x].split("=");
-                    if (p[0] == param)
-                    {
-                        return decodeURIComponent(p[1]);
-                    }
-                    x++;
-                }
-            }
-          
+                $('#tabla_animales tbody').on('click', 'tr', function () {
+                    //alert($(this).text());
+                     var data = table.row(this).data();
+                     //console.log(Object.values(data)[0]);                     
+                     location.href = '${home}editAnimal?idanimal=' + Object.values(data)[0];
+                     //location.href = '${home}editAnimal?idanimal=' + $(this).data("row-id");
+                     //alert( 'You clicked on '+data[5] +'\'s row' );
+                    } );
+                                         
+                }); 
         </script>
 
 

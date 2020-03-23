@@ -351,6 +351,7 @@ public class AllAnimalController {
             }
             lista = animalService.get(aux, "inactiu=0");
         } else {
+            System.out.println("Busqueda por: " + busqueda_por + " Cadena: " + cadenaBusqueda);
             if (lasRazas == null || lasRazas.isEmpty())
                 lista = animalService.get("ORDER BY nom ASC", busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0");
             else {
@@ -410,6 +411,122 @@ public class AllAnimalController {
        //System.out.println ("\n\n" + json.toString());
         return json.toString();
 
+    }
+    
+    
+    @RequestMapping(value = "/getAnimalList_v2")
+    public String getSearchResultViaAjaxV2 (
+           HttpServletRequest request 
+    ) throws JSONException {
+        
+        String campos_tabla [] = {"idAnimal", "nom", "tipusAnimal", "raza"};
+        
+        // Cada petición debemos sumar 1 a este parámetro
+        int draw = Integer.parseInt(request.getParameter("draw")) + 1;
+        
+        // Número de registros a mostrar
+        int num_registros = Integer.parseInt(request.getParameter("length"));
+        
+        // Primer registro a mostrar, depende de la página donde estamos
+        int inicio = Integer.parseInt(request.getParameter("start"));
+        
+        // Miramos si hay algún filtro
+        String cadenaBusqueda = request.getParameter("search[value]");
+        
+        // La columna por la que buscar
+        int buscar_por = Integer.parseInt( request.getParameter("order[0][column]") );
+        String busqueda_por = campos_tabla[buscar_por];
+        
+        //Ordernar ascendenteo o descendente
+        String order_dir = request.getParameter("order[0][dir]");
+        
+        List <Raza> lasRazas = new ArrayList <>();
+        
+        if ( busqueda_por.equals("tipusAnimal")) {
+            if ( cadenaBusqueda.toLowerCase().startsWith("go") ) 
+                cadenaBusqueda = "1";
+            else if ( cadenaBusqueda.toLowerCase().startsWith("ga") )
+                cadenaBusqueda = "2";
+            else if ( cadenaBusqueda.toLowerCase().startsWith("t") ) 
+                cadenaBusqueda = "3";
+        } else if ( busqueda_por.equals("raza")) { 
+            lasRazas = razaService.get("descripcio=%" + cadenaBusqueda + "%");
+            busqueda_por = "raza";
+           
+        }
+        
+        // Cadena complementario a la busqueda      
+        String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";
+        
+        List <Animal> _animales = new ArrayList<>();
+        _animales = animalService.get(aux, "inactiu=0");
+        //Obtenemos el total de animales sin filtro.
+        int total_registros = _animales.size();        
+        if (cadenaBusqueda.length() > 0 ) {
+            System.out.println("Busqueda por: " + busqueda_por + " Cadena: " + cadenaBusqueda);
+            if (lasRazas == null || lasRazas.isEmpty())
+                _animales = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0");
+            else {
+                _animales.clear();
+                for (Raza unaRaza: lasRazas) {                    
+                    //System.out.println("\nRazas: " + unaRaza.getDescripcio());
+                    List<Animal> lista_aux = new ArrayList<>();
+                    cadenaBusqueda = Integer.toString( ( (Raza) razaService.getone("descripcio=" + unaRaza.getDescripcio())).getIdRaza());
+                    //System.out.println("buscar por " + busqueda_por + ": " + cadenaBusqueda);
+                    lista_aux = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0");
+                    _animales.addAll(lista_aux);
+                }                
+            }            
+        } 
+        
+        
+        int reg_final = inicio + num_registros;
+        if ( reg_final > _animales.size() ) reg_final = _animales.size();
+        List <Animal> animales = _animales.subList(inicio, reg_final);
+        
+        if ( animales != null && animales.size() > 0 ) {
+            for (int i = 0; i < _animales.size(); i++) {
+                TipusAnimal t = (TipusAnimal) tipusAnimalService.getone("idtipus=" + animales.get(i).getTipusAnimal());
+                Raza r = (Raza) razaService.getone("idraza=" +  animales.get(i).getRaza());
+                animales.get(i).settAnimal( t.getDescripcio() );
+                animales.get(i).setLaRaza( r.getDescripcio()) ;
+            }
+            
+        }
+        
+        ObjectMapper JSON_MAPPER = new ObjectMapper();
+        JSONObject member = null;
+        JSONArray array = new JSONArray();
+        for (Animal an : animales) {
+            try {
+                member = new JSONObject(JSON_MAPPER.writeValueAsString(an));
+                array.put(member);
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        //System.out.println("Json array: " + array.toString());
+        JSONObject json = new JSONObject();
+        try {
+            json.put("recordsFiltered", _animales.size());            
+            json.put("recordsTotal", total_registros);
+            json.put("draw", draw);
+            json.put("data", array);
+        } catch (JSONException ex) {
+            Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+
+       /* String result = "{\"current\":1, "
+                + "\"rowCount\":10,"
+                + "\"total\":14,"
+                + "\"rows\": ["
+                + "{\"idanimal\":1,\"nom\":\"El nombre\",\"tipusanimal\": \"edu\",\"raza\": \"edu@yahoo.com\"}"
+                + "]}";
+*/
+       System.out.println ("\n\n" + json.toString());
+       return json.toString();
     }
 
 }
