@@ -94,10 +94,7 @@ public class AdminUserController {
         return modelview;
     }
 
-    /*  @RequestMapping("/logout")
-    public void logout () {
-        System.out.println("\n\n\nAdios");
-    }*/
+ 
     @RequestMapping(value = "/editUser")
     public ModelAndView editUser(@RequestParam("username") String username, Model modelo) {
         Usuarios usr = (Usuarios) usuarioService.getone("username=" + username);
@@ -285,105 +282,7 @@ public class AdminUserController {
     }
 
     @RequestMapping(value = "/userList")
-    public String getSearchResultViaAjax(
-            @RequestBody String search,
-            @RequestParam("current") String actual,
-            @RequestParam("rowCount") String numFilas,
-            HttpServletRequest request,
-            @RequestParam("searchPhrase") String cadenaBusqueda) throws JSONException {
-
-               
-        String busqueda_por = "username";
-        Enumeration <String> par = request.getParameterNames();
-        while (par.hasMoreElements()) {
-            String aux = par.nextElement();
-            if (aux.indexOf("sort") != -1) {
-                busqueda_por = aux.substring(5, aux.length()-1);                
-                if ( busqueda_por.equals("tAnimal") ) {
-                    busqueda_por = "tipusAnimal";
-                }
-            }
-        }
-        
-        //System.out.println("\n\n"+busqueda_por);
-        
-        if ( busqueda_por.equals("tipusAnimal")) {
-            if ( cadenaBusqueda.toLowerCase().startsWith("g") ) 
-                cadenaBusqueda = "1";
-            else if ( cadenaBusqueda.toLowerCase().startsWith("c") )
-                cadenaBusqueda = "2";
-            else if ( cadenaBusqueda.toLowerCase().startsWith("t") ) 
-                cadenaBusqueda = "3";
-        }
-        
-        
-        List<Usuarios> lista = new ArrayList<>();
-        if (cadenaBusqueda.length() == 0) {
-            String aux = "";
-            if (Integer.parseInt(numFilas) != -1) {
-                aux = "LIMIT " + numFilas;
-            }
-            //lista = usuarioService.getAll(("ORDER BY username ASC " + aux).trim());
-            lista = usuarioService.get(aux, "enabled=1");
-        } else {
-            lista = usuarioService.getAND("ORDER BY apellido1 ASC", busqueda_por + "=%" + cadenaBusqueda + "%,enabled=1");
-        }
-
-        if ( lista!= null && lista.size() > 0 ) {
-            for (int i = 0; i < lista.size(); i++) {
-                TipusAnimal t = (TipusAnimal) tipusAnimalService.getone("idtipus=" + lista.get(i).getTipusAnimal());
-                lista.get(i).settAnimal(  t.getDescripcio()  );
-            }
-        }
-        
-        ObjectMapper JSON_MAPPER = new ObjectMapper();
-        JSONObject member = null;
-        JSONArray array = new JSONArray();
-        for (Usuarios user : lista) {
-            try {
-                member = new JSONObject(JSON_MAPPER.writeValueAsString(user));
-                array.put(member);
-            } catch (JsonProcessingException ex) {
-                Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        //System.out.println("Json array: " + array.toString());
-        JSONObject json = new JSONObject();
-        try {
-            json.put("total", lista.size());
-            json.put("rows", array);            
-            json.put("rowCount", numFilas);
-            json.put("current", actual);
-        } catch (JSONException ex) {
-            Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        /*  String result = "{\"current\":1, "
-                + "\"rowCount\":10,"
-                + "\"total\":14,"
-                + "\"rows\": ["
-                + "{\"id\":1,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":2,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":3,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":4,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":5,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":6,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":7,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":8,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":9,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":10,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":11,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":12,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":13,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"},"
-                + "{\"id\":14,\"name\": \"edu\",\"correo\": \"edu@yahoo.com\"}"
-                + "]}";*/
-        //System.out.println(json.toString());
-        return json.toString();
-    }
-
-    @RequestMapping(value = "/userList_v2")
-    public String getSearchResultViaAjaxV2(           
+    public String getSearchResultViaAjax(           
             HttpServletRequest request
          ) throws JSONException {
         

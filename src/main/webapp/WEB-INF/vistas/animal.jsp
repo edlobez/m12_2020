@@ -259,9 +259,10 @@
                         <div class="form-footer">
                             <button type="submit" id="btn_enviar" class="btn btn-info">
                                 <span class="glyphicon glyphicon-log-in"></span> Enviar
-                            </button>
+                            </button>                            
                             <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'"                        
                                    value=' Tornar'/>
+                            <input type="button" class="btn btn-danger" onclick="borrarAnimal()" value="Borrar"/>
                             <input type="hidden" name="accion" value="${accion}"/>
                             
 
@@ -286,7 +287,7 @@
             jQuery(document).ready(function () {           
                 var comentarios = "${comentarios}";
                 if ( comentarios !== null ) {
-                    console.log(comentarios);
+                    //console.log(comentarios);
                 }
                 
                 /*Si es la pantalla de creación muestra el textarea de comentario*/
@@ -320,6 +321,12 @@
                 $("#newComentari").show("slow");
             });
 
+            function borrarAnimal () {
+                var opcion = confirm("Esteu segur que vol esborrar l'animal "+ "${animal.nom}" + "?");
+                if ( opcion === true ) {
+                    location.href = '${pageContext.servletContext.contextPath}/responsable/deleteAnimal?idanimal=' + "${animal.idAnimal}";
+                }
+            }
 
 
         </script>

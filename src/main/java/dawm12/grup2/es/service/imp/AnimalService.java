@@ -69,6 +69,7 @@ public class AnimalService extends ServiceImp <Animal> implements Service <Anima
                     "isvacunat="+((type.isIsVacunat())?1:0)+","+
                     "isesterilitzat="+((type.isIsEsterlitzat())?1:0)+","+
                     "haschip="+((type.isHasChip())?1:0)+","+
+                    "numchip="+type.getNumChip()+","+
                     "vetassignat="+type.getVetAssignat()+","+
                     "inactiu="+((type.isInactiu())?1:0)+","+
                     "createddate="+type.getCreatedDate()+","+

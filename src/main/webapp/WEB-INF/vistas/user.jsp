@@ -55,7 +55,8 @@
                     radio[4].disabled = false;
                     radio[5].disabled = false;
                 }
-            }
+            }            
+            
         </script>
 
         <header>            
@@ -116,7 +117,7 @@
                                 <div class="input-group-addon"><span class="glyphicon glyphicon-user"></span></div>
                                     <mvc:input path="username" name="username" type="text" class="form-control" placeholder="ID usuari" disabled="${modificar_username}"/>
                                     <mvc:input path="username" name="username" type="hidden" disabled="${_modificar_username}"/>
-                            </div>
+                                                            </div>
                             <span class="help-block" id="error"></span>
                         </div>
 
@@ -248,9 +249,10 @@
                         <div class="form-footer">
                             <button type="submit" id="btn_enviar" class="btn btn-info">
                                 <span class="glyphicon glyphicon-log-in"></span> Enviar
-                            </button>
+                            </button>                            
                             <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/admin/users'"                        
                                    value=' Tornar'/>
+                            <input type="button" class="btn btn-danger" onclick="borrarUser()" value="Borrar"/>
                             <input type="hidden" name="accion" value="${accion}"/> 
 
                             <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
@@ -311,9 +313,12 @@
                
             });
             
-           
-            
-            
+           function borrarUser () {
+                var opcion = confirm("Esteu segur que vol esborrar l'usuari "+ "${usuario.username}" + "?");
+                if ( opcion === true ) {
+                    location.href = '${home}deleteUser?username=' + "${usuario.username}";
+                }
+            }
 
         </script>
 

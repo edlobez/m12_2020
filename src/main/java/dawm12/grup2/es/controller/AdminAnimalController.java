@@ -23,14 +23,8 @@ import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
 import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
-import java.io.UnsupportedEncodingException;
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,9 +117,7 @@ public class AdminAnimalController {
         }
         
         animal = completarCampos (animal); 
-        
-        System.out.println("El comentario: " + comentario);
-        
+                
         // Creamos un nuevo animal
         if ( accion.equals("create")) {
             Animal an = createAnimal(animal, modelo);
@@ -170,8 +162,7 @@ public class AdminAnimalController {
         }
         else {
             param = "?param=delete_ok";
-        }
-        
+        }        
         
         return new ModelAndView("redirect:/animal/animalList" + param);
     }
@@ -253,7 +244,7 @@ public class AdminAnimalController {
         
         animal.setDataAlta(new java.sql.Date(1999-01-01));
         
-        //System.out.println("Animal a guardar: " + animal.toString());
+        System.out.println("Animal a guardar: " + animal.toString());
         
         return (Animal) animalService.create(animal);
     }
@@ -270,7 +261,7 @@ public class AdminAnimalController {
         java.sql.Date d2 = new java.sql.Date(d.getTime());
         java.sql.Timestamp date = new java.sql.Timestamp(d.getTime());
         
-        comentario = "[" + date + "] [" + usuario + "] - " + comentario;
+        //comentario = "[" + date + "] [" + usuario + "] - " + comentario;
         
        // System.out.println("\nComentario:" + comentario +"\n para animal id " + an.getIdAnimal());
         

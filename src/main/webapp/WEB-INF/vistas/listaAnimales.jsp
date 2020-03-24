@@ -107,7 +107,7 @@
                     "processing" : true,
                     "serverSide" : true,                    
                     "ajax" : { 
-                        url: "${home}getAnimalList_v2"
+                        url: "${home}getAnimalList"
                         ,type: 'POST'
                     },
                     "columns" : [
@@ -132,8 +132,54 @@
                      //location.href = '${home}editAnimal?idanimal=' + $(this).data("row-id");
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );
-                                         
+                
+                var aux = $_GET("param");
+                if (aux.length > 0) {
+                    if (aux === "create_ok") {
+                        alert("Animal creat amb èxit.");
+                    }
+                    if (aux === "update_ok") {
+                        alert("Els canvis s'han guardat amb èxit.");
+                    }
+                    if (aux === "delete_ok") {
+                        alert("Animal esborrat amb èxit.");
+                    }
+                    if (aux === "delete_Nok") {
+                        alert("Error a l'esborrar l'animal.");
+                    }
+                }  
+
                 }); 
+                
+                
+                function $_GET(param)
+            {
+                /* Obtener la url completa */
+                url = document.URL;
+                /* Buscar a partir del signo de interrogación ? */
+                url = String(url.match(/\?+.+/));
+                /* limpiar la cadena quitándole el signo ? */
+                url = url.replace("?", "");
+                /* Crear un array con parametro=valor */
+                url = url.split("&");
+                /* 
+                 Recorrer el array url
+                 obtener el valor y dividirlo en dos partes a través del signo = 
+                 0 = parametro
+                 1 = valor
+                 Si el parámetro existe devolver su valor
+                 */
+                x = 0;
+                while (x < url.length)
+                {
+                    p = url[x].split("=");
+                    if (p[0] == param)
+                    {
+                        return decodeURIComponent(p[1]);
+                    }
+                    x++;
+                }
+            }
         </script>
 
 
