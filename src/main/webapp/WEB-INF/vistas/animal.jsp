@@ -87,7 +87,7 @@
                                 <mvc:label path="dataNaix" for="dataNaix">Data de naixement</mvc:label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="far fa-calendar-alt"></i></div>
-                                        <mvc:input path="dataNaix" name="dataNaix" type="date" class="form-control" placeholder="Data de naixement (AAAA-MM-DD)" />    
+                                        <mvc:input path="dataNaix" name="dataNaix" type="date" class="form-control" />    
 
                                 </div>
                                 <span class="help-block" id="error"></span>
@@ -262,15 +262,24 @@
                             </button>                            
                             <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'"                        
                                    value=' Tornar'/>
+                            
+                            <sec:authorize access="hasAuthority('admin')">  
+                            <c:if test="${accion=='update'}">
                             <input type="button" class="btn btn-danger" onclick="borrarAnimal()" value="Borrar"/>
+                            </c:if>
+                            </sec:authorize>
+                            
                             <input type="hidden" name="accion" value="${accion}"/>
                             
 
                             <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
                             <br>
                             <c:choose>
-                                <c:when test="${error=='error_create'}">
-                                    <br><span class="alert alert-danger">Error a crear l'animal.</span>
+                                <c:when test="${error=='fecha_error'}">
+                                    <span class="alert alert-danger">Si us plau, introdueixi una data de naixement correcta.</span>
+                                </c:when>
+                                <c:when test="${error=='create_error'}">
+                                    <span class="alert alert-danger">Error a crear l'animal.</span>
                                 </c:when>
                             </c:choose>
                         </div>

@@ -113,7 +113,18 @@ public class AdminAnimalController {
     )  {
         
         if (validacion.hasErrors()) {
-            System.out.println("Error validaciones");
+            for (Object error : validacion.getAllErrors()) {
+                System.out.println( error.toString());
+                if ( error.toString().contains("dataNaix") ) {                   
+                   modelo.addAttribute("error", "fecha_error");
+                }
+            }
+            
+            modelo.addAttribute("animal", animal);
+            modelo.addAttribute("accion", accion);
+            //modelo.addAttribute("error", "create_error");
+            cargarDatosEnVista ( modelo );
+            return new ModelAndView("animal");            
         }
         
         animal = completarCampos (animal); 

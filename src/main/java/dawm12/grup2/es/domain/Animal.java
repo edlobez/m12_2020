@@ -17,7 +17,11 @@
 package dawm12.grup2.es.domain;
 
 import java.sql.Date;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 /**
@@ -27,9 +31,12 @@ import javax.validation.constraints.NotNull;
 public class Animal {
     
     private int idAnimal;
+            
+    @NotNull
+    @Size(min=3, max=8, message="El nom ha de ser entre 3 i 20 caràcters.")
     private String nom;
-    
-    @NotNull    
+  
+    //@NotNull (message="Si us plau, introdueixi una data correcta")
     private Date dataNaix;
     
     private String sexe;
