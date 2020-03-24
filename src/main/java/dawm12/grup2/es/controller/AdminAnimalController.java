@@ -30,6 +30,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -284,6 +285,22 @@ public class AdminAnimalController {
         return c;
         
     }    
+    
+    private String rolActual () {
+        
+        String rol = null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
+            rol = "admin";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("responsable"))){
+           rol = "responsable";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("veterinari"))){
+            rol = "veterinari";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("voluntari"))){
+            rol = "voluntari";
+        }
+        return rol;
+    }
    
     
  }

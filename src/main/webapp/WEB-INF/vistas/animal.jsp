@@ -51,8 +51,8 @@
 
         <div class="container">
 
-            <div class="signup-form-container">
-
+            <div class="signup-form-container">    
+                
                 <!-- form start -->
                 <mvc:form method="post" role="form" id="register-form" autocomplete="off" 
                           action="saveAnimal" modelAttribute="animal" methodParam="post">
@@ -71,14 +71,14 @@
                     
                     <mvc:input path="idAnimal" name="idAnimal" type="hidden" class="form-control" /> 
                     <div class="form-body">
-
+                        <div id="editables">
                         <div class="row">
 
                             <div class="form-group col-lg-3">
                                 <mvc:label path="nom" for="nom">Nom</mvc:label>
                                     <div class="input-group">                                  
                                         <div class="input-group-addon"><i class="fas fa-cat"></i></div>                                                                     
-                                        <mvc:input path="nom" name="nom" type="text" class="form-control" placeholder="Nom" />                                   
+                                        <mvc:input path="nom" name="nom" id="nom" type="text" class="form-control" placeholder="Nom" />                                   
                                 </div>
                                 <span class="help-block" id="error"></span>
                             </div>
@@ -87,7 +87,7 @@
                                 <mvc:label path="dataNaix" for="dataNaix">Data de naixement</mvc:label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="far fa-calendar-alt"></i></div>
-                                        <mvc:input path="dataNaix" name="dataNaix" type="date" class="form-control" />    
+                                        <mvc:input path="dataNaix" name="dataNaix" id="dataNaix" type="date" class="form-control" />    
 
                                 </div>
                                 <span class="help-block" id="error"></span>
@@ -97,7 +97,7 @@
                                 <mvc:label path="tAnimal" for="tAnimal">Tipus d'animal</mvc:label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fas fa-paw"></i></div>
-                                        <mvc:select path="tAnimal" name="tipusAnimal" class="form-control" items="${tAnimal}" />                                   
+                                        <mvc:select path="tAnimal" name="tipusAnimal" id="tipusAnimal" class="form-control" items="${tAnimal}" />                                   
                                 </div>
                                 <span class="help-block" id="error"></span>
                             </div>
@@ -106,7 +106,7 @@
                                 <mvc:label path="laRaza" for="laRaza">Raza</mvc:label>
                                     <div class="input-group">
                                         <div class="input-group-addon"><i class="fas fa-dog"></i></div>
-                                        <mvc:select path="laRaza" name="raza" class="form-control" items="${laRaza}" />                                   
+                                        <mvc:select path="laRaza" name="raza" id="raza" class="form-control" items="${laRaza}" />                                   
                                 </div>
                                 <span class="help-block" id="error"></span>
                             </div>
@@ -118,7 +118,7 @@
                                 <mvc:label path="sexe" for="sexe">Sexe</mvc:label>
                                     <div class="input-group">                                  
                                         <div class="input-group-addon"><i class="fas fa-kiwi-bird"></i></div> 
-                                        <mvc:select path="sexe" class="form-control" name="sexe" multiple="false">
+                                        <mvc:select path="sexe" id="sexe" class="form-control" name="sexe" multiple="false">
                                             <mvc:option value="0" class="form-control" label="Mascle"></mvc:option>
                                             <mvc:option value="1" class="form-control" label="Femella"></mvc:option>
                                         </mvc:select>
@@ -128,9 +128,9 @@
                             <div class="form-group col-lg-3">
                                 <mvc:label path="tamany" for="tamany">Tamany</mvc:label>
                                     <div class="input-group">                                  
-                                        <div class="input-group-addon"><i class="fas fa-hippo"></i></div>                                                                     
-                                        <!--  <mvc:input path="tamany" name="tamany" type="text" class="form-control" placeholder="tamany" />-->
-                                    <mvc:select path="tamany" class="form-control" name="tamany" multiple="false">
+                                        <div class="input-group-addon"><i class="fas fa-hippo"></i></div>                                                                   
+                                        
+                                    <mvc:select path="tamany" id="tamany" class="form-control" name="tamany" multiple="false">
                                         <mvc:option value="molt petit" class="form-control" label="Molt petit"></mvc:option>
                                         <mvc:option value="petit" class="form-control" label="Petit"></mvc:option>
                                         <mvc:option value="mitja" class="form-control" label="Mitjà"></mvc:option>
@@ -146,7 +146,7 @@
                                 <mvc:label path="veterinari" for="veterinar">Veterinari</mvc:label>
                                     <div class="input-group">                                  
                                         <div class="input-group-addon"><i class="fas fa-user-md"></i></div>                                                                     
-                                        <mvc:select path="veterinari" name="veterinari" class="form-control" items="${vet}" /> 
+                                        <mvc:select path="veterinari" id="veterinari" name="veterinari" class="form-control" items="${vet}" /> 
 
                                 </div>
                                 <span class="help-block" id="error"></span>
@@ -196,7 +196,8 @@
 
                             </div>
                         </div>
-                                
+                        </div> <!--fin Editables-->
+                        
                         <c:if test="${accion=='update'}">
                         <br>
                        <!-- Boton -->
@@ -260,8 +261,9 @@
                             <button type="submit" id="btn_enviar" class="btn btn-info">
                                 <span class="glyphicon glyphicon-log-in"></span> Enviar
                             </button>                            
-                            <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'"                        
-                                   value=' Tornar'/>
+                           <!-- <input type="button" id="btn_volver" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'"                        
+                                   value=' Tornar'/>-->
+                            <button type="button" class="btn btn-info" onclick="location.href ='${pageContext.servletContext.contextPath}/animal/animalList'">Tornar</button>
                             
                             <sec:authorize access="hasAuthority('admin')">  
                             <c:if test="${accion=='update'}">
@@ -269,7 +271,7 @@
                             </c:if>
                             </sec:authorize>
                             
-                            <input type="hidden" name="accion" value="${accion}"/>
+                            <input type="hidden" id="_accion" name="accion" value="${accion}"/>
                             
 
                             <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
@@ -294,10 +296,6 @@
         <script>
 
             jQuery(document).ready(function () {           
-                var comentarios = "${comentarios}";
-                if ( comentarios !== null ) {
-                    //console.log(comentarios);
-                }
                 
                 /*Si es la pantalla de creación muestra el textarea de comentario*/
                 var accion = "${accion}";
@@ -312,8 +310,20 @@
                   $("#numChip").attr("disabled", "true");  
                 }
                 
+                /* Controles según el rol */
+                if ("${rol}" == "voluntari") {    
+                    deshabilita();                 
+                } else if ( "${rol}" == "admin" ) {
+                    alert("El admin!!!");
+                } else if ( "${rol}" == "responsable" ) {
+                    alert("El responsable!!!");
+                } else if ( "${rol}" == "veterinari" ) {
+                    deshabilita();
+                }
 
             });
+            
+            var habilitado = true;
             
             //Control del chip
             $("._chipRadio").click(function (e) {                
@@ -329,12 +339,30 @@
             $("#nuevoComentario").click(function() {
                 $("#newComentari").show("slow");
             });
+            
+            $("#btn_enviar").click(function () {
+                if ( !habilitado ) habilita();
+                
+            });
 
             function borrarAnimal () {
                 var opcion = confirm("Esteu segur que vol esborrar l'animal "+ "${animal.nom}" + "?");
                 if ( opcion === true ) {
                     location.href = '${pageContext.servletContext.contextPath}/responsable/deleteAnimal?idanimal=' + "${animal.idAnimal}";
                 }
+            }
+            
+            function deshabilita () {
+                $("input").attr("disabled", "true");
+                $("select").attr("disabled", "true");
+                $("radiobutton").attr("disabled", "true");
+                habilitado = false;
+            }
+            
+            function habilita () {
+                $("input").removeAttr("disabled");   
+                $("select").removeAttr("disabled");   
+                $("radiobutton").removeAttr("disabled");  
             }
 
 

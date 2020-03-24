@@ -18,6 +18,7 @@ package dawm12.grup2.es.domain;
 
 import java.sql.Date;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -49,7 +50,11 @@ public class Animal {
     private boolean isVacunat;
     private boolean isEsterlitzat;
     private boolean hasChip;
+    
+    @NotNull
+    @Max(value=999999, message="Nombre de chip incorrecte")
     private int numChip;
+    
     private String vetAssignat;
     private boolean inactiu;
     private Date createdDate;

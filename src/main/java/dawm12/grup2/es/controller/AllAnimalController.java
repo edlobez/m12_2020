@@ -39,6 +39,9 @@ import javax.validation.Valid;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -106,6 +109,7 @@ public class AllAnimalController {
         
         modelo.addAttribute("animal", an);
         modelo.addAttribute("accion", "update");
+        modelo.addAttribute("rol", rolActual() );
         cargarDatosEnVista ( an, modelo);
         cargarComentarios ( an, modelo);
         
@@ -127,7 +131,18 @@ public class AllAnimalController {
     )  {
         
         if (validacion.hasErrors()) {
-            System.out.println("Error validaciones");
+            for (Object error : validacion.getAllErrors()) {
+                System.out.println( error.toString());
+                if ( error.toString().contains("dataNaix") ) {                   
+                   modelo.addAttribute("error", "fecha_error");
+                }
+            }            
+            modelo.addAttribute("animal", animal);
+            modelo.addAttribute("accion", accion);
+            modelo.addAttribute("rol", rolActual() );
+            //modelo.addAttribute("error", "create_error");
+            cargarDatosEnVista (animal, modelo );
+            return new ModelAndView("animal");
         }
         
         animal = completarCampos (animal); 
@@ -140,6 +155,7 @@ public class AllAnimalController {
             if ( an == null ) {
                 modelo.addAttribute("animal", animal);
                 modelo.addAttribute("accion", accion);
+                modelo.addAttribute("rol", rolActual() );
                 modelo.addAttribute("error", "create_error");
                 cargarDatosEnVista (animal, modelo);
                 return new ModelAndView("animal");
@@ -294,7 +310,7 @@ public class AllAnimalController {
         
         // public Comentari(int idComentari, String descripcio, int idAnimal, Date createdDate, String createdUser)
         
-        Comentari c = (Comentari) comentariService.create( new Comentari ( comentario, an.getIdAnimal(), d2, an.getCreatedUser()) );
+        Comentari c = (Comentari) comentariService.create( new Comentari ( comentario, an.getIdAnimal(), d2, usuarioActual()) );
         
         //System.out.println ("Comentario " + c.toString());
         return c;
@@ -420,6 +436,29 @@ public class AllAnimalController {
 */
        //System.out.println ("\n\n" + json.toString());
        return json.toString();
+    }
+    
+    
+    private String rolActual () {
+        
+        String rol = null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
+            rol = "admin";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("responsable"))){
+           rol = "responsable";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("veterinari"))){
+            rol = "veterinari";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("voluntari"))){
+            rol = "voluntari";
+        }
+        return rol;
+    }
+    
+    private String usuarioActual () {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
 
 }
