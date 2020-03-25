@@ -185,8 +185,17 @@ public class AdminAnimalController {
     private void cargarDatosEnVista ( ModelMap modelo ) {
         
          //El literal del tipo de animal
+         // En el caso de ser un responsable, sólo se le cargarán
+         // ... animales de su mismo tipo
+        String filtro_tanimal = null;
+         if ( rolActual ().equals("responsable") ) {
+             int aux_tanimal = ((Usuarios)usuarioService.getone("username="+ usuarioActual())).getTipusAnimal();
+             filtro_tanimal = "idtipus=" + aux_tanimal;
+         }
+            
         List <String> tAnimal = new ArrayList <>();
-        for (Object unAnimal : tipusAnimalService.getAll() ) {
+        // si el metodo get recibe un null actua igual que le método getAll
+        for (Object unAnimal : tipusAnimalService.get(filtro_tanimal) ) {
             tAnimal.add( ((TipusAnimal) unAnimal).getDescripcio() );
         }
         tAnimal.remove("Tots");
@@ -300,6 +309,12 @@ public class AdminAnimalController {
             rol = "voluntari";
         }
         return rol;
+    }
+    
+    private String usuarioActual () {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
    
     
