@@ -75,7 +75,8 @@
                                     <th>Id</th>
                                     <th>Nom</th>
                                     <th>Tipus</th>
-                                    <th>Raza</th>                
+                                    <th>Raza</th>
+                                    <th>Estat de salut</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -84,7 +85,8 @@
                                     <th>Id</th>
                                     <th>Nom</th>
                                     <th>Tipus</th>
-                                    <th>Raza</th> 
+                                    <th>Raza</th>
+                                    <th>Estat de salut</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -114,13 +116,15 @@
                         {"data": "idAnimal"},
                         {"data": "nom"},
                         {"data": "tAnimal"},
-                        {"data": "laRaza"}
+                        {"data": "laRaza"},
+                        {"data": "isAlta"}
                     ],
                     "columnDefs": [
                         { "searchable": false, "targets": 0 },
                         { "searchable": false, "targets": 1 },
                         { "searchable": false, "targets": 2 },
-                        { "searchable": false, "targets": 3 }
+                        { "searchable": false, "targets": 3 },
+                        { "searchable": false, "targets": 4 }
                     ]
                 }); 
                 
@@ -133,6 +137,22 @@
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );
                 
+                $('#tabla_animales').on('draw.dt', function () {
+                    //alert("redibujando tabla");
+                    $("td").each(  function () {
+                        if ( $(this).text() === "true") {
+                            $(this).text("ALTA MÉDICA");
+                            $(this).css("background-color", "green");
+                        }
+                        if ( $(this).text() === 'false') {
+                            $(this).text("BAJA MÉDICA");
+                            $(this).css("background-color", "red");
+                        }
+                    });
+                });
+                
+            });
+            
                 var aux = $_GET("param");
                 if (aux.length > 0) {
                     if (aux === "create_ok") {
@@ -149,10 +169,10 @@
                     }
                 }  
 
-                }); 
                 
                 
-                function $_GET(param)
+                
+            function $_GET(param)
             {
                 /* Obtener la url completa */
                 url = document.URL;

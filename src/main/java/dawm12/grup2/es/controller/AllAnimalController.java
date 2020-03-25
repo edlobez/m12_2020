@@ -342,7 +342,7 @@ public class AllAnimalController {
            HttpServletRequest request 
     ) throws JSONException {
         
-        String campos_tabla [] = {"idAnimal", "nom", "tipusAnimal", "raza"};
+        String campos_tabla [] = {"idAnimal", "nom", "tipusAnimal", "raza", "isAlta"};
         
         // Cada petición debemos sumar 1 a este parámetro
         int draw = Integer.parseInt(request.getParameter("draw")) + 1;
@@ -359,6 +359,7 @@ public class AllAnimalController {
         // La columna por la que buscar
         int buscar_por = Integer.parseInt( request.getParameter("order[0][column]") );
         String busqueda_por = campos_tabla[buscar_por];
+        System.out.println("busqueda_por: " + busqueda_por);
         
         //Ordernar ascendenteo o descendente
         String order_dir = request.getParameter("order[0][dir]");
@@ -384,7 +385,11 @@ public class AllAnimalController {
         } else if ( busqueda_por.equals("raza")) { 
             lasRazas = razaService.get("descripcio=%" + cadenaBusqueda + "%");
             busqueda_por = "raza";
-
+        } else if ( busqueda_por.equals("isAlta") ) {
+            if ( cadenaBusqueda.toLowerCase().startsWith("t") || cadenaBusqueda.toLowerCase().startsWith("a") )
+                cadenaBusqueda = "1";
+            if ( cadenaBusqueda.toLowerCase().startsWith("f") || cadenaBusqueda.toLowerCase().startsWith("b") )
+                cadenaBusqueda = "0";
         }
         
         
