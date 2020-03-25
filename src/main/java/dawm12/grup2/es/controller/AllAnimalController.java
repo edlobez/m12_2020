@@ -342,7 +342,7 @@ public class AllAnimalController {
            HttpServletRequest request 
     ) throws JSONException {
         
-        String campos_tabla [] = {"idAnimal", "nom", "tipusAnimal", "raza", "isAlta"};
+        String campos_tabla [] = {"nom", "tipusAnimal", "raza", "isAlta"};
         
         // Cada petición debemos sumar 1 a este parámetro
         int draw = Integer.parseInt(request.getParameter("draw")) + 1;

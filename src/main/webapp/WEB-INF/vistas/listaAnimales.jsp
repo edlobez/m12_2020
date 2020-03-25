@@ -72,7 +72,6 @@
                     <div class="col-md-12">
                         <table id="tabla_animales" class="display" style="width:100%"><thead>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Nom</th>
                                     <th>Tipus</th>
                                     <th>Raza</th>
@@ -82,7 +81,6 @@
                             <tbody></tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Id</th>
                                     <th>Nom</th>
                                     <th>Tipus</th>
                                     <th>Raza</th>
@@ -112,8 +110,7 @@
                         url: "${home}getAnimalList"
                         ,type: 'POST'
                     },
-                    "columns" : [
-                        {"data": "idAnimal"},
+                    "columns" : [                        
                         {"data": "nom"},
                         {"data": "tAnimal"},
                         {"data": "laRaza"},
@@ -123,8 +120,8 @@
                         { "searchable": false, "targets": 0 },
                         { "searchable": false, "targets": 1 },
                         { "searchable": false, "targets": 2 },
-                        { "searchable": false, "targets": 3 },
-                        { "searchable": false, "targets": 4 }
+                        { "searchable": false, "targets": 3 }
+                        
                     ]
                 }); 
                 
@@ -141,11 +138,11 @@
                     //alert("redibujando tabla");
                     $("td").each(  function () {
                         if ( $(this).text() === "true") {
-                            $(this).text("ALTA MÉDICA");
+                            $(this).text("Alta médica");
                             $(this).css("background-color", "green");
                         }
                         if ( $(this).text() === 'false') {
-                            $(this).text("BAJA MÉDICA");
+                            $(this).text("Baixa médica");
                             $(this).css("background-color", "red");
                         }
                     });
