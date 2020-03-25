@@ -38,6 +38,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -54,7 +57,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RestController
-@RequestMapping("/admin")
+//@RequestMapping("/admin")
 public class AdminUserController {
 
     @Autowired
@@ -75,14 +78,14 @@ public class AdminUserController {
 
     private Usuarios _usr_copy;
 
-    @RequestMapping("/users")
+    @RequestMapping(value = {"/admin/users", "/responsable/users"})
     public ModelAndView adminUsers(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView("adminUsers");
         return modelview;
     }
 
-    @RequestMapping("/pets")
+    @RequestMapping("/admin/pets")
     public ModelAndView adminPets(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         ModelAndView modelview = new ModelAndView("listaAnimales");
@@ -90,7 +93,7 @@ public class AdminUserController {
     }
 
  
-    @RequestMapping(value = "/editUser")
+    @RequestMapping(value = {"/admin/editUser"})
     public ModelAndView editUser(@RequestParam("username") String username, Model modelo) {
         Usuarios usr = (Usuarios) usuarioService.getone("username=" + username);
         //Usuarios usr_copy = new Usuarios (usr);
@@ -106,7 +109,7 @@ public class AdminUserController {
         return mv;
     }
 
-    @RequestMapping(value = "/deleteUser")
+    @RequestMapping(value = "/admin/deleteUser")
     public ModelAndView deleteUser(
             @ModelAttribute("usuario") Usuarios usr) {
         System.out.println ("Borrar usuario: " + usr.toString());
@@ -126,7 +129,7 @@ public class AdminUserController {
         return new ModelAndView("redirect:/admin/users" + param);
     }
 
-    @RequestMapping(value = "/newUser")
+    @RequestMapping(value = "/admin/newUser")
     public ModelAndView newUser(ModelMap modelo) {
         Usuarios usr = new Usuarios();
         modelo.addAttribute("usuario", usr);
@@ -144,7 +147,7 @@ public class AdminUserController {
     Validación del resultado formulario user.jsp
     TO-DO ELIMINAR TANTOS BLOQUES DE CÓDIGO REPETIDO
      */
-    @RequestMapping(value = "/saveUser")
+    @RequestMapping(value = "/admin/saveUser")
     public ModelAndView guardarUser(
             @Valid @ModelAttribute("usuario") Usuarios usr,
             BindingResult validacion,
@@ -276,7 +279,7 @@ public class AdminUserController {
         
     }
 
-    @RequestMapping(value = "/userList")
+    @RequestMapping(value = {"/admin/userList", "/responsable/userList"})
     public String getSearchResultViaAjax(           
             HttpServletRequest request
          ) throws JSONException {
@@ -316,6 +319,15 @@ public class AdminUserController {
         String order_dir = request.getParameter("order[0][dir]");
         //System.out.println("Order dir: " + order_dir);
         
+        // El listado dependera de si lo solicita un admin, que se muestran
+        // ... todos o bien un responsable, que sólo mostrará usuarios de su tipo
+        // Filtrar lista por rol
+        String lista_rol = "";
+        if ( rolActual().equals("responsable")) {            
+            Usuarios u = (Usuarios) usuarioService.getone("username="+usuarioActual());
+            lista_rol = ",tipusAnimal=" + u.getTipusAnimal();            
+        }
+        
         // Si vamos a buscar por tipo de animal, debemos cambiar la cadena
         // ... de búsqueda
         if ( busqueda_por.equals("tipusAnimal")) {
@@ -330,11 +342,11 @@ public class AdminUserController {
         // Cadena complementario a la busqueda      
         String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";
         List <Usuarios> _usuarios = new ArrayList <>();
-        _usuarios = usuarioService.get (aux, "enabled=1");
+        _usuarios = usuarioService.getAND (aux, "enabled=1" + lista_rol);
         // Obtenemos todos los usuarios sin ningun filtro        
         int total_registros = _usuarios.size();
         if (cadenaBusqueda.length() > 0 ) {            
-            _usuarios = usuarioService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,enabled=1");
+            _usuarios = usuarioService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,enabled=1"+ lista_rol);
         } 
         
         int reg_final = inicio + num_registros;
@@ -503,6 +515,28 @@ public class AdminUserController {
         //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
         return usr_resultado;
 
+    }
+    
+    private String rolActual () {
+        
+        String rol = null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
+            rol = "admin";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("responsable"))){
+           rol = "responsable";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("veterinari"))){
+            rol = "veterinari";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("voluntari"))){
+            rol = "voluntari";
+        }
+        return rol;
+    }
+    
+    private String usuarioActual () {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
 
     private void ejemplos() {

@@ -30,7 +30,6 @@ import dawm12.grup2.es.domain.TipusAnimal;
 import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -88,6 +87,8 @@ public class AllAnimalController {
     @Qualifier("comentariService")
     private Service comentariService;
     
+    private Animal animal_copy = null;
+    
     @RequestMapping(value = "/animalList")
     public ModelAndView animalList() {
         ModelAndView modelview = new ModelAndView("listaAnimales");
@@ -107,16 +108,15 @@ public class AllAnimalController {
         an.setVeterinari( usr.getUsername() + " " + usr.getNombre() + " " + usr.getApellido1() );
         an.settAnimal( ((TipusAnimal)tipusAnimalService.getone("idtipus=" + an.getTipusAnimal())).getDescripcio() );
         
+        // Guardamos una copia antes del update
+        animal_copy = an;
         modelo.addAttribute("animal", an);
         modelo.addAttribute("accion", "update");
         modelo.addAttribute("rol", rolActual() );
         cargarDatosEnVista ( an, modelo);
         cargarComentarios ( an, modelo);
         
-        System.out.println("Editando animal: " + an.toString());
-        
-        
-        
+        //System.out.println("Editando animal: " + an.toString());
         return mv;
     }
     
@@ -147,7 +147,8 @@ public class AllAnimalController {
         
         animal = completarCampos (animal); 
         
-        System.out.println("El comentario: " + comentario);
+        //System.out.println("El comentario: " + comentario);
+        System.out.println("A guardar: " + animal.toString());
         
         // Creamos un nuevo animal
         if (accion.equals("update")) {
@@ -188,12 +189,24 @@ public class AllAnimalController {
         private Animal updateAnimal (Animal animal, ModelMap modelo) {
         
         // TODO --> En la modificación debería de coger de la vista si le da el alta, si esta adoptado y si es inactivo
-        animal.setIsAlta(false);
+        //animal.setIsAlta(false);
         animal.setIsAdoptat(false);
         animal.setInactiu(false);
         
-        // TODO --> La fecha la debe coger del formulario
-        animal.setDataAlta(new java.sql.Date(1999-01-01));
+        
+        // Miramos si el animal estaba de baja médica y ha pasado a alta
+        // ... guardamos la fecha del alta
+        if ( !animal_copy.isIsAlta() && animal.isIsAlta() ) {
+            System.out.println ("\nHa pasado a estado de alta médica");
+            java.util.Date d = new java.util.Date(); 
+            java.sql.Date d2 = new java.sql.Date(d.getTime());
+            animal.setDataAlta(d2);
+        }
+        else {
+            animal.setDataAlta(new java.sql.Date(1999-01-01));
+        }
+        
+        System.out.println("Guardando: " + animal.toString());
         
         return (Animal) animalService.update(animal, 
                 "nom=" + animal.getNom() + ","+
@@ -320,6 +333,9 @@ public class AllAnimalController {
     
     /*
     Retorna en formato Json la lista de animales solicitada
+    El listado de animales dependerá del usuario que lo solicite.
+    Admin y veterinario mostrará todos
+    Voluntario y responsable sólo los de su tipo.
      */   
     @RequestMapping(value = "/getAnimalList")
     public String getSearchResultViaAjax (
@@ -347,7 +363,14 @@ public class AllAnimalController {
         //Ordernar ascendenteo o descendente
         String order_dir = request.getParameter("order[0][dir]");
         
-        List <Raza> lasRazas = new ArrayList <>();
+        List <Raza> lasRazas = new ArrayList <>();        
+        
+        // Filtrar lista por rol
+        String lista_rol = "";
+        if ( rolActual().equals("voluntari") || rolActual().equals("responsable")) {            
+            Usuarios u = (Usuarios) usuarioService.getone("username="+usuarioActual());
+            lista_rol = ",tipusAnimal=" + u.getTipusAnimal();            
+        }
         
         if ( busqueda_por.equals("tipusAnimal")) {            
             if ( cadenaBusqueda.toLowerCase().startsWith("ga") )
@@ -361,20 +384,20 @@ public class AllAnimalController {
         } else if ( busqueda_por.equals("raza")) { 
             lasRazas = razaService.get("descripcio=%" + cadenaBusqueda + "%");
             busqueda_por = "raza";
-           
+
         }
         
-        // Cadena complementario a la busqueda      
-        String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";
         
+        // Cadena complementario a la busqueda      
+        String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";        
         List <Animal> _animales = new ArrayList<>();
-        _animales = animalService.get(aux, "inactiu=0");
+        _animales = animalService.getAND(aux, "inactiu=0" + lista_rol);
         //Obtenemos el total de animales sin filtro.
         int total_registros = _animales.size();        
         if (cadenaBusqueda.length() > 0 ) {
             //System.out.println("Busqueda por: " + busqueda_por + " Cadena: " + cadenaBusqueda);
             if (lasRazas == null || lasRazas.isEmpty())
-                _animales = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0");
+                _animales = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0"+lista_rol);
             else {
                 _animales.clear();
                 for (Raza unaRaza: lasRazas) {                    
@@ -382,7 +405,7 @@ public class AllAnimalController {
                     List<Animal> lista_aux = new ArrayList<>();
                     cadenaBusqueda = Integer.toString( ( (Raza) razaService.getone("descripcio=" + unaRaza.getDescripcio())).getIdRaza());
                     //System.out.println("buscar por " + busqueda_por + ": " + cadenaBusqueda);
-                    lista_aux = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0");
+                    lista_aux = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0"+lista_rol);
                     _animales.addAll(lista_aux);
                 }                
             }            

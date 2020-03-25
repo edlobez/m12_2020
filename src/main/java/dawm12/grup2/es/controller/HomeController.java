@@ -49,6 +49,11 @@ public class HomeController {
     @Autowired @Qualifier("usuarioService")
     private Service usuarioService;
     
+    @RequestMapping("/404")
+    public String accessdenied() {
+        return "404";
+    }
+    
     @RequestMapping(value = {"/", "/home"})    
     public ModelAndView homeRequest (HttpServletRequest request, HttpServletResponse response )
             throws ServletException, IOException { 

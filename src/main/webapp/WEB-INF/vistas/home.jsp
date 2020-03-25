@@ -41,7 +41,7 @@
                     </div>
                 </a>
                 <div class="list-group list-group-flush">
-                    <sec:authorize access="hasAuthority('admin')">  
+                    <sec:authorize access="hasAnyAuthority('responsable','admin')">  
                         <ul class="list-unstyled components">
                             <li class="active">
                                 <a href="#usuarisSubmenu" data-toggle="collapse" aria-expanded="false" 
@@ -51,12 +51,13 @@
                                 </a>
                                 <ul class="collapse list-unstyled" id="usuarisSubmenu">
                                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/users" id="usuarisList">
+                                        <a class="logout-link" href="${pageContext.servletContext.contextPath}/responsable/users" id="usuarisList">
                                             <i class="fas fa-list"></i>
                                             &nbsp;Llista
                                         </a>
                                     </li>
                                 </ul>
+                                 <sec:authorize access="hasAuthority('admin')">
                                 <ul class="collapse list-unstyled" id="usuarisSubmenu">
                                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/newUser" id="usuarisCrear">
@@ -65,6 +66,7 @@
                                         </a>
                                     </li>
                                 </ul>
+                                 </sec:authorize>
                             </li>
                         </ul>
                     </sec:authorize>

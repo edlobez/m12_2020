@@ -44,17 +44,15 @@
                     </span>
                 </a>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+                    
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                         <li class="nav-item active">
+                            <sec:authorize access="hasAuthority('admin')">
                             <a class="nav-link" href="${pageContext.servletContext.contextPath}/admin/newUser">Crear usuari <span class="sr-only">(current)</span></a>
-                        </li>
-                        <!--  <li class="nav-item">
-                              <a class="nav-link" href="#">Link</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link disabled" href="#">Disabled</a>
-                          </li>-->
+                            </sec:authorize>
+                        </li>                       
                     </ul>
+                    
                     <form class="form-inline my-2 my-lg-0">
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
                         <span>
@@ -148,7 +146,7 @@
                     //alert($(this).text());
                      var data = table.row(this).data();
                      //console.log(Object.values(data)[10]);                     
-                     location.href = '${home}editUser?username=' + Object.values(data)[10];
+                     location.href = '${pageContext.servletContext.contextPath}/admin/editUser?username=' + Object.values(data)[10];
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );                     
                     $("th").click(function () {

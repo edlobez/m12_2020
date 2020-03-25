@@ -81,7 +81,7 @@
                             <tbody></tbody>
                             <tfoot>
                                 <tr>
-                                    <<th>Id</th>
+                                    <th>Id</th>
                                     <th>Nom</th>
                                     <th>Tipus</th>
                                     <th>Raza</th> 

@@ -72,7 +72,7 @@
                         </a>
                     </div>
                     <form class="nav navbar-nav navbar-right">
-                        <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
+                        <span id="usr_actual"><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
                         <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir&nbsp;&nbsp;&nbsp;</i></a> 
                     </form>
                 </div>
@@ -83,8 +83,7 @@
 
         <div class="container">
 
-            <div class="signup-form-container">
-
+            <div class="signup-form-container">               
                 <!-- form start -->
                 <mvc:form method="post" role="form" id="register-form" autocomplete="off" 
                           action="saveUser" modelAttribute="usuario">
@@ -246,13 +245,22 @@
                         </sec:authorize>
 
                         <br/> <br/>
-                        <div class="form-footer">
+                        <div class="form-footer">                            
+                            
                             <button type="submit" id="btn_enviar" class="btn btn-info">
                                 <span class="glyphicon glyphicon-log-in"></span> Enviar
-                            </button>                            
-                            <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/admin/users'"                        
-                                   value=' Tornar'/>
-                            <input type="button" class="btn btn-danger" onclick="borrarUser()" value="Borrar"/>
+                            </button>   
+                         
+                            <input type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}'"                        
+                                   value=' Tornar'/>                           
+                        
+                            
+                            <sec:authorize access="hasAuthority('admin')">  
+                                <c:if test="${accion=='update'}">
+                                    <input type="button" class="btn btn-danger" onclick="borrarUser()" value="Borrar"/>
+                                </c:if>
+                            </sec:authorize>                            
+                           
                             <input type="hidden" name="accion" value="${accion}"/> 
 
                             <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>

@@ -69,7 +69,11 @@ public class WebSecConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout().permitAll();
+                .logout().permitAll()
+                .and()
+                .exceptionHandling()
+                .accessDeniedPage("/404")
+                ;
     }
 
     @Bean
