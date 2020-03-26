@@ -79,9 +79,9 @@ public class AdminUserController {
     private Usuarios _usr_copy;
 
     @RequestMapping(value = {"/admin/users", "/responsable/users"})
-    public ModelAndView adminUsers(HttpServletRequest request, HttpServletResponse response)
+    public ModelAndView listaUsuarios(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ModelAndView modelview = new ModelAndView("adminUsers");
+        ModelAndView modelview = new ModelAndView("listaUsuarios");
         return modelview;
     }
 
