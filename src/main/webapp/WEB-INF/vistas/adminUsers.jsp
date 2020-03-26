@@ -65,7 +65,7 @@
         </header>
 
 
-        <!-- http://www.jquery-bootgrid.com/ -->
+        <!-- https://datatables.net// -->
         <div class="container"> 
             <seccion>
                 <div class="row">
@@ -125,6 +125,9 @@
                     "ajax" : { 
                         url: "${home}userList"
                         ,type: 'POST'
+                    },
+                    "language" : {
+                        "url" : "../static/resources/lan/Catalan.json"
                     },
                     "columns" : [
                         {"data": "username"},

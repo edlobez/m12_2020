@@ -110,6 +110,9 @@
                         url: "${home}getAnimalList"
                         ,type: 'POST'
                     },
+                    "language" : {
+                        "url" : "../static/resources/lan/Catalan.json"
+                    },
                     "columns" : [                        
                         {"data": "nom"},
                         {"data": "tAnimal"},
@@ -139,11 +142,11 @@
                     $("td").each(  function () {
                         if ( $(this).text() === "true") {
                             $(this).text("Alta médica");
-                            $(this).css("background-color", "green");
+                            $(this).css("background-color", "#A4F09E");
                         }
                         if ( $(this).text() === 'false') {
                             $(this).text("Baixa médica");
-                            $(this).css("background-color", "red");
+                            $(this).css("background-color", "#F88078");
                         }
                     });
                 });
