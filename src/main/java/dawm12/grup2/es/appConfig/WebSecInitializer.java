@@ -24,5 +24,7 @@ import org.springframework.security.web.context.AbstractSecurityWebApplicationIn
 
 public class WebSecInitializer extends AbstractSecurityWebApplicationInitializer {
     
+    
+    
 }
 

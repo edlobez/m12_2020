@@ -31,13 +31,16 @@ import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -87,6 +90,9 @@ public class AllAnimalController {
     @Qualifier("comentariService")
     private Service comentariService;
     
+    @Autowired
+    private JdbcTemplate jdbc;
+    
     private Animal animal_copy = null;
     
     @RequestMapping(value = "/animalList")
@@ -95,6 +101,8 @@ public class AllAnimalController {
         modelview.addObject("rol", "admin");
         return modelview;
     }
+    
+    
 
     @RequestMapping(value = "/editAnimal")
     public ModelAndView editAnimal (
@@ -110,6 +118,7 @@ public class AllAnimalController {
         
         // Guardamos una copia antes del update
         animal_copy = an;
+        modelo.addAttribute("id", an.getIdAnimal());
         modelo.addAttribute("animal", an);
         modelo.addAttribute("accion", "update");
         modelo.addAttribute("rol", rolActual() );

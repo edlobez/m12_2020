@@ -29,14 +29,13 @@
 
     </head>
 
-    <body>
-
+    <body>        
         <div class="d-flex" id="wrapper">
-
+                
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <a href="${pageContext.servletContext.contextPath}">
-                    <div class="sidebar-heading"><img src="static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
+                    <div class="sidebar-heading"><img src="static/resources/imgs/kitty_ico.png" width="30" height="30" alt=""><!--<img src="static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">-->
                         RescueManagement                       
                     </div>
                 </a>
@@ -57,16 +56,16 @@
                                         </a>
                                     </li>
                                 </ul>
-                                 <sec:authorize access="hasAuthority('admin')">
-                                <ul class="collapse list-unstyled" id="usuarisSubmenu">
-                                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/newUser" id="usuarisCrear">
-                                            <i class="far fa-plus-square"></i>
-                                            &nbsp;Crear
-                                        </a>
-                                    </li>
-                                </ul>
-                                 </sec:authorize>
+                                <sec:authorize access="hasAuthority('admin')">
+                                    <ul class="collapse list-unstyled" id="usuarisSubmenu">
+                                        <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/newUser" id="usuarisCrear">
+                                                <i class="far fa-plus-square"></i>
+                                                &nbsp;Crear
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </sec:authorize>
                             </li>
                         </ul>
                     </sec:authorize>
@@ -94,7 +93,7 @@
                                             &nbsp;Crear
                                         </a>
                                     </li>
-                                </sec:authorize>
+                                </sec:authorize>                          
                             </ul>                                
                         </li>
                     </ul>
