@@ -37,7 +37,7 @@
                 <form action="${loginUrl}" method="post">
 
                     <c:if test="${param.error != null}">
-                        <p class="error">Ususari o contrasenya erronis, si us plau torna-ho a provar.</p>
+                        <p class="error">Usuari o contrasenya erronis, si us plau torna-ho a provar.</p>
                     </c:if>
 
                     <c:if test="${param.logout != null}">
