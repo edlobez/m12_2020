@@ -55,8 +55,7 @@
             <div id="img_container" class="row">
                 <div  class="col-lg-3">
                     <c:set var="url" scope="page" value="${pageContext.servletContext.contextPath}/imagenes/uploaded?id=${id}"/>
-                    <img id="imagen" src="${url}" 
-                         height="100" width="100" onerror="ocultarImagen();"/>
+                    <img id="imagen" src="${url}" class="img-thumbnail" style="max-height: 200px;" onerror="ocultarImagen();"/>
                 </div>
             </div>
 
@@ -112,7 +111,7 @@
                                 </div>
 
                                 <div class="form-group col-lg-3">
-                                    <mvc:label path="laRaza" for="laRaza">Raza</mvc:label>
+                                    <mvc:label path="laRaza" for="laRaza">Raça</mvc:label>
                                         <div class="input-group">
                                             <div class="input-group-addon"><i class="fas fa-dog"></i></div>
                                             <mvc:select path="laRaza" name="raza" id="raza" class="form-control" items="${laRaza}" />                                   
@@ -151,7 +150,7 @@
                                     <span class="help-block" id="error"></span>
                                 </div>
 
-                                <div class="form-group col-lg-2">
+                                <div class="form-group col-lg-4">
                                     <mvc:label path="veterinari" for="veterinar">Veterinari</mvc:label>
                                         <div class="input-group">                                  
                                             <div class="input-group-addon"><i class="fas fa-user-md"></i></div>                                                                     
@@ -180,14 +179,6 @@
                                         </div>
                                         <span class="help-block" id="error"></span>
                                     </div>
-                                    <div class="form-group col-lg-2">
-                                        <mvc:label path="dataAlta" for="dataAlta">Data d'Alta</mvc:label>
-                                            <div class="input-group"> 
-                                            <c:if test="${animal.isAlta}">
-                                                <mvc:label path="dataAlta">${animal.dataAlta}</mvc:label>
-                                            </c:if>                                            
-                                            <span class="help-block" id="error"></span>
-                                        </div>
                                     </c:if>
 
                                 </div> 
@@ -200,7 +191,7 @@
                                         <mvc:radiobutton path="isVacunat" name="isVacunat" class="form-check-input _vacunatRadio" value="0" />
                                         <mvc:label path="isVacunat" class="form-check-label">No</mvc:label>
                                         <mvc:radiobutton path="isVacunat" name="isVacunat" class="form-check-input _vacunatRadio" value="1" />
-                                        <mvc:label path="isVacunat" class="form-check-label">Sí</mvc:label>
+                                        <mvc:label path="isVacunat" class="form-check-label">Si</mvc:label>
                                             <span class="help-block" id="error"></span>
                                         </div>
 
@@ -210,7 +201,7 @@
                                         <mvc:radiobutton path="isEsterlitzat" name="isEsterlitzat" class="form-check-input _esterilitzatRadio" value="0" />
                                         <mvc:label path="isEsterlitzat" class="form-check-label">No</mvc:label>
                                         <mvc:radiobutton path="isEsterlitzat" name="isEsterlitzat" class="form-check-input _esterilitzatRadio" value="1" />
-                                        <mvc:label path="isEsterlitzat" class="form-check-label">Sí</mvc:label>
+                                        <mvc:label path="isEsterlitzat" class="form-check-label">Si</mvc:label>
                                             <span class="help-block" id="error"></span>
                                         </div>
 
@@ -220,7 +211,7 @@
                                         <mvc:radiobutton path="hasChip" name="hasChip"  class="form-check-input _chipRadio" value="0" />
                                         <mvc:label path="hasChip" class="form-check-label">No</mvc:label>
                                         <mvc:radiobutton path="hasChip" name="hasChip"  class="form-check-input _chipRadio" value="1" />
-                                        <mvc:label path="hasChip" class="form-check-label">Sí</mvc:label>
+                                        <mvc:label path="hasChip" class="form-check-label">Si</mvc:label>
                                             <span class="help-block" id="error"></span>
                                         </div>
 
@@ -305,7 +296,7 @@
 
 
                                 <button type="button" data-toggle="modal" id="btn_imagen" href="#modal_imagen" class="btn btn-info">
-                                    <i class="fas fa-camera-retro"></i> Imagen
+                                    <i class="fas fa-camera-retro"></i> Afegeix imatge
                                 </button>                                
 
 
@@ -346,29 +337,25 @@
                                                 <button type="button" class="close" data-dismiss="modal">
                                                     <span aria-hidden="true">&times;</span><span class="sr-only">Tanca</span>
                                                 </button>
-                                                <h4 class="modal-title" id="myModalLabel">Selecciona imagen</h4>
+                                                <h4 class="modal-title" id="myModalLabel">Selecciona imatge</h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row" style="padding:15px">
-
-                                                    <div id="preview" class="thumbnail">
-                                                        <a href="#" id="file-select" class="btn btn-default">Elegir archivo</a>
+                                                    <a href="#" id="file-select2" class="btn btn-default">Escull arxiu</a>
+                                                    <div id="preview" class="thumbnail" style="display:none;">
+                                                        <a href="#" id="file-select" class="btn btn-default">Canvia la imatge</a>
                                                         <img src=""/>
-
                                                     </div>
-                                                    <span class="alert alert-info" id="file-info">No hay archivo aún</span>
-
-                                                    <form method="post" id="file-submit" action="${pageContext.servletContext.contextPath}/imagenes/form?id=${id}" enctype="multipart/form-data">
-                                                        <input id="file" name="file" type="file"/>                                                        
-                                                        <input type="submit" class="btn btn-primary" id="file-save" value="Guardar"/>
-                                                    </form>
-
-                                                    
-
+                                                    <span class="alert alert-info" id="file-info">Encara no s'han carregat arxius</span>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Tanca</button>
+                                                
+                                                <form method="post" id="file-submit" action="${pageContext.servletContext.contextPath}/imagenes/form?id=${id}" enctype="multipart/form-data">
+                                                        <input id="file" name="file" type="file"/> 
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Tanca</button>
+                                                        <input type="submit" class="btn btn-primary" id="file-save" value="Guardar"/>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -411,7 +398,9 @@
                         deshabilita_todos();
                         habilita_veterinario();
                     }
-
+                    
+                    /*Al iniciar la previsualización de imagen nueva no se verá*/
+                   
                 });
 
                 $('#preview').hover(function () {
@@ -424,6 +413,11 @@
                     e.preventDefault();
                     $('#file').click();
                 });
+                
+                $('#file-select2').on('click', function (e) {
+                    e.preventDefault();
+                    $('#file').click();
+                });
 
                 $('input[type=file]').change(function () {
                     var file = (this.files[0].name).toString();
@@ -431,6 +425,8 @@
 
                     $('#file-info').text('');
                     $('#file-info').text(file);
+                    $('#preview').show("slow");
+                    $('#file-select2').css("display", "none");
 
                     reader.onload = function (e) {
                         $('#preview img').attr('src', e.target.result);

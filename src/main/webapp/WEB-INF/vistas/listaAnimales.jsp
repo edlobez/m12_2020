@@ -74,7 +74,7 @@
                                 <tr>
                                     <th>Nom</th>
                                     <th>Tipus</th>
-                                    <th>Raza</th>
+                                    <th>Raça</th>
                                     <th>Estat de salut</th>
                                 </tr>
                             </thead>
@@ -83,7 +83,7 @@
                                 <tr>
                                     <th>Nom</th>
                                     <th>Tipus</th>
-                                    <th>Raza</th>
+                                    <th>Raça</th>
                                     <th>Estat de salut</th>
                                 </tr>
                             </tfoot>
