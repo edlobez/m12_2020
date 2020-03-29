@@ -151,17 +151,76 @@
                     <h1 class="mt-4">Benvingut/da!</h1>
                     <p>Benvingut/da a la pàgina principal de l'aplicació Rescue Management.</p>
                     <p>Des del menú de l'esquerra pots accedir als llistats i manteniment del personal i els animals que tens a càrrec, així com actualitzar el teu perfil.</p>
+                    <p></p>
+                      <div class="container"> 
+            <seccion>
+                  <div class="row">
+                    <div class="col-md-12">
+                        <h2 class="mt-4">Comentaris més recents</h2>
+                        <table id="tabla_comentarios" class="display" style="width:100%"><thead>
+                                <tr>
+                                    <th>ID comentari</th>
+                                    <th>Descripció</th>
+                                    <th>Nom Animal</th>
+                                    <th>Data comentari</th>
+                                    <th>Autor</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>ID comentari</th>
+                                    <th>Descripció</th>
+                                    <th>Nom Animal</th>
+                                    <th>Data comentari</th>
+                                    <th>Autor</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        
+                    </div>
+                </div>                
+            </seccion>
+        </div>
                 </div>
             </div>
-            <!-- /#page-content-wrapper -->
+                           
+            <script>
+            jQuery(document).ready(function ($) {
+
+                var table = $('#tabla_comentarios').DataTable({
+                    "processing" : true,
+                    "serverSide" : true,                    
+                    "ajax" : { 
+                        url: "${home}getCommentList"
+                        ,type: 'POST'
+                    },
+                    "language" : {
+                        "url" : "../static/resources/lan/Catalan.json"
+                    },
+                    "columns" : [                        
+                        {"data": "idComentari"},
+                        {"data": "descripcio"},
+                        {"data": "idAnimal"},
+                        {"data": "createdDate"},
+                        {"data": "createdUser"}
+                    ],
+                    "columnDefs": [
+                        { "searchable": false, "targets": 0 },
+                        { "searchable": false, "targets": 1 },
+                        { "searchable": false, "targets": 2 },
+                        { "searchable": false, "targets": 3 },
+                        { "searchable": false, "targets": 4 }                       
+                    ]
+                });   
+            }); 
+                </script>
 
         </div>
-        <!-- /#wrapper -->
 
         <!-- Bootstrap core JavaScript -->
         <script src="static/startbootstrap-simple-sidebar/vendor/jquery/jquery.min.js"></script>        
         <script src="static/startbootstrap-simple-sidebar/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
 
 
         <!-- Menu Toggle Script -->
