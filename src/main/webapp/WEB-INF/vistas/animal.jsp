@@ -150,7 +150,7 @@
                                     <span class="help-block" id="error"></span>
                                 </div>
 
-                                <div class="form-group col-lg-4">
+                                <div class="form-group col-lg-3">
                                     <mvc:label path="veterinari" for="veterinar">Veterinari</mvc:label>
                                         <div class="input-group">                                  
                                             <div class="input-group-addon"><i class="fas fa-user-md"></i></div>                                                                     
@@ -184,44 +184,54 @@
                                 </div> 
 
                                 <div class="row">
-
-                                    <div class="form-check col-lg-3">
-                                        <mvc:label path="isVacunat" for="isVacunat"><i class="fas fa-syringe"></i>&nbsp;Està vacunat?</mvc:label>
-                                            <br/>                                       
-                                        <mvc:radiobutton path="isVacunat" name="isVacunat" class="form-check-input _vacunatRadio" value="0" />
-                                        <mvc:label path="isVacunat" class="form-check-label">No</mvc:label>
-                                        <mvc:radiobutton path="isVacunat" name="isVacunat" class="form-check-input _vacunatRadio" value="1" />
-                                        <mvc:label path="isVacunat" class="form-check-label">Si</mvc:label>
-                                            <span class="help-block" id="error"></span>
-                                        </div>
-
-                                        <div class="form-check col-lg-3">
-                                        <mvc:label path="isEsterlitzat" for="isEsterlitzat"><i class="fas fa-briefcase-medical"></i>&nbsp;Està esterilitzat?</mvc:label>
-                                            <br/>                                       
-                                        <mvc:radiobutton path="isEsterlitzat" name="isEsterlitzat" class="form-check-input _esterilitzatRadio" value="0" />
-                                        <mvc:label path="isEsterlitzat" class="form-check-label">No</mvc:label>
-                                        <mvc:radiobutton path="isEsterlitzat" name="isEsterlitzat" class="form-check-input _esterilitzatRadio" value="1" />
-                                        <mvc:label path="isEsterlitzat" class="form-check-label">Si</mvc:label>
-                                            <span class="help-block" id="error"></span>
-                                        </div>
-
-                                        <div class="form-check col-lg-2">
-                                        <mvc:label path="hasChip" for="hasChip"><i class="fas fa-briefcase-medical"></i>&nbsp;Té chip?</mvc:label>
-                                            <br/>                                       
-                                        <mvc:radiobutton path="hasChip" name="hasChip"  class="form-check-input _chipRadio" value="0" />
-                                        <mvc:label path="hasChip" class="form-check-label">No</mvc:label>
-                                        <mvc:radiobutton path="hasChip" name="hasChip"  class="form-check-input _chipRadio" value="1" />
-                                        <mvc:label path="hasChip" class="form-check-label">Si</mvc:label>
-                                            <span class="help-block" id="error"></span>
-                                        </div>
-
-                                        <div class="form-check col-lg-4">
-                                        <mvc:label path="numChip" for="numChip">Nº chip</mvc:label>
-                                            <div class="input-group">                                  
-                                                <div class="input-group-addon"><i class="fas fa-microchip"></i></div>                                                                     
-                                                <mvc:input path="numChip" name="numChip" type="text" id="numChip" class="form-control" placeholder="Nombre chip" disabled="true" />                                   
-                                        </div>
+                                    
+                                    <div class="form-check col-lg-2">
+                                    <mvc:label path="isAdoptat" for="isVacunat"><i class="fas fa-heart"></i>&nbsp;Està adoptat?</mvc:label>
+                                        <br/>                                       
+                                    <mvc:radiobutton path="isAdoptat" name="isAdoptat" class="form-check-input _adoptatRadio" value="0" />
+                                    <mvc:label path="isAdoptat" class="form-check-label">No</mvc:label>
+                                    <mvc:radiobutton path="isAdoptat" name="isAdoptat" class="form-check-input _adoptatRadio" value="1" />
+                                    <mvc:label path="isAdoptat" class="form-check-label">Si</mvc:label>
                                         <span class="help-block" id="error"></span>
+                                    </div>
+
+                                    <div class="form-check col-lg-2">
+                                    <mvc:label path="isVacunat" for="isVacunat"><i class="fas fa-syringe"></i>&nbsp;Està vacunat?</mvc:label>
+                                        <br/>                                       
+                                    <mvc:radiobutton path="isVacunat" name="isVacunat" class="form-check-input _vacunatRadio" value="0" />
+                                    <mvc:label path="isVacunat" class="form-check-label">No</mvc:label>
+                                    <mvc:radiobutton path="isVacunat" name="isVacunat" class="form-check-input _vacunatRadio" value="1" />
+                                    <mvc:label path="isVacunat" class="form-check-label">Si</mvc:label>
+                                        <span class="help-block" id="error"></span>
+                                    </div>
+
+                                    <div class="form-check col-lg-2">
+                                    <mvc:label path="isEsterlitzat" for="isEsterlitzat"><i class="fas fa-notes-medical"></i>&nbsp;Està esterilitzat?</mvc:label>
+                                        <br/>                                       
+                                    <mvc:radiobutton path="isEsterlitzat" name="isEsterlitzat" class="form-check-input _esterilitzatRadio" value="0" />
+                                    <mvc:label path="isEsterlitzat" class="form-check-label">No</mvc:label>
+                                    <mvc:radiobutton path="isEsterlitzat" name="isEsterlitzat" class="form-check-input _esterilitzatRadio" value="1" />
+                                    <mvc:label path="isEsterlitzat" class="form-check-label">Si</mvc:label>
+                                        <span class="help-block" id="error"></span>
+                                    </div>
+
+                                    <div class="form-check col-lg-2">
+                                    <mvc:label path="hasChip" for="hasChip"><i class="fas fa-briefcase-medical"></i>&nbsp;Té chip?</mvc:label>
+                                        <br/>                                       
+                                    <mvc:radiobutton path="hasChip" name="hasChip"  class="form-check-input _chipRadio" value="0" />
+                                    <mvc:label path="hasChip" class="form-check-label">No</mvc:label>
+                                    <mvc:radiobutton path="hasChip" name="hasChip"  class="form-check-input _chipRadio" value="1" />
+                                    <mvc:label path="hasChip" class="form-check-label">Si</mvc:label>
+                                        <span class="help-block" id="error"></span>
+                                    </div>
+
+                                    <div class="form-check col-lg-4">
+                                    <mvc:label path="numChip" for="numChip">Nº chip</mvc:label>
+                                        <div class="input-group">                                  
+                                            <div class="input-group-addon"><i class="fas fa-microchip"></i></div>                                                                     
+                                            <mvc:input path="numChip" name="numChip" type="text" id="numChip" class="form-control" placeholder="Nombre chip" disabled="true" />                                   
+                                    </div>
+                                    <span class="help-block" id="error"></span>
 
                                     </div>
                                 </div>
@@ -294,11 +304,11 @@
                                        value=' Tornar'/>-->
 
 
-
-                                <button type="button" data-toggle="modal" id="btn_imagen" href="#modal_imagen" class="btn btn-info">
-                                    <i class="fas fa-camera-retro"></i> Afegeix imatge
-                                </button>                                
-
+                                <c:if test="${accion=='update'}">
+                                    <button type="button" data-toggle="modal" id="btn_imagen" href="#modal_imagen" class="btn btn-info">
+                                        <i class="fas fa-camera-retro"></i> Afegeix imatge
+                                    </button>
+                                </c:if>
 
 
                                 <button type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'">Tornar</button>
@@ -350,7 +360,6 @@
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
-                                                
                                                 <form method="post" id="file-submit" action="${pageContext.servletContext.contextPath}/imagenes/form?id=${id}" enctype="multipart/form-data">
                                                         <input id="file" name="file" type="file"/> 
                                                         <button type="button" class="btn btn-default" data-dismiss="modal">Tanca</button>

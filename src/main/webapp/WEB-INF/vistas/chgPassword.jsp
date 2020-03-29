@@ -66,7 +66,7 @@
                         <div class="form-group">
                             <label>Contrasenya</label>
                             <div class="input-group" id="show_hide_password">
-                                <mvc:input path="password" class="form-control" type="password" name="password" placeholder="Contrasenya"/>
+                                <input class="form-control" type="password" name="password" placeholder="Contrasenya">
                                 <div class="input-group-addon">
                                     <a href=""><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
                                 </div>

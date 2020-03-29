@@ -199,7 +199,7 @@ public class AllAnimalController {
         
         // TODO --> En la modificación debería de coger de la vista si le da el alta, si esta adoptado y si es inactivo
         //animal.setIsAlta(false);
-        animal.setIsAdoptat(false);
+        //animal.setIsAdoptat(false);
         animal.setInactiu(false);
         
         
