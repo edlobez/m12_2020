@@ -14,9 +14,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' />
+        <meta name='viewport' content='width=500, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
       <!--  <link href="static/css/login.css" type="text/css" rel="stylesheet" />-->
-      <link href="<c:url value="static/css/login_8.css"/>"  rel="stylesheet"/>
+      <link href="<c:url value="static/css/login_9.css"/>"  rel="stylesheet"/>
 
        
       
@@ -38,7 +38,7 @@
                 <form action="${loginUrl}" method="post">
 
                     <c:if test="${param.error != null}">
-                        <p class="error">Usuari o contrasenya erronis, si us plau torna-ho a provar.</p>
+                        <p class="error">Usuari o contrasenya erronis.</p>
                     </c:if>
 
                     <c:if test="${param.logout != null}">

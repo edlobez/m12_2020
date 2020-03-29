@@ -105,7 +105,7 @@ p.logout {
 
 p.error {
     font-size: 4vw;
-    color: red;
+    color: purple;
     font-weight: bolder;
     font-family: Segoe UI Semibold;   
 }
