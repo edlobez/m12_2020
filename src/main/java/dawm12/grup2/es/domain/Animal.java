@@ -58,7 +58,8 @@ public class Animal {
     private String createdUser;
     private String imatge;
     
-    // Guardamos el literal de la raza  tipo animal veterinario
+    // Guardamos el literal de la raza  tipo animal veterinario para el json del
+    // ...listado
     private String tAnimal;
     private String laRaza;
     private String veterinari;

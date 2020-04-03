@@ -16,17 +16,29 @@
  */
 package dawm12.grup2.es.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dawm12.grup2.es.PasswordEncoderGenerator;
+import dawm12.grup2.es.domain.Animal;
+import dawm12.grup2.es.domain.Comentari;
 import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
 import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,6 +74,10 @@ public class AllUserController {
     @Autowired
     @Qualifier("animalService")
     private Service animalService;
+    
+    @Autowired
+    @Qualifier("comentariService")
+    private Service comentariService;
 
     private Usuarios _usr_copy;
 
@@ -200,6 +216,108 @@ public class AllUserController {
         return new ModelAndView("redirect:/home");
 
     }
+    
+    
+    @RequestMapping(value = "/getCommentList")
+    public String getCommentList (HttpServletRequest request 
+    ) throws JSONException {
+        
+        String campos_tabla [] = {"idComentari","descripcio", "idAnimal","createdDate", "createdUser"}; 
+        
+        // Cada petición debemos sumar 1 a este parámetro
+        int draw = Integer.parseInt(request.getParameter("draw")) + 1;
+        
+        // Número de registros a mostrar
+        int num_registros = Integer.parseInt(request.getParameter("length"));
+        
+        // Primer registro a mostrar, depende de la página donde estamos
+        int inicio = Integer.parseInt(request.getParameter("start"));
+        
+        // Miramos si hay algún filtro
+        String cadenaBusqueda = request.getParameter("search[value]");
+        
+        // La columna por la que buscar
+        int buscar_por = Integer.parseInt( request.getParameter("order[0][column]") );
+        String busqueda_por = campos_tabla[buscar_por];
+        System.out.println("busqueda_por: " + busqueda_por);
+        
+        //Ordernar ascendenteo o descendente
+        String order_dir = request.getParameter("order[0][dir]");
+        
+        // Cadena complementario a la busqueda      
+        String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";         
+        // La lista de comentarios a tomar serán de animales activos
+        List <Comentari> _comentarios = listaComentariosAnimalesActivos (aux);
+        //Obtenemos el total sin filtro de busqueda.
+        int total_registros = _comentarios.size(); 
+        
+        int reg_final = inicio + num_registros;
+        if ( reg_final > _comentarios.size() ) reg_final = _comentarios.size();
+        List <Comentari> comentarios = _comentarios.subList(inicio, reg_final);
+        
+        ObjectMapper JSON_MAPPER = new ObjectMapper();
+        JSONObject member = null;
+        JSONArray array = new JSONArray();
+        for (Comentari c : comentarios) {            
+            try {
+                member = new JSONObject(JSON_MAPPER.writeValueAsString(c));
+                array.put(member);
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        //System.out.println("Json array: " + array.toString());
+        JSONObject json = new JSONObject();
+        try {
+            json.put("recordsFiltered", _comentarios.size());            
+            json.put("recordsTotal", total_registros);
+            json.put("draw", draw);
+            json.put("data", array);
+        } catch (JSONException ex) {
+            Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+                
+        return json.toString();        
+    }
+    
+    /* Se creará una lista con todos los comentarios de la tabla comentarios
+       ...pero sólo de los animales activos.
+       Dependiendo del rol sólo se mostraran los comentarios para los animales
+       ... cuyo rol tienen asignados
+    */
+    private List <Comentari> listaComentariosAnimalesActivos (String aux) {
+        
+        List <Comentari> result;
+        
+        // Filtrar lista por rol
+        String lista_rol = "";
+        if ( rolActual().equals("voluntari") || rolActual().equals("responsable")) {            
+            Usuarios u = (Usuarios) usuarioService.getone("username="+usuarioActual());
+            lista_rol = ",tipusAnimal=" + u.getTipusAnimal();            
+        }
+        
+        //Primero tomamos una lista con todos los comentarios, filtrado u 
+        //...ordenado en función de la cadena de búsqueda - orden       
+        result = comentariService.getAll(aux);
+                
+        // Recorremos y eliminamos los comentarios de los animales inactivos
+        List <Comentari> auxlist = new ArrayList <Comentari> ();
+        for ( Comentari c: result ) {            
+            Animal a = (Animal) animalService.getone("idanimal=" + c.getIdAnimal() + lista_rol);            
+            if ( a != null && !a.isInactiu() ) {
+                c.setNomAnimal(a.getNom());
+                auxlist.add(c);
+            }
+        }
+        
+        result = auxlist;
+        
+        
+        
+        return result;
+    }
 
     // TO - DO REACER DESPUES DEL CAMBIO DE LA TABLA ROLES
     private Usuarios updateUsuario(Usuarios usr, Usuarios usr_old, ModelMap modelo) {
@@ -270,6 +388,28 @@ public class AllUserController {
         //System.out.println("\n\n\n\nUsuario creado: " + usr.toString() + " con rol:" + role);
         return usr_resultado;
 
+    }
+    
+    private String rolActual () {
+        
+        String rol = null;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"))) {
+            rol = "admin";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("responsable"))){
+           rol = "responsable";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("veterinari"))){
+            rol = "veterinari";
+        } else if (auth.getAuthorities().contains(new SimpleGrantedAuthority("voluntari"))){
+            rol = "voluntari";
+        }
+        return rol;
+    }
+    
+    private String usuarioActual () {
+        
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return auth.getName();
     }
 
 }

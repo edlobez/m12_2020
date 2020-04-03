@@ -26,7 +26,7 @@
         <link href="static/startbootstrap-simple-sidebar/css/simple-sidebar.css" rel="stylesheet">
 
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-        
+         <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/>    
         <link href="static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
     </head>
 
@@ -148,11 +148,7 @@
                     </div>
                 </nav>
 
-                <div class="container-fluid" id="contenido">
-                    <h1 class="mt-4">Benvingut/da!</h1>
-                    <p>Benvingut/da a la pàgina principal de l'aplicació Rescue Management.</p>
-                    <p>Des del menú de l'esquerra pots accedir als llistats i manteniment del personal i els animals que tens a càrrec, així com actualitzar el teu perfil.</p>
-                    <p></p>
+                <div class="container-fluid" id="contenido">                   
                       <div class="container"> 
             <seccion>
                   <div class="row">
@@ -160,7 +156,7 @@
                         <h2 class="mt-4">Comentaris més recents</h2>
                         <table id="tabla_comentarios" class="display" style="width:100%"><thead>
                                 <tr>
-                                    <th>ID comentari</th>
+                                   <!-- <th>ID comentari</th>-->
                                     <th>Descripció</th>
                                     <th>Nom Animal</th>
                                     <th>Data comentari</th>
@@ -170,7 +166,7 @@
                             <tbody></tbody>
                             <tfoot>
                                 <tr>
-                                    <th>ID comentari</th>
+                                   <!-- <th>ID comentari</th>-->
                                     <th>Descripció</th>
                                     <th>Nom Animal</th>
                                     <th>Data comentari</th>
@@ -184,49 +180,45 @@
             </seccion>
         </div>
                 </div>
-            </div>
-                           
-            <script>
-            jQuery(document).ready(function ($) {
+            </div>            
+        </div>
 
+        <!-- Bootstrap core JavaScript -->
+        <script src="static/startbootstrap-simple-sidebar/vendor/jquery/jquery.min.js"></script>        
+        <script src="static/startbootstrap-simple-sidebar/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+
+
+        <!-- Menu Toggle Script -->
+        <script>
+            jQuery(document).ready(function ($) {
+                
+                
                 var table = $('#tabla_comentarios').DataTable({
                     "processing" : true,
                     "serverSide" : true,                    
                     "ajax" : { 
-                        url: "${home}getCommentList"
+                        url: "${home}user/getCommentList"
                         ,type: 'POST'
                     },
                     "language" : {
-                        "url" : "../static/resources/lan/Catalan.json"
+                        "url" : "static/resources/lan/Catalan.json"
                     },
-                    "columns" : [                        
-                        {"data": "idComentari"},
+                    "columns" : [  
                         {"data": "descripcio"},
-                        {"data": "idAnimal"},
-                        {"data": "createdDate"},
+                        {"data": "nomAnimal"},
+                        {"data": "createdDateString"},
                         {"data": "createdUser"}
                     ],
                     "columnDefs": [
                         { "searchable": false, "targets": 0 },
                         { "searchable": false, "targets": 1 },
                         { "searchable": false, "targets": 2 },
-                        { "searchable": false, "targets": 3 },
-                        { "searchable": false, "targets": 4 }                       
+                        { "searchable": false, "targets": 3 }
+                                             
                     ]
                 });   
-            }); 
-                </script>
-
-        </div>
-
-        <!-- Bootstrap core JavaScript -->
-        <script src="static/startbootstrap-simple-sidebar/vendor/jquery/jquery.min.js"></script>        
-        <script src="static/startbootstrap-simple-sidebar/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-
-        <!-- Menu Toggle Script -->
-        <script>
-            jQuery(document).ready(function ($) {
+                
 
                 var aux = $_GET("param");
 

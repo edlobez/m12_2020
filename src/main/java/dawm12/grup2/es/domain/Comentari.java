@@ -30,6 +30,10 @@ public class Comentari {
     private int idAnimal;
     private Date createdDate;
     private String createdUser;
+    
+    // Se crean estos campos para el Json de listados
+    private String createdDateString;
+    private String nomAnimal;
 
     public Comentari(int idComentari, String descripcio, int idAnimal, Date createdDate, String createdUser) {
         this.idComentari = idComentari;
@@ -37,6 +41,7 @@ public class Comentari {
         this.idAnimal = idAnimal;
         this.createdUser = createdUser;
         this.createdDate = createdDate;
+        this.createdDateString = createdDate.toString();
     }
 
     public Comentari(String descripcio, int idAnimal, Date createdDate, String createdUser) {
@@ -44,7 +49,25 @@ public class Comentari {
         this.idAnimal = idAnimal;
         this.createdDate = createdDate;
         this.createdUser = createdUser;
+        this.createdDateString = createdDate.toString();
     }
+
+    public String getCreatedDateString() {
+        return createdDateString;
+    }
+
+    public void setCreatedDateString(String createdDateString) {
+        this.createdDateString = createdDateString;
+    }
+
+    public String getNomAnimal() {
+        return nomAnimal;
+    }
+
+    public void setNomAnimal(String nomAnimal) {
+        this.nomAnimal = nomAnimal;
+    }
+    
     
     
 
@@ -87,6 +110,8 @@ public class Comentari {
     public void setCreatedUser(String createdUser) {
         this.createdUser = createdUser;
     }
+    
+    
 
     @Override
     public String toString() {
