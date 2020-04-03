@@ -17,6 +17,7 @@
         <meta name='viewport' content='width=500, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
       <!--  <link href="static/css/login.css" type="text/css" rel="stylesheet" />-->
       <link href="<c:url value="static/css/login_9.css"/>"  rel="stylesheet"/>
+      <link href="static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
 
        
       
