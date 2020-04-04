@@ -368,7 +368,7 @@ public class AllAnimalController {
         // La columna por la que buscar
         int buscar_por = Integer.parseInt( request.getParameter("order[0][column]") );
         String busqueda_por = campos_tabla[buscar_por];
-        System.out.println("busqueda_por: " + busqueda_por);
+        //System.out.println("busqueda_por: " + busqueda_por);
         
         //Ordernar ascendenteo o descendente
         String order_dir = request.getParameter("order[0][dir]");

@@ -220,6 +220,15 @@
                     ]
                 });   
                 
+                $('#tabla_comentarios tbody').on('click', 'tr', function () {
+                    //alert($(this).text());
+                     var data = table.row(this).data();
+                     //console.log(Object.values(data)[0]);                     
+                     location.href = '${home}animal/editAnimal?idanimal=' + Object.values(data)[0];
+                     //location.href = '${home}editAnimal?idanimal=' + $(this).data("row-id");
+                     //alert( 'You clicked on '+data[5] +'\'s row' );
+                    } );
+                
 
                 var aux = $_GET("param");
 
