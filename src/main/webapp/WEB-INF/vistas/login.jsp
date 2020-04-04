@@ -15,8 +15,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta name='viewport' content='width=500, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-      <!--  <link href="static/css/login.css" type="text/css" rel="stylesheet" />-->
-      <link href="<c:url value="static/css/login_9.css"/>"  rel="stylesheet"/>
+      <link href="<c:url value="static/css/login_11.css"/>"  rel="stylesheet"/>
       <link href="static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
 
        
@@ -39,11 +38,12 @@
                 <form action="${loginUrl}" method="post">
 
                     <c:if test="${param.error != null}">
-                        <p class="error">Usuari o contrasenya erronis.</p>
+                      <p class="snackbar">Usuari o contrasenya erronis.</p>
+                     
                     </c:if>
 
                     <c:if test="${param.logout != null}">
-                        <p class="logout">La sessió s'ha tancat correctament.</p>
+                      <p class="snackbar">La sessió s'ha tancat correctament.</p>
                     </c:if>
 
                     <div>
