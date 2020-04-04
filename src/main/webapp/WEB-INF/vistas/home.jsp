@@ -156,7 +156,7 @@
                         <h2 class="mt-4">Comentaris més recents</h2>
                         <table id="tabla_comentarios" class="display" style="width:100%"><thead>
                                 <tr>
-                                   <!-- <th>ID comentari</th>-->
+                                  <!--  <th>ID comentari</th>-->
                                     <th>Descripció</th>
                                     <th>Nom Animal</th>
                                     <th>Data comentari</th>
@@ -166,7 +166,7 @@
                             <tbody></tbody>
                             <tfoot>
                                 <tr>
-                                   <!-- <th>ID comentari</th>-->
+                                  <!--  <th>ID comentari</th>-->
                                     <th>Descripció</th>
                                     <th>Nom Animal</th>
                                     <th>Data comentari</th>
@@ -204,7 +204,7 @@
                     "language" : {
                         "url" : "static/resources/lan/Catalan.json"
                     },
-                    "columns" : [  
+                    "columns" : [                          
                         {"data": "descripcio"},
                         {"data": "nomAnimal"},
                         {"data": "createdDateString"},
@@ -215,6 +215,7 @@
                         { "searchable": false, "targets": 1 },
                         { "searchable": false, "targets": 2 },
                         { "searchable": false, "targets": 3 }
+                        
                                              
                     ]
                 });   

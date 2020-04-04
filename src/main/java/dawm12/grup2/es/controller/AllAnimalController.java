@@ -431,7 +431,7 @@ public class AllAnimalController {
         List <Animal> animales = _animales.subList(inicio, reg_final);
         
         if ( animales != null && animales.size() > 0 ) {
-            for (int i = 0; i < _animales.size(); i++) {
+            for (int i = 0; i < animales.size(); i++) {
                 TipusAnimal t = (TipusAnimal) tipusAnimalService.getone("idtipus=" + animales.get(i).getTipusAnimal());
                 Raza r = (Raza) razaService.getone("idraza=" +  animales.get(i).getRaza());
                 animales.get(i).settAnimal( t.getDescripcio() );

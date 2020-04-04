@@ -222,7 +222,7 @@ public class AllUserController {
     public String getCommentList (HttpServletRequest request 
     ) throws JSONException {
         
-        String campos_tabla [] = {"idComentari","descripcio", "idAnimal","createdDate", "createdUser"}; 
+        String campos_tabla [] = {"descripcio", "idAnimal","createdDate", "createdUser"}; 
         
         // Cada petición debemos sumar 1 a este parámetro
         int draw = Integer.parseInt(request.getParameter("draw")) + 1;
@@ -239,7 +239,7 @@ public class AllUserController {
         // La columna por la que buscar
         int buscar_por = Integer.parseInt( request.getParameter("order[0][column]") );
         String busqueda_por = campos_tabla[buscar_por];
-        System.out.println("busqueda_por: " + busqueda_por);
+        //System.out.println("busqueda_por: " + busqueda_por);
         
         //Ordernar ascendenteo o descendente
         String order_dir = request.getParameter("order[0][dir]");
@@ -247,9 +247,39 @@ public class AllUserController {
         // Cadena complementario a la busqueda      
         String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";         
         // La lista de comentarios a tomar serán de animales activos
-        List <Comentari> _comentarios = listaComentariosAnimalesActivos (aux);
+        List <Comentari> _comentarios = listaComentariosAnimalesActivos (aux, "");
         //Obtenemos el total sin filtro de busqueda.
         int total_registros = _comentarios.size(); 
+        
+        // Si buscamos por nombre de animal...
+        List <Animal> _animalesFiltradosPorNombre = new ArrayList <Animal> ();
+        // Filtrar lista por rol
+        String lista_rol = "";
+        if ( rolActual().equals("voluntari") || rolActual().equals("responsable")) {            
+            Usuarios u = (Usuarios) usuarioService.getone("username="+usuarioActual());
+            lista_rol = ",tipusAnimal=" + u.getTipusAnimal();            
+        }
+        if (busqueda_por.equals ("idAnimal") ) {           
+            _animalesFiltradosPorNombre = animalService.getAND("nom=%" + cadenaBusqueda + "%,inactiu=0" + lista_rol);
+        }
+        
+        if ( cadenaBusqueda.length() > 0 ) {            
+            if ( _animalesFiltradosPorNombre == null || _animalesFiltradosPorNombre.isEmpty() ) 
+                _comentarios =  listaComentariosAnimalesActivos (aux, busqueda_por + "=%" + cadenaBusqueda + "%");// comentariService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%");
+            else {                
+                _comentarios.clear();
+                for ( Animal a: _animalesFiltradosPorNombre ) {
+                    List <Comentari> auxComentari = new ArrayList <> ();
+                    cadenaBusqueda = Integer.toString (  ((Animal)animalService.getone("nom=" + a.getNom())).getIdAnimal() );
+                    auxComentari = listaComentariosAnimalesActivos (aux, busqueda_por + "=%" + cadenaBusqueda + "%");
+                    _comentarios.addAll(auxComentari);
+                }
+            }
+            
+            
+            //rellenarNombreParaJson(_comentarios);
+        }
+        
         
         int reg_final = inicio + num_registros;
         if ( reg_final > _comentarios.size() ) reg_final = _comentarios.size();
@@ -287,7 +317,7 @@ public class AllUserController {
        Dependiendo del rol sólo se mostraran los comentarios para los animales
        ... cuyo rol tienen asignados
     */
-    private List <Comentari> listaComentariosAnimalesActivos (String aux) {
+    private List <Comentari> listaComentariosAnimalesActivos (String aux, String filtro) {
         
         List <Comentari> result;
         
@@ -300,7 +330,7 @@ public class AllUserController {
         
         //Primero tomamos una lista con todos los comentarios, filtrado u 
         //...ordenado en función de la cadena de búsqueda - orden       
-        result = comentariService.getAll(aux);
+        result = comentariService.getAND(aux, filtro);
                 
         // Recorremos y eliminamos los comentarios de los animales inactivos
         List <Comentari> auxlist = new ArrayList <Comentari> ();
@@ -317,6 +347,17 @@ public class AllUserController {
         
         
         return result;
+    }
+    
+    private void rellenarNombreParaJson ( List <Comentari> list) {
+        if ( list != null && list.size() > 0 ) {
+            for (Comentari c: list ) {
+               Animal a = (Animal) animalService.getone("idanimal=" + c.getIdAnimal());            
+               if ( a != null && !a.isInactiu() ) {
+                    c.setNomAnimal(a.getNom());                    
+                }
+            }
+        }
     }
 
     // TO - DO REACER DESPUES DEL CAMBIO DE LA TABLA ROLES
