@@ -190,9 +190,9 @@
                                 <div class="row">
                                     
                                     <div class="form-check col-lg-2">
-                                    <mvc:label path="isAdoptat" for="isVacunat"><i class="fas fa-heart"></i>&nbsp;Està adoptat?</mvc:label>
+                                    <mvc:label path="isAdoptat" for="isAdoptat"><i class="fas fa-heart"></i>&nbsp;Està adoptat?</mvc:label>
                                         <br/>                                       
-                                    <mvc:radiobutton path="isAdoptat" name="isAdoptat" class="form-check-input _adoptatRadio" value="0" />
+                                    <mvc:radiobutton path="isAdoptat" name="isAdoptat" class="form-check-input _adoptatRadio" value="0" id="noadoptat" />
                                     <mvc:label path="isAdoptat" class="form-check-label">No</mvc:label>
                                     <mvc:radiobutton path="isAdoptat" name="isAdoptat" class="form-check-input _adoptatRadio" value="1" />
                                     <mvc:label path="isAdoptat" class="form-check-label">Si</mvc:label>
@@ -389,6 +389,12 @@
                     var accion = "${accion}";
                     if (accion == "create") {
                         $("#newComentari").show("slow");
+                        $("._adoptatRadio").attr("disabled", "true");
+                    }
+                    
+                    if (accion == "update" && $("#estado_medico").val() == "BAIXA") {
+                        $("._adoptatRadio").attr("disabled", "true");
+                        $("#noadoptat").prop("checked", true);
                     }
 
                     /*Habilita/Deshabilita el campo Num chip al cargar segun si tiene o no chip*/
@@ -516,12 +522,15 @@
                         $("#_estado_medico").val("true");
                         $("#estado_medico").removeClass("btn-danger");
                         $("#estado_medico").addClass("btn-success");
+                        $("._adoptatRadio").removeAttr("disabled");
 
                     } else {
                         $("#_estado_medico").val("false");
                         $("#estado_medico").val("BAIXA");
                         $("#estado_medico").removeClass("btn-success");
                         $("#estado_medico").addClass("btn-danger");
+                        $("._adoptatRadio").attr("disabled", "true");
+                        $("#noadoptat").prop("checked", true);
                     }
 
                 }
