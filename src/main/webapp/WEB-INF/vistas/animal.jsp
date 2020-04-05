@@ -53,11 +53,14 @@
 
         <div class="container">
 
-            <div id="img_container" class="row">
-                <div  class="col-lg-3">
-                    <c:set var="url" scope="page" value="${pageContext.servletContext.contextPath}/imagenes/uploaded?id=${id}"/>
-                    <img id="imagen" src="${url}" class="img-thumbnail" style="max-height: 200px;" onerror="ocultarImagen();"/>
-                </div>
+           <div id="img_container" class="row">
+               
+                <c:forEach var="imagen" items="${imagenes}">
+                    <div  class="col-lg-3">
+                        <img id="imagen" src='data:${imagen.tipo};base64,${imagen.base64}' class="img-thumbnail" style="max-height: 150px;" onerror="ocultarImagen();"/>
+                    </div>
+                </c:forEach>
+                
             </div>
 
             <div class="signup-form-container">    

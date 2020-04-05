@@ -24,12 +24,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dawm12.grup2.es.domain.Animal;
 import dawm12.grup2.es.domain.Comentari;
+import dawm12.grup2.es.domain.Imagen;
 import dawm12.grup2.es.domain.Raza;
 import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
 import dawm12.grup2.es.domain.Usuarios;
 import dawm12.grup2.es.service.Service;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -91,6 +93,10 @@ public class AllAnimalController {
     private Service comentariService;
     
     @Autowired
+    @Qualifier("imagenService")
+    private Service imagenService;
+    
+    @Autowired
     private JdbcTemplate jdbc;
     
     private Animal animal_copy = null;
@@ -124,6 +130,7 @@ public class AllAnimalController {
         modelo.addAttribute("rol", rolActual() );
         cargarDatosEnVista ( an, modelo);
         cargarComentarios ( an, modelo);
+        cargarImagenes(an, modelo);
         
         //System.out.println("Editando animal: " + an.toString());
         return mv;
@@ -244,9 +251,29 @@ public class AllAnimalController {
         List <Comentari> comentarios = comentariService.getAND("ORDER BY CREATEDDATE", "idanimal="+an.getIdAnimal());
         if ( comentarios != null && comentarios.size() > 0 ) {
             modelo.addAttribute("comentarios", comentarios);
+        } 
+    }
+    
+        /*
+    Carga las imagenes que exists en la tabla imagenes para el animal
+    en concreto.
+    */
+    private void cargarImagenes ( Animal an, ModelMap modelo ) {
+       
+        List <Imagen> imagenes = imagenService.get("idanimal="+an.getIdAnimal());
+        
+        List <Imagen> images = new ArrayList <>();
+        for(Imagen img : imagenes){
+            byte[] bytes = (byte[]) img.getPixel();
+            String base64 = Base64.getEncoder().encodeToString(bytes);
+            img.setBase64(base64);
+
+            images.add(img);
         }
         
-        
+        if (images != null && images.size() > 0 ) {
+             modelo.addAttribute("imagenes", images);
+        }
     }
     
     /*

@@ -41,10 +41,18 @@ public class ImagenImp extends MyRepositoryImp<Imagen> implements MyRepository<I
     @Override
     protected Imagen buildDomainFromResultSet(ResultSet rs) throws SQLException {
 
-        return new Imagen(rs.getInt("id"),
+        //return new Imagen(rs.getInt("idanimal"),
+                //rs.getString("nombre"),
+                //rs.getString("tipo"),
+                //rs.getLong("tamano"),
+                //rs.getBytes("pixel"));
+                Imagen i = new Imagen (
+                rs.getInt("idanimal"),
                 rs.getString("nombre"),
                 rs.getString("tipo"),
                 rs.getLong("tamano"),
-                rs.getBytes("pixel"));
+                rs.getBytes("pixel")
+        );
+        return i;
     }
 }

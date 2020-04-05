@@ -30,6 +30,7 @@ public class Imagen {
     private String tipo;  // tipo de fichero
     private long tamano; // tamano de la imagen
     private byte[] pixel; // blob
+    private String base64;
    
 
     public Imagen() {
@@ -91,6 +92,15 @@ public class Imagen {
         this.pixel = pixel;
     }
 
+    public String getBase64() {
+        return base64;
+    }
+
+    public void setBase64(String base64) {
+        this.base64 = base64;
+    }
+
+    
     @Override
     public String toString() {
         return "Imagen{" + "id=" + id + ", nombre=" + nombre + ", tipo=" + tipo + ", tamano=" + tamano + ", pixel=" + pixel + '}';
