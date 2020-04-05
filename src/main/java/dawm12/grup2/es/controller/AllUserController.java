@@ -219,7 +219,7 @@ public class AllUserController {
     
     
     @RequestMapping(value = "/getCommentList")
-    public String getCommentList (HttpServletRequest request 
+    public String getCommentList (HttpServletRequest request           
     ) throws JSONException {
         
         String campos_tabla [] = {"descripcio", "idAnimal","createdDate", "createdUser"}; 
@@ -239,13 +239,18 @@ public class AllUserController {
         // La columna por la que buscar
         int buscar_por = Integer.parseInt( request.getParameter("order[0][column]") );
         String busqueda_por = campos_tabla[buscar_por];
-        //System.out.println("busqueda_por: " + busqueda_por);
         
-        //Ordernar ascendenteo o descendente
+
+        if ( busqueda_por.equals("descripcio") ) busqueda_por = "createdDate";
+        //System.out.println("busqueda_por: " + busqueda_por);        
+        
+        // Hacemos esto para que la primera vista sea en orden descendente.
         String order_dir = request.getParameter("order[0][dir]");
+        if ( order_dir.equals("asc") ) order_dir = "desc";
+        else order_dir = "asc";
         
         // Cadena complementario a la busqueda      
-        String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";         
+        String aux = "ORDER BY " + busqueda_por + " " + order_dir + " ";         
         // La lista de comentarios a tomar serán de animales activos
         List <Comentari> _comentarios = listaComentariosAnimalesActivos (aux, "");
         //Obtenemos el total sin filtro de busqueda.

@@ -215,8 +215,6 @@
                         { "searchable": false, "targets": 1 },
                         { "searchable": false, "targets": 2 },
                         { "searchable": false, "targets": 3 }
-                        
-                                             
                     ]
                 });   
                 
