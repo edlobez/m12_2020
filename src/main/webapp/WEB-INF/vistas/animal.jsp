@@ -402,6 +402,7 @@
                     /* Controles según el rol */
                     if ("${rol}" == "voluntari") {
                         deshabilita_todos();
+                        habilitaSubirImagen();
                     } else if ("${rol}" == "admin") {
                         //alert("El admin!!!");
                     } else if ("${rol}" == "responsable") {
@@ -410,6 +411,7 @@
                     } else if ("${rol}" == "veterinari") {
                         deshabilita_todos();
                         habilita_veterinario();
+                        habilitaSubirImagen();
                     }
                     
                     /*Al iniciar la previsualización de imagen nueva no se verá*/
@@ -484,6 +486,11 @@
                     $("select").attr("disabled", "true");
                     $("radiobutton").attr("disabled", "true");
                     habilitado = false;
+                }
+                function habilitaSubirImagen(){
+                    $('#file').removeAttr("disabled");
+                    $('#file-save').removeAttr("disabled");
+
                 }
 
                 function habilita_todos() {
