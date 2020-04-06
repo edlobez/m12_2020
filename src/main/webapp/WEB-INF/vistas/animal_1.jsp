@@ -17,9 +17,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
 
-        <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>  
-
-
+        <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>
         <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>" rel="stylesheet" type="text/css"/>
         <link href="<c:url value="../static/css/fileUploader.css"/>" rel="stylesheet" type="text/css"/>
 
@@ -56,34 +54,30 @@
         <div class="container">
 
             <div id="img_container" class="row">
-                <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                    <!-- https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_carousel2&stacked=h -->
-                    <ol class="carousel-indicators">
-                        <c:set var="aux_1" scope="page" value="0"/>
-                        <c:forEach var="imagen" items="${imagenes}">
-                            <c:set var="clase" scope="page" value=""/> 
-                            <c:if test="${aux_1==0}">
-                               <c:set var="clase" scope="page" value="active"/> 
-                            </c:if>
-                            <li data-target="#myCarousel" data-slide-to="${aux_1}" class="${clase}"></li>
-                             <c:set var="aux_1" scope="page" value="${aux_1+1}"/>   
-                        </c:forEach>
-                    </ol>
-                    
-                    <div class="carousel-inner">                       
-                        <c:set var="aux" scope="page" value="${true}"/>
-                        <c:forEach var="imagen" items="${imagenes}">
-                            <c:set var="clase" scope="page" value="item"/>
-                            <c:if test="${aux}">
-                                <c:set var="clase" scope="page" value="item active"/>
-                                <c:set var="aux" scope="page" value="${false}"/>
-                            </c:if>
-                            <div class="${clase}">
-                                <img id="imagen" src='data:${imagen.tipo};base64,${imagen.base64}' class="d-block w-100" style="max-height: 150px;display: block;margin-left: auto;margin-right: auto;" onerror="ocultarImagen();"/>
-                            </div>
-                        </c:forEach>
+
+                <c:forEach var="imagen" items="${imagenes}">
+                    <div  class="col-lg-3">
+                        <img id="imagen" src='data:${imagen.tipo};base64,${imagen.base64}' class="img-thumbnail" style="max-height: 150px;" onerror="ocultarImagen();"/>
+                    </div>
+                </c:forEach>
+
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img class="d-block w-100" src="..." alt="First slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="..." alt="Second slide">
+                        </div>
+                        <div class="carousel-item">
+                            <img class="d-block w-100" src="..." alt="Third slide">
+                        </div>
                     </div>
                 </div>
+
+
+
+
             </div>
 
             <div class="signup-form-container">    
