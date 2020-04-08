@@ -41,13 +41,7 @@
                 </a>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                        <sec:authorize access="hasAnyAuthority('responsable','admin')">  
-                        <c:if test="${list=='all'}">
-                            <li class="nav-item active">                            
-                                <a class="nav-link" href="${pageContext.servletContext.contextPath}/responsable/newAnimal">Crear animal <span class="sr-only">(current)</span></a>
-                            </li>
-                        </c:if>
-                        </sec:authorize>
+                        
                         <!--  <li class="nav-item">
                               <a class="nav-link" href="#">Link</a>
                           </li>
@@ -76,8 +70,8 @@
                                 <tr>
                                     <th>Nom</th>
                                     <th>Tipus</th>
-                                    <th>Raça</th>                                    
-                                    <th>Estat de salut</th>  
+                                    <th>Raça</th>
+                                    <th>Data d'adopció</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
@@ -86,8 +80,7 @@
                                     <th>Nom</th>
                                     <th>Tipus</th>
                                     <th>Raça</th>
-                                    <th>Estat de salut</th>
-                                    
+                                    <th>Data d'adopció</th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -111,14 +104,10 @@
                     var _url = "${home}getAnimalList/all";
                     var _url_2 = "${home}animal/edit";
                 }
-                else if ( tipoLista === "adoptados") {
+                if ( tipoLista === "adoptados") {
                     var _url = "${home}getAnimalList/adoptats";
-                    var _url_2 = "${home}animal/consultar";                    
+                    var _url_2 = "${home}animal/consultar";
                 }
-                else if ( tipoLista === "disponible") {
-                    var _url = "${home}getAnimalList/disponibles";
-                    var _url_2 = "${home}";
-                }        
 
                 var table = $('#tabla_animales').DataTable({
                     "processing" : true,

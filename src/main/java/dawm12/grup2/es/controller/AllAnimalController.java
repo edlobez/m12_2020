@@ -105,10 +105,19 @@ public class AllAnimalController {
         return modelview;
     }
     
+    @RequestMapping(value = "/animalListDisponible")
+    public ModelAndView animalDisponible(  Model modelo          
+    ) {
+        ModelAndView modelview = new ModelAndView("listaAnimales");
+        modelo.addAttribute("list", "disponible");
+       // modelview.addObject("rol", "admin");
+        return modelview;
+    }
+    
     @RequestMapping(value = "/animalListAdoptats")
     public ModelAndView animalListApotats(Model modelo           
     ) {
-        ModelAndView modelview = new ModelAndView("listaAnimales");
+        ModelAndView modelview = new ModelAndView("listaAdoptados");
         // El listado de animales que retornará será animales adoptados
         modelo.addAttribute("list", "adoptados");
         return modelview;
@@ -444,12 +453,15 @@ public class AllAnimalController {
         String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " "; 
         String adoptats = "inactiu=0";
         if ( tipo_lista.equals("adoptats") ) {            
-            adoptats = adoptats + ",isadoptat=1";
-            //System.out.println("Mostrando adoptados " + adoptats);
+            adoptats = adoptats + ",isadoptat=1";            
         }
-        else {
+        else if ( tipo_lista.equals("all") ){
             adoptats = adoptats + ",isadoptat=0";
         }
+        else if ( tipo_lista.equals("disponibles") ) {
+            adoptats = adoptats + ",isadoptat=0" + ",isalta=1";            
+        }
+        
         List <Animal> _animales = new ArrayList<>();
         _animales = animalService.getAND(aux, adoptats + lista_rol);
         //Obtenemos el total de animales sin filtro.

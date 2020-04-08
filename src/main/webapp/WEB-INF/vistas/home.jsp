@@ -58,7 +58,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                                <sec:authorize access="hasAuthority('admin')">
+                                <sec:authorize access="hasAuthority('admin')">                                 
                                     <ul class="collapse list-unstyled" id="usuarisSubmenu">
                                         <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <a class="logout-link" href="${pageContext.servletContext.contextPath}/admin/newUser" id="usuarisCrear">
@@ -116,7 +116,7 @@
                                 </li>
                                 <sec:authorize access="hasAnyAuthority('responsable','admin')">  
                                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <a class="logout-link" href="${pageContext.servletContext.contextPath}" id="adoptarCrear">
+                                        <a class="logout-link" href="${pageContext.servletContext.contextPath}/animal/animalListDisponible" id="adoptarCrear">
                                             <i class="fas fa-dove"></i>
                                             &nbsp;Adoptar animal
                                         </a>
