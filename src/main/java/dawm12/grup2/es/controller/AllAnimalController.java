@@ -447,6 +447,9 @@ public class AllAnimalController {
             adoptats = adoptats + ",isadoptat=1";
             //System.out.println("Mostrando adoptados " + adoptats);
         }
+        else {
+            adoptats = adoptats + ",isadoptat=0";
+        }
         List <Animal> _animales = new ArrayList<>();
         _animales = animalService.getAND(aux, adoptats + lista_rol);
         //Obtenemos el total de animales sin filtro.
