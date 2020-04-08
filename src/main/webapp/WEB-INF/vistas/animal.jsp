@@ -15,18 +15,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="../static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
+        <link href="${pageContext.servletContext.contextPath}/static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
 
-        <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap.min.css"/>" rel="stylesheet" type="text/css"/>  
+        <link href="${pageContext.servletContext.contextPath}/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>  
 
 
-        <link href="<c:url value="../static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css"/>" rel="stylesheet" type="text/css"/>
-        <link href="<c:url value="../static/css/fileUploader.css"/>" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.servletContext.contextPath}/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
+        <link href="${pageContext.servletContext.contextPath}/static/css/fileUploader.css" rel="stylesheet" type="text/css"/>
 
         <script src="https://kit.fontawesome.com/42bb3417c7.js" crossorigin="anonymous"></script>
 
-        <script src="../static/js/jquery/jquery-3.3.1.min.js"></script>
-        <script src="../static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/static/js/jquery/jquery-3.3.1.min.js"></script>
+        <script src="${pageContext.servletContext.contextPath}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
         <title>Formulari Animal</title>
     </head>
@@ -38,7 +38,7 @@
                     <div class="navbar-header">
                         <a href="${pageContext.servletContext.contextPath}">
                             <span class="navbar-brand">                        
-                                <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="" onerror="alert('error');">                            
+                                <img src="${pageContext.servletContext.contextPath}/static/resources/imgs/kitty_ico.png" width="30" height="30" alt="" onerror="alert('error');">                            
                             </span>
                             <span class="navbar-brand">RescueManagement</span>
                         </a>
@@ -99,7 +99,10 @@
                             </c:if>
                             <c:if test="${accion=='create'}">
                                 <c:out value="Crear animal"/>
-                            </c:if>                      
+                            </c:if>    
+                            <c:if test="${accion=='consulta'}">
+                                <c:out value="Consultar animal"/>
+                            </c:if> 
                         </h3>
 
                     </div>
@@ -187,7 +190,7 @@
                                     <span class="help-block" id="error"></span>
                                 </div>
 
-                                <c:if test="${accion=='update'}"> 
+                                <c:if test="${accion=='update' || accion=='consulta'}"> 
                                     <div class="form-group col-lg-2">
                                         <mvc:label path="isAlta" for="isAlta">Estat de salut</mvc:label>
                                             <div class="input-group"> 
@@ -264,7 +267,7 @@
                             </div>
                         </div> <!--fin Editables-->
 
-                        <c:if test="${accion=='update'}">
+                        <c:if test="${accion=='update' || accion=='consulta'}">
                             <br>
                             <!-- Boton -->
 
@@ -274,9 +277,13 @@
                                     <button data-toggle="modal" href="#mi_modal" class="btn btn-default" type="button">
                                         Veure comentaris
                                     </button>
+                                    
+                                    <c:if test="${accion=='update'}">
                                     <button type="button" id="nuevoComentario" class="btn btn-default">
                                         Nou comentari
                                     </button>
+                                    </c:if>
+                                    
                                 </div>
                             </div>
                             <!-- si se necesita cambiar tamaño de modal agregar modal-lg a la linea 
@@ -324,12 +331,15 @@
 
                         <br/> <br/>
                         <div class="form-footer">
+                            
+                            <c:if test="${accion=='update' || accion=='create'}">
+                            
                             <button type="submit" id="btn_enviar" class="btn btn-info">
                                 <span class="glyphicon glyphicon-log-in"></span> Enviar
                             </button>                            
                            <!-- <input type="button" id="btn_volver" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'"                        
                                    value=' Tornar'/>-->
-
+                            </c:if>
 
                             <c:if test="${accion=='update'}">
                                 <button type="button" data-toggle="modal" id="btn_imagen" href="#modal_imagen" class="btn btn-info">
@@ -418,7 +428,7 @@
                 if (accion == "update" && $("#estado_medico").val() == "BAIXA") {
                     $("._adoptatRadio").attr("disabled", "true");
                     $("#noadoptat").prop("checked", true);
-                }
+                }                
 
                 /*Habilita/Deshabilita el campo Num chip al cargar segun si tiene o no chip*/
                 if ($("._chipRadio:checked").val() == 1) {
@@ -443,6 +453,10 @@
                     habilitaSubirImagen();
                 }
 
+                // El caso más resctrictivo, una consulta todo deshabilitado
+                if (accion == "consulta") {
+                    deshabilita_todos();
+                }
                 /*Al iniciar la previsualización de imagen nueva no se verá*/
 
             });

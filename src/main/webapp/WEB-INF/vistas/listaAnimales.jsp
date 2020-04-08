@@ -102,12 +102,22 @@
                            
         <script>
             jQuery(document).ready(function ($) {
+                
+                var tipoLista = "${list}";
+                if ( tipoLista === "all") {
+                    var _url = "${home}getAnimalList/all";
+                    var _url_2 = "${home}animal/edit";
+                }
+                if ( tipoLista === "adoptados") {
+                    var _url = "${home}getAnimalList/adoptats";
+                    var _url_2 = "${home}animal/consultar";
+                }
 
                 var table = $('#tabla_animales').DataTable({
                     "processing" : true,
                     "serverSide" : true,                    
                     "ajax" : { 
-                        url: "${home}getAnimalList"
+                        url: _url
                         ,type: 'POST'
                     },
                     "language" : {
@@ -131,9 +141,9 @@
                 $('#tabla_animales tbody').on('click', 'tr', function () {
                     //alert($(this).text());
                      var data = table.row(this).data();
-                     //console.log(Object.values(data)[0]);                     
-                     location.href = '${home}editAnimal?idanimal=' + Object.values(data)[0];
-                     //location.href = '${home}editAnimal?idanimal=' + $(this).data("row-id");
+                     //console.log(Object.values(data)[0]); 
+                     location.href = _url_2 + '?idanimal=' + Object.values(data)[0];                      
+                     //location.href = '${home}editAnimal?idanimal=' + Object.values(data)[0];                     
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );
                 

@@ -25,7 +25,8 @@
         <!-- Custom styles for this template -->
         <link href="static/startbootstrap-simple-sidebar/css/simple-sidebar.css" rel="stylesheet">
 
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/42bb3417c7.js" crossorigin="anonymous"></script>
+        
          <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/>    
         <link href="static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
     </head>
@@ -77,7 +78,7 @@
                         <li class="active">
                             <a href="#mascotasSubmenu" data-toggle="collapse" aria-expanded="false" 
                                class="list-group-item list-group-item-action bg-light dropdown-toggle">
-                                <i class="fas fa-users"></i>
+                                <i class="fas fa-horse"></i>
                                 <strong>Animals</strong>
                             </a>
                             <ul class="collapse list-unstyled" id="mascotasSubmenu">
@@ -90,7 +91,7 @@
                                 <sec:authorize access="hasAnyAuthority('responsable','admin')">  
                                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <a class="logout-link" href="${pageContext.servletContext.contextPath}/responsable/newAnimal" id="animalesCrear">
-                                            <i class="fas fa-list"></i>
+                                            <i class="far fa-plus-square"></i>
                                             &nbsp;Crear
                                         </a>
                                     </li>
@@ -98,6 +99,33 @@
                             </ul>                                
                         </li>
                     </ul>
+                    
+                    <ul class="list-unstyled components">
+                        <li class="active">
+                            <a href="#adopcionSubmenu" data-toggle="collapse" aria-expanded="false" 
+                               class="list-group-item list-group-item-action bg-light dropdown-toggle">
+                                <i class="fas fa-hands"></i>
+                                <strong>Adopciones</strong>
+                            </a>
+                            <ul class="collapse list-unstyled" id="adopcionSubmenu">
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a class="logout-link" href="${pageContext.servletContext.contextPath}/animal/animalListAdoptats" id="adopcionesList">
+                                        <i class="fas fa-list"></i>
+                                        &nbsp;Llista d'adopcions
+                                    </a>
+                                </li>
+                                <sec:authorize access="hasAnyAuthority('responsable','admin')">  
+                                    <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <a class="logout-link" href="${pageContext.servletContext.contextPath}" id="adoptarCrear">
+                                            <i class="fas fa-dove"></i>
+                                            &nbsp;Adoptar animal
+                                        </a>
+                                    </li>
+                                </sec:authorize>                          
+                            </ul>                                
+                        </li>
+                    </ul>
+                                        
 
 
 
@@ -105,13 +133,13 @@
                         <li class="active">
                             <a href="#perfilSubmenu" data-toggle="collapse" aria-expanded="false" 
                                class="list-group-item list-group-item-action bg-light dropdown-toggle">
-                                <i class="fas fa-users"></i>
+                                <i class="fas fa-user"></i>
                                 <strong>Perfil</strong>
                             </a>
                             <ul class="collapse list-unstyled" id="perfilSubmenu">
                                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a class="logout-link" href="#" id="miPerfil">
-                                        <i class="fas fa-list"></i>
+                                        <i class="fas fa-user-edit"></i>
                                         &nbsp;El meu perfil
                                     </a>
                                 </li>
@@ -222,7 +250,7 @@
                     //alert($(this).text());
                      var data = table.row(this).data();
                      //console.log(Object.values(data)[0]);                     
-                     location.href = '${home}animal/editAnimal?idanimal=' + Object.values(data)[0];
+                     location.href = '${home}animal/animal/consultar?idanimal=' + Object.values(data)[0];
                      //location.href = '${home}editAnimal?idanimal=' + $(this).data("row-id");
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );

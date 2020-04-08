@@ -47,9 +47,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -68,51 +70,56 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/animal")
 public class AllAnimalController {
 
-    @Autowired
-    @Qualifier("usuarioService")
+    @Autowired @Qualifier("usuarioService")
     private Service usuarioService;
 
-    @Autowired
-    @Qualifier("rolesService")
+    @Autowired @Qualifier("rolesService")
     private Service rolesService;
 
-    @Autowired
-    @Qualifier("tipusAnimalService")
+    @Autowired @Qualifier("tipusAnimalService")
     private Service tipusAnimalService;
 
-    @Autowired
-    @Qualifier("animalService")
+    @Autowired @Qualifier("animalService")
     private Service animalService;
     
-    @Autowired
-    @Qualifier("razaService")
+    @Autowired @Qualifier("razaService")
     private Service razaService;  
     
-    @Autowired
-    @Qualifier("comentariService")
+    @Autowired @Qualifier("comentariService")
     private Service comentariService;
     
-    @Autowired
-    @Qualifier("imagenService")
+    @Autowired @Qualifier("imagenService")
     private Service imagenService;
     
     @Autowired
     private JdbcTemplate jdbc;
     
-    private Animal animal_copy = null;
+    private Animal animal_copy = null;    
     
     @RequestMapping(value = "/animalList")
-    public ModelAndView animalList() {
+    public ModelAndView animalList(  Model modelo          
+    ) {
         ModelAndView modelview = new ModelAndView("listaAnimales");
-        modelview.addObject("rol", "admin");
+        modelo.addAttribute("list", "all");
+       // modelview.addObject("rol", "admin");
+        return modelview;
+    }
+    
+    @RequestMapping(value = "/animalListAdoptats")
+    public ModelAndView animalListApotats(Model modelo           
+    ) {
+        ModelAndView modelview = new ModelAndView("listaAnimales");
+        // El listado de animales que retornará será animales adoptados
+        modelo.addAttribute("list", "adoptados");
         return modelview;
     }
     
     
 
-    @RequestMapping(value = "/editAnimal")
+    @RequestMapping(value = "/animal/{edit}")
     public ModelAndView editAnimal (
-            @RequestParam ("idanimal") int idAnimal, ModelMap modelo
+            @RequestParam ("idanimal") int idAnimal, ModelMap modelo,
+            @PathVariable ("edit") String edit
     ) {
         ModelAndView mv = new ModelAndView("animal");
         Animal an = (Animal) animalService.getone("idAnimal=" + idAnimal);
@@ -126,7 +133,10 @@ public class AllAnimalController {
         animal_copy = an;
         modelo.addAttribute("id", an.getIdAnimal());
         modelo.addAttribute("animal", an);
-        modelo.addAttribute("accion", "update");
+        
+        if ( edit.equals("edit") ) modelo.addAttribute("accion", "update");
+        if ( edit.equals("consultar") ) modelo.addAttribute("accion", "consulta");
+        
         modelo.addAttribute("rol", rolActual() );
         cargarDatosEnVista ( an, modelo);
         cargarComentarios ( an, modelo);
@@ -373,11 +383,12 @@ public class AllAnimalController {
     Admin y veterinario mostrará todos
     Voluntario y responsable sólo los de su tipo.
      */   
-    @RequestMapping(value = "/getAnimalList")
+    @RequestMapping(value = "/getAnimalList/{tipo}")
     public String getSearchResultViaAjax (
+           @PathVariable("tipo") String tipo_lista,
            HttpServletRequest request 
     ) throws JSONException {
-        
+       
         String campos_tabla [] = {"nom", "tipusAnimal", "raza", "isAlta"};
         
         // Cada petición debemos sumar 1 a este parámetro
@@ -430,15 +441,20 @@ public class AllAnimalController {
         
         
         // Cadena complementario a la busqueda      
-        String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";        
+        String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " "; 
+        String adoptats = "inactiu=0";
+        if ( tipo_lista.equals("adoptats") ) {            
+            adoptats = adoptats + ",isadoptat=1";
+            //System.out.println("Mostrando adoptados " + adoptats);
+        }
         List <Animal> _animales = new ArrayList<>();
-        _animales = animalService.getAND(aux, "inactiu=0" + lista_rol);
+        _animales = animalService.getAND(aux, adoptats + lista_rol);
         //Obtenemos el total de animales sin filtro.
         int total_registros = _animales.size();        
         if (cadenaBusqueda.length() > 0 ) {
             //System.out.println("Busqueda por: " + busqueda_por + " Cadena: " + cadenaBusqueda);
             if (lasRazas == null || lasRazas.isEmpty())
-                _animales = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0"+lista_rol);
+                _animales = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,"+ adoptats +lista_rol);
             else {
                 _animales.clear();
                 for (Raza unaRaza: lasRazas) {                    
@@ -446,7 +462,7 @@ public class AllAnimalController {
                     List<Animal> lista_aux = new ArrayList<>();
                     cadenaBusqueda = Integer.toString( ( (Raza) razaService.getone("descripcio=" + unaRaza.getDescripcio())).getIdRaza());
                     //System.out.println("buscar por " + busqueda_por + ": " + cadenaBusqueda);
-                    lista_aux = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,inactiu=0"+lista_rol);
+                    lista_aux = animalService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%,"+ adoptats +lista_rol);
                     _animales.addAll(lista_aux);
                 }                
             }            
