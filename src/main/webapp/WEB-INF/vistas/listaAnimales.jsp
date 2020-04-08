@@ -117,7 +117,7 @@
                 }
                 else if ( tipoLista === "disponible") {
                     var _url = "${home}getAnimalList/disponibles";
-                    var _url_2 = "${home}";
+                    var _url_2 = "${pageContext.servletContext.contextPath}/adopcion/formulario";
                 }        
 
                 var table = $('#tabla_animales').DataTable({
