@@ -313,10 +313,16 @@ public class AllAnimalController {
                
         modelo.addAttribute("tAnimal", tAnimal);
                
-        //El literal de la raza
+        //El literal de la raza, se mostrará en función del rol
+        // Filtrar lista por rol
+        String lista_rol = "";
+        if ( rolActual().equals("voluntari") || rolActual().equals("responsable")) {            
+            Usuarios u = (Usuarios) usuarioService.getone("username="+usuarioActual());
+            lista_rol = "idtipus=" + u.getTipusAnimal();            
+        }
         List <String> laRaza = new ArrayList <>();
         laRaza.add ( an.getLaRaza() ); 
-        for (Object raza : razaService.getAll() ) {
+        for (Object raza : razaService.get(lista_rol) ) {
             String aux = ((Raza) raza).getDescripcio();
             if ( !aux.equals(an.getLaRaza()) )
                  laRaza.add ( aux );

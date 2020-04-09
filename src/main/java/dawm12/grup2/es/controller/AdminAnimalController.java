@@ -201,9 +201,15 @@ public class AdminAnimalController {
         tAnimal.remove("Tots");
         modelo.addAttribute("tAnimal", tAnimal);
                
-        //El literal de la raza
+        //El literal de la raza, se mostrará en función del rol
+        // Filtrar lista por rol
+        String lista_rol = "";
+        if ( rolActual().equals("voluntari") || rolActual().equals("responsable")) {            
+            Usuarios u = (Usuarios) usuarioService.getone("username="+usuarioActual());
+            lista_rol = "idtipus=" + u.getTipusAnimal();            
+        }
         List <String> laRaza = new ArrayList <>();
-        for (Object raza : razaService.getAll() ) {
+        for (Object raza : razaService.get(lista_rol) ) {
             laRaza.add ( ((Raza) raza).getDescripcio() );
         }
         modelo.addAttribute("laRaza", laRaza);
