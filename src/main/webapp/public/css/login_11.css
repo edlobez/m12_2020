@@ -2,19 +2,18 @@
     Created on : 18-Feb-2020, 15:19:38
     Author     : DAW_M12_grup2
 */
-/* The snackbar - position it at the bottom and in the middle of the screen */
+
 p.snackbar {
-  min-width: 250px; /* Set a default minimum width */
-  margin-left: -125px; /* Divide value of min-width by 2 */
-  background-color: #333; /* Black background color */
-  color: #fff; /* White text color */
-  text-align: center; /* Centered text */
-  border-radius: 2px; /* Rounded borders */
-  padding: 16px; /* Padding */
-  position: fixed; /* Sit on top of the screen */
-  z-index: 1; /* Add a z-index if needed */
-  left: 50%; /* Center the snackbar */
-  bottom: 30px; /* 30px from the bottom */
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
   -webkit-animation: cssAnimation 5s forwards; 
   animation-name: cssAnimation;
   animation-duration: 4s;

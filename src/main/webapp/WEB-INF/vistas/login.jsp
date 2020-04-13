@@ -43,7 +43,7 @@
                     </c:if>
 
                     <c:if test="${param.logout != null}">
-                      <p class="snackbar">La sessió s'ha tancat correctament.</p>
+                      <p class="snackbar">Sessió tancada correctament.</p>
                     </c:if>
 
                     <div>
