@@ -24,7 +24,7 @@
         <script src="../static/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
         
-        <title>Llistat d'animals</title>
+        <title>Llistat d'animals adoptats</title>
     </head>
     <body>
 
@@ -41,13 +41,7 @@
                 </a>
                 <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
                     <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                        
-                        <!--  <li class="nav-item">
-                              <a class="nav-link" href="#">Link</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link disabled" href="#">Disabled</a>
-                          </li>-->
+
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>

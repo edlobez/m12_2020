@@ -3,6 +3,32 @@
     Author     : DAW_M12_grup2
 */
 
+p.snackbar {
+  min-width: 250px;
+  margin-left: -125px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 2px;
+  padding: 16px;
+  position: fixed;
+  z-index: 1;
+  left: 50%;
+  -webkit-animation: cssAnimation 5s forwards; 
+  animation-name: cssAnimation;
+  animation-duration: 4s;
+}
+@keyframes cssAnimation {
+    0%   {opacity: 1;}
+    90%  {opacity: 1;}
+    100% {display: none;}
+}
+@-webkit-keyframes cssAnimation {
+    0%   {opacity: 1;}
+    90%  {opacity: 1;}
+    100% {display: none;}
+}
+
 div.main {    
     font-family: Segoe UI Light;
     font-size: 20px;
@@ -56,7 +82,7 @@ p.error {
     font-family: Segoe UI Semibold;   
 }
 
-p.logout {
+p.login {
     font-size: 22px;
     color: green;
     font-style: italic;

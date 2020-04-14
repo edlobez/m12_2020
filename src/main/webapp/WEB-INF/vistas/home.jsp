@@ -105,13 +105,13 @@
                             <a href="#adopcionSubmenu" data-toggle="collapse" aria-expanded="false" 
                                class="list-group-item list-group-item-action bg-light dropdown-toggle">
                                 <i class="fas fa-hands"></i>
-                                <strong>Adopciones</strong>
+                                <strong>Adopcions</strong>
                             </a>
                             <ul class="collapse list-unstyled" id="adopcionSubmenu">
                                 <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                     <a class="logout-link" href="${pageContext.servletContext.contextPath}/animal/animalListAdoptats" id="adopcionesList">
                                         <i class="fas fa-list"></i>
-                                        &nbsp;Llista d'adopcions
+                                        &nbsp;Llistat d'adopcions
                                     </a>
                                 </li>
                                 <sec:authorize access="hasAnyAuthority('responsable','admin')">  
