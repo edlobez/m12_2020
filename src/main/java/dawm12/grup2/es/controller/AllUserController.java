@@ -353,7 +353,7 @@ public class AllUserController {
         
         return result;
     }
-    
+    /*
     private void rellenarNombreParaJson ( List <Comentari> list) {
         if ( list != null && list.size() > 0 ) {
             for (Comentari c: list ) {
@@ -363,7 +363,7 @@ public class AllUserController {
                 }
             }
         }
-    }
+    }*/
 
     // TO - DO REACER DESPUES DEL CAMBIO DE LA TABLA ROLES
     private Usuarios updateUsuario(Usuarios usr, Usuarios usr_old, ModelMap modelo) {
