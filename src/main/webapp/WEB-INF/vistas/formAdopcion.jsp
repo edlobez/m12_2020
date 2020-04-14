@@ -55,27 +55,60 @@
             </div>
         </nav>
         <div class="container">
-
-            <mvc:form>                
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputEmail4">Email</label>
-                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="inputPassword4">Password</label>
-                        <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="inputAddress">Address</label>
-                    <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                </div>
-                <div class="form-group">
-                    <label for="inputAddress2">Address 2</label>
-                    <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+            <br>
+            <mvc:form>  
+                <div class="form-header">
+                    <h3 class="form-title"><i class="fas fa-dove"></i>
+                        Formulari d'adopció
+                    </h3>
                 </div>
                 <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <label for="nom">Nom</label>
+                        <div class="input-group">   
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                            <input type="text" class="form-control" id="nom" placeholder="nom">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="cognom1">Cognom 1</label>
+                        <div class="input-group">   
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                            <input type="text" class="form-control" id="cognom1" placeholder="Cognom 1">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="cognom2">Cognom 2</label>
+                        <div class="input-group">   
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
+                            <input type="text" class="form-control" id="cognom2" placeholder="Cognom 1">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                   <div class="form-group col-md-6">
+                        <label for="email">Email</label>
+                        <div class="input-group">   
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
+                            <input type="email" class="form-control" id="email" placeholder="email">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="telefon">Telefon</label>
+                        <div class="input-group">   
+                            <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-phone"></i></span></div>
+                            <input type="" class="form-control" id="telefon" placeholder="Telefon">
+                        </div>
+                    </div> 
+                </div>
+                <div class="form-group">
+                    <label for="direccio">Direccio</label>
+                    <div class="input-group">   
+                        <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-address-card"></i></span></div>
+                        <input type="text" class="form-control" id="direccio" placeholder="Direccio">
+                    </div>
+                </div>
+            <!--    <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputCity">City</label>
                         <div class="input-group">   
@@ -103,7 +136,7 @@
                             Check me out
                         </label>
                     </div>
-                </div>
+                </div>-->
                 
                 <div class="form-footer">                    
                     <button type="submit" class="btn btn-info">Enviar</button>

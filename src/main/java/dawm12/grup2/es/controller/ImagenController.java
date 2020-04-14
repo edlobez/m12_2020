@@ -16,15 +16,12 @@
  */
 package dawm12.grup2.es.controller;
 
-import dawm12.grup2.es.service.Service;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -55,10 +52,10 @@ public class ImagenController {
         return new ModelAndView("pruebaImagenCargador", "lista", imageList);
     }
     
-    @RequestMapping("/imagen")
+  /*  @RequestMapping("/imagen")
     public ModelAndView imagen (@RequestParam ("nombre") String nombre ) {
         return new ModelAndView ("pruebaImagenVisor", "nombre", nombre);
-    }
+    }*/
     
     @RequestMapping(path="/form", method = RequestMethod.POST)
     public String handleFormUpload (
