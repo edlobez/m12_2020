@@ -112,7 +112,7 @@ public class AdminUserController {
     @RequestMapping(value = "/admin/deleteUser")
     public ModelAndView deleteUser(
             @ModelAttribute("usuario") Usuarios usr) {
-        System.out.println ("Borrar usuario: " + usr.toString());
+        //System.out.println ("Borrar usuario: " + usr.toString());
         
         // Para borrar el usuario lo deshabílitamos
         Usuarios _usr = (Usuarios) usuarioService.update(usr, "enabled=0");

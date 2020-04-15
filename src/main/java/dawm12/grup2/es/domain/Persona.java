@@ -61,6 +61,8 @@ public class Persona {
         this.telefon = telefon;
         this.direccio = direccio;
     }
+    
+    public Persona () {}
 
     public String getNom() {
         return nom;

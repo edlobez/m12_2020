@@ -56,7 +56,7 @@
         </nav>
         <div class="container">
             <br>
-            <mvc:form>  
+            <mvc:form role="form" id="adopcio-form" autocomplete="off" action="saveAdopcio" modelAttribute="adoptante">  
                 <div class="form-header">
                     <h3 class="form-title"><i class="fas fa-dove"></i>
                         Formulari d'adopció
@@ -67,21 +67,21 @@
                         <label for="nom">Nom</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
-                            <input type="text" class="form-control" id="nom" placeholder="nom">
+                            <mvc:input path="nom" type="text" class="form-control" id="nom" placeholder="nom"/>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="cognom1">Cognom 1</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
-                            <input type="text" class="form-control" id="cognom1" placeholder="Cognom 1">
+                            <mvc:input path="cognom1" type="text" class="form-control" id="cognom1" placeholder="Cognom 1"/>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="cognom2">Cognom 2</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
-                            <input type="text" class="form-control" id="cognom2" placeholder="Cognom 1">
+                            <mvc:input path="cognom2" type="text" class="form-control" id="cognom2" placeholder="Cognom 1"/>
                         </div>
                     </div>
                 </div>
@@ -90,14 +90,14 @@
                         <label for="email">Email</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
-                            <input type="email" class="form-control" id="email" placeholder="email">
+                            <mvc:input path="email" type="email" class="form-control" id="email" placeholder="email"/>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="telefon">Telefon</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-phone"></i></span></div>
-                            <input type="" class="form-control" id="telefon" placeholder="Telefon">
+                            <mvc:input path="telefon" type="" class="form-control" id="telefon" placeholder="Telefon"/>
                         </div>
                     </div> 
                 </div>
@@ -105,45 +105,50 @@
                     <label for="direccio">Direccio</label>
                     <div class="input-group">   
                         <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-address-card"></i></span></div>
-                        <input type="text" class="form-control" id="direccio" placeholder="Direccio">
+                        <mvc:input path="direccio" type="text" class="form-control" id="direccio" placeholder="Direccio"/>
                     </div>
-                </div>
-            <!--    <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="inputCity">City</label>
-                        <div class="input-group">   
-                            <div class="input-group-prepend"><span class="input-group-text">$</span></div>
-                            <input type="text" class="form-control" id="inputCity">
-                            <div class="input-group-append"><span class="input-group-text">.00</span></div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4">
-                        <label for="inputState">State</label>
-                        <select id="inputState" class="form-control">
-                            <option selected>Choose...</option>
-                            <option>...</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-2">
-                        <label for="inputZip">Zip</label>
-                        <input type="text" class="form-control" id="inputZip">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="gridCheck">
-                        <label class="form-check-label" for="gridCheck">
-                            Check me out
-                        </label>
-                    </div>
-                </div>-->
+                </div>          
                 
                 <div class="form-footer">                    
                     <button type="submit" class="btn btn-info">Enviar</button>
-                    <button type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'">Tornar</button>
+                    <button type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalListDisponible'">Tornar</button>
 
                 </div>
+                 <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>   
+                 
             </mvc:form>  
+            <br><br>
+            <div id="img_container" class="row">
+                <div id="myCarousel" class="carousel slide col-md-12" data-ride="carousel">
+                    <!-- https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_carousel2&stacked=h -->
+                    <h2>${nombre_animal}</h2>
+                    <ol class="carousel-indicators">
+                        <c:set var="aux_1" scope="page" value="0"/>
+                        <c:forEach var="imagen" items="${imagenes}">
+                            <c:set var="clase" scope="page" value=""/> 
+                            <c:if test="${aux_1==0}">
+                               <c:set var="clase" scope="page" value="active"/> 
+                            </c:if>
+                            <li data-target="#myCarousel" data-slide-to="${aux_1}" class="${clase}"></li>
+                             <c:set var="aux_1" scope="page" value="${aux_1+1}"/>   
+                        </c:forEach>
+                    </ol>
+                    
+                    <div class="carousel-inner">                       
+                        <c:set var="aux" scope="page" value="${true}"/>
+                        <c:forEach var="imagen" items="${imagenes}">
+                            <c:set var="clase" scope="page" value="carousel-item"/>
+                            <c:if test="${aux}">
+                                <c:set var="clase" scope="page" value="carousel-item active"/>
+                                <c:set var="aux" scope="page" value="${false}"/>
+                            </c:if>
+                            <div class="${clase}">
+                                <img id="imagen" src='data:${imagen.tipo};base64,${imagen.base64}' class="d-block w-100" style="max-width:15%; max-height:15%;display: block;margin-left: auto;margin-right: auto;" onerror="ocultarImagen();"/>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </body>
