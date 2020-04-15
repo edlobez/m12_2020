@@ -79,6 +79,16 @@ public class Persona {
     
     public Persona () {}
 
+    public int getIdpersona() {
+        return idpersona;
+    }
+
+    public void setIdpersona(int idpersona) {
+        this.idpersona = idpersona;
+    }
+
+    
+    
     public String getNom() {
         return nom;
     }
