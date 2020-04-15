@@ -40,6 +40,15 @@ public class Adopcio {
         this.dataAdopcioString = dataAdopcio.toString();
     }
 
+    public Adopcio(int idAnimal, int idPersona, Date dataAdopcio, String dataAdopcioString) {
+        this.idAnimal = idAnimal;
+        this.idPersona = idPersona;
+        this.dataAdopcio = dataAdopcio;
+        this.dataAdopcioString = dataAdopcioString;
+    }
+    
+    
+
     public int getIdadopcio() {
         return idadopcio;
     }

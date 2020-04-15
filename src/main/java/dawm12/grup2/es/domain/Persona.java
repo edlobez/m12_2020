@@ -29,6 +29,8 @@ import javax.validation.constraints.Size;
  */
 public class Persona {
     
+    private int idpersona;
+    
     @NotNull
     @Size(min=3, max=30, message="Camp nom no pot estar buit")
     private String nom;
@@ -61,6 +63,19 @@ public class Persona {
         this.telefon = telefon;
         this.direccio = direccio;
     }
+
+    public Persona(int idpersona, String nom, String cognom1, String cognom2, String email, int telefon, String direccio) {
+        this.idpersona = idpersona;
+        this.nom = nom;
+        this.cognom1 = cognom1;
+        this.cognom2 = cognom2;
+        this.email = email;
+        this.telefon = telefon;
+        this.direccio = direccio;
+    }
+    
+    
+    
     
     public Persona () {}
 
