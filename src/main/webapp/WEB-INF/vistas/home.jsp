@@ -264,7 +264,12 @@
                     }
                     if (aux === "update_ok") {
                         alert("Els canvis s'han guardat amb èxit.");
-
+                    }
+                    if (aux === "adopcio_ok") {
+                        alert("Els canvis s'han guardat amb èxit.");
+                    }
+                    if (aux === "adopcio_Nok") {
+                        alert("Error al realizar la adopción!!!");
                     }
                 }
 

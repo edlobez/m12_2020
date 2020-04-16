@@ -48,7 +48,7 @@ public class Persona {
     private String email;
     
     @NotNull (message="Camp teléfon no pot estar buit")
-    @Max(value=9, message="Teléfon incorrecte")
+    @Max(value=999999999, message="Teléfon incorrecte")
     private int telefon;
     
     @NotEmpty (message="Camp direcció no pot estar buit")

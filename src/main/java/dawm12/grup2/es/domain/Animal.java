@@ -58,11 +58,12 @@ public class Animal {
     private String createdUser;
     private String imatge;
     
-    // Guardamos el literal de la raza  tipo animal veterinario para el json del
-    // ...listado
+    // Guardamos el literal de la raza  tipo animal veterinario y fecha de adopcion
+    // ...para el json del listado
     private String tAnimal;
     private String laRaza;
     private String veterinari;
+    private String adopcioDate;
 
     public Animal(int idAnimal, String nom, Date dataNaix, String sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, boolean inactiu, Date createdDate, String createdUser, String imatge) {
         this.idAnimal = idAnimal;
@@ -268,6 +269,14 @@ public class Animal {
         this.veterinari = veterinari;
     }
 
+    public String getAdopcioDate() {
+        return adopcioDate;
+    }
+
+    public void setAdopcioDate(String adopcioDate) {
+        this.adopcioDate = adopcioDate;
+    }
+    
     @Override
     public String toString() {
         return "Animal{" + "idAnimal=" + idAnimal + ", nom=" + nom + ", dataNaix=" + dataNaix + ", sexe=" + sexe + ", tamany=" + tamany + ", tipusAnimal=" + tipusAnimal + ", raza=" + raza + ", isAlta=" + isAlta + ", dataAlta=" + dataAlta + ", isAdoptat=" + isAdoptat + ", isVacunat=" + isVacunat + ", isEsterlitzat=" + isEsterlitzat + ", hasChip=" + hasChip + ", numChip=" + numChip + ", vetAssignat=" + vetAssignat + ", inactiu=" + inactiu + ", createdDate=" + createdDate + ", createdUser=" + createdUser + ", imatge=" + imatge + ", tAnimal=" + tAnimal + ", laRaza=" + laRaza + ", veterinari=" + veterinari + '}';

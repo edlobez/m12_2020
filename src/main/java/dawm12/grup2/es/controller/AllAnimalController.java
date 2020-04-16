@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dawm12.grup2.es.domain.Adopcio;
 
 import dawm12.grup2.es.domain.Animal;
 import dawm12.grup2.es.domain.Comentari;
@@ -90,6 +91,9 @@ public class AllAnimalController {
     
     @Autowired @Qualifier("imagenService")
     private Service imagenService;
+    
+    @Autowired @Qualifier("adopcioService")
+    private Service adopcioService;
     
     @Autowired
     private JdbcTemplate jdbc;
@@ -469,7 +473,7 @@ public class AllAnimalController {
         }
         
         List <Animal> _animales = new ArrayList<>();
-        _animales = animalService.getAND(aux, adoptats + lista_rol);
+        _animales = animalService.getAND(aux, adoptats + lista_rol);      
         //Obtenemos el total de animales sin filtro.
         int total_registros = _animales.size();        
         if (cadenaBusqueda.length() > 0 ) {
@@ -500,6 +504,12 @@ public class AllAnimalController {
                 Raza r = (Raza) razaService.getone("idraza=" +  animales.get(i).getRaza());
                 animales.get(i).settAnimal( t.getDescripcio() );
                 animales.get(i).setLaRaza( r.getDescripcio()) ;
+                  // Para animales adoptados además hace falta la fecha de adopcin
+                if  ( tipo_lista.equals("adoptats") ) { 
+                    Adopcio ap = (Adopcio) adopcioService.getone("idanimal=" + animales.get(i).getIdAnimal());
+                    animales.get(i).setAdopcioDate(ap.getDataAdopcioString());
+                }
+        
             }
             
         }

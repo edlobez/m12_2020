@@ -16,6 +16,7 @@
  */
 package dawm12.grup2.es.controller;
 
+import dawm12.grup2.es.domain.Adopcio;
 import dawm12.grup2.es.domain.Animal;
 import dawm12.grup2.es.domain.Imagen;
 import dawm12.grup2.es.domain.Persona;
@@ -50,13 +51,20 @@ public class AdopcionController {
     @Autowired @Qualifier("imagenService")
     private Service imagenService;
     
-    private Animal an; // El animal a adoptar
+    @Autowired @Qualifier("adopcioService")
+    private Service adopcionService;
+    
+    @Autowired @Qualifier("personaService")
+    private Service personaService;
+    
+    private Animal an; // El animal a adoptar  
+    
     
     @RequestMapping("/formulario")
     public ModelAndView formulario (
            @RequestParam("idanimal") String id_animal
            
-    ) {
+    ) {        
         ModelAndView mv = new ModelAndView("formAdopcion");        
         Persona p = new Persona();
         an = (Animal)animalService.getone("idanimal="+id_animal);
@@ -70,6 +78,7 @@ public class AdopcionController {
             @Valid @ModelAttribute ("adoptante") Persona p,             
             BindingResult validacion
     ) {
+        String param = "";
         System.out.println("Persona : " + p);
         ModelAndView mv = new ModelAndView();  
         if (validacion.hasErrors()) {
@@ -79,9 +88,13 @@ public class AdopcionController {
             cargarAnimalEnVista( an, mv );            
             return mv;
         }
-        else realizarAdopcio(p, an);
+        else  if ( realizarAdopcio(p, an) == true) {
+            param = "?param=adopcio_ok";
+        }
+        else param = "?param=adopcio_Nok";
             
-        return null;
+        
+        return new ModelAndView("redirect:/" + param);
         
     }
     
@@ -90,7 +103,24 @@ public class AdopcionController {
        - Rellenamos la tabla adopción con los datos de la persona y el animal.
     */
     private boolean realizarAdopcio (Persona p, Animal n) {
-        return false;
+        
+        //Añadimos la persona
+        Persona aux_p = (Persona) personaService.create(p);
+        if ( aux_p == null ) return false;
+        
+        // Rellenamos la tabla adopcio
+        //public Adopcio(int idAnimal, int idPersona, Date dataAdopcio)
+        java.util.Date d = new java.util.Date(); 
+        java.sql.Date d2 = new java.sql.Date(d.getTime());
+        Adopcio ap = new Adopcio (n.getIdAnimal(), aux_p.getIdpersona(), d2 );
+        if ( adopcionService.create(ap) == null ) return false;
+        
+        // Modificamos ese animal como adoptado
+        if ( animalService.update(n, "isadoptat=1") == null) return false;
+        
+        System.out.println("adopción correcta");
+        
+        return true;
     }
     
     //Cargamos en el modelo las fotos del animal y su nombre

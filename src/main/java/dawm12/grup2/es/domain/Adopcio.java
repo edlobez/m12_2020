@@ -40,11 +40,11 @@ public class Adopcio {
         this.dataAdopcioString = dataAdopcio.toString();
     }
 
-    public Adopcio(int idAnimal, int idPersona, Date dataAdopcio, String dataAdopcioString) {
+    public Adopcio(int idAnimal, int idPersona, Date dataAdopcio) {
         this.idAnimal = idAnimal;
         this.idPersona = idPersona;
         this.dataAdopcio = dataAdopcio;
-        this.dataAdopcioString = dataAdopcioString;
+        this.dataAdopcioString = dataAdopcio.toString();
     }
     
     

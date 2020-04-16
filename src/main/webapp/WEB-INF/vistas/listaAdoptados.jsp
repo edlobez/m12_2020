@@ -117,7 +117,7 @@
                         {"data": "nom"},
                         {"data": "tAnimal"},
                         {"data": "laRaza"},
-                        {"data": "isAlta"}
+                        {"data": "adopcioDate"}
                     ],
                     "columnDefs": [
                         { "searchable": false, "targets": 0 },
