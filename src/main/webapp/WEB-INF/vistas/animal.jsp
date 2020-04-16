@@ -103,6 +103,9 @@
                             <c:if test="${accion=='consulta'}">
                                 <c:out value="Consultar animal"/>
                             </c:if> 
+                            <c:if test="${accion=='consulta_adoptado'}">
+                                <c:out value="Consultar animal adoptado"/>
+                            </c:if> 
                         </h3>
 
                     </div>
@@ -357,7 +360,7 @@
                             </sec:authorize>
 
                             <input type="hidden" id="_accion" name="accion" value="${accion}"/>
-
+                            
 
                             <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
                             <br>
@@ -375,6 +378,13 @@
 
                 </mvc:form>
 
+                <div class="row">
+                    <br>
+                <c:if test="${accion=='consulta_adoptado'}">
+                    <h2>Adoptante</h2>
+                    <c:out value="${persona.nom}"/>
+                </c:if> 
+                </div>
 
                 <!-- Modal-->
                 <div class="modal fade" id="modal_imagen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -454,7 +464,7 @@
                 }
 
                 // El caso más resctrictivo, una consulta todo deshabilitado
-                if (accion == "consulta") {
+                if (accion == "consulta" || accion == "consulta_adoptado") {
                     deshabilita_todos();
                 }
                 /*Al iniciar la previsualización de imagen nueva no se verá*/

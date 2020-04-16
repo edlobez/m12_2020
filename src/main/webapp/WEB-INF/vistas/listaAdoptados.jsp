@@ -94,13 +94,13 @@
             jQuery(document).ready(function ($) {
                 
                 var tipoLista = "${list}";
-                if ( tipoLista === "all") {
+              /*  if ( tipoLista === "all") {
                     var _url = "${home}getAnimalList/all";
                     var _url_2 = "${home}animal/edit";
-                }
+                }*/
                 if ( tipoLista === "adoptados") {
                     var _url = "${home}getAnimalList/adoptats";
-                    var _url_2 = "${home}animal/consultar";
+                    var _url_2 = "${home}animal/consultar_adoptado";
                 }
 
                 var table = $('#tabla_animales').DataTable({

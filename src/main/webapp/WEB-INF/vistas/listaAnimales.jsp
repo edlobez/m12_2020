@@ -111,10 +111,10 @@
                     var _url = "${home}getAnimalList/all";
                     var _url_2 = "${home}animal/edit";
                 }
-                else if ( tipoLista === "adoptados") {
+              /*  else if ( tipoLista === "adoptados") {
                     var _url = "${home}getAnimalList/adoptats";
                     var _url_2 = "${home}animal/consultar";                    
-                }
+                }*/
                 else if ( tipoLista === "disponible") {
                     var _url = "${home}getAnimalList/disponibles";
                     var _url_2 = "${pageContext.servletContext.contextPath}/adopcion/formulario";

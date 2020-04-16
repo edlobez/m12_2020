@@ -26,6 +26,7 @@ import dawm12.grup2.es.domain.Adopcio;
 import dawm12.grup2.es.domain.Animal;
 import dawm12.grup2.es.domain.Comentari;
 import dawm12.grup2.es.domain.Imagen;
+import dawm12.grup2.es.domain.Persona;
 import dawm12.grup2.es.domain.Raza;
 import dawm12.grup2.es.domain.Roles;
 import dawm12.grup2.es.domain.TipusAnimal;
@@ -95,6 +96,12 @@ public class AllAnimalController {
     @Autowired @Qualifier("adopcioService")
     private Service adopcioService;
     
+    @Autowired @Qualifier("adopcioService")
+    private Service adopcionService;
+    
+    @Autowired @Qualifier("personaService")
+    private Service personaService;
+    
     @Autowired
     private JdbcTemplate jdbc;
     
@@ -149,6 +156,15 @@ public class AllAnimalController {
         
         if ( edit.equals("edit") ) modelo.addAttribute("accion", "update");
         if ( edit.equals("consultar") ) modelo.addAttribute("accion", "consulta");
+        // Un animal adoptado pasamos a la vista los datos del adoptante
+        if ( edit.equals("consultar_adoptado") ) {
+            modelo.addAttribute("accion", "consulta_adoptado");
+            Adopcio ad = (Adopcio) adopcionService.getone("idanimal=" + an.getIdAnimal());
+            Persona p = null;
+            if ( ad != null ) p = (Persona) personaService.getone("idpersona=" + ad.getIdPersona());
+            if ( p != null ) modelo.addAttribute("persona", p);
+            
+        }
         
         modelo.addAttribute("rol", rolActual() );
         cargarDatosEnVista ( an, modelo);
@@ -507,7 +523,7 @@ public class AllAnimalController {
                   // Para animales adoptados además hace falta la fecha de adopcin
                 if  ( tipo_lista.equals("adoptats") ) { 
                     Adopcio ap = (Adopcio) adopcioService.getone("idanimal=" + animales.get(i).getIdAnimal());
-                    animales.get(i).setAdopcioDate(ap.getDataAdopcioString());
+                    if ( ap != null ) animales.get(i).setAdopcioDate(ap.getDataAdopcioString());
                 }
         
             }
