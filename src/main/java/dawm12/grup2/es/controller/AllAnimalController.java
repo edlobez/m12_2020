@@ -179,11 +179,12 @@ public class AllAnimalController {
     public ModelAndView saveAnimal (
            @Valid @ModelAttribute ("animal") Animal animal,
            BindingResult validacion, 
-           HttpServletRequest request,
            @RequestParam("accion") String accion,
            @RequestParam("comentari") String comentario,
            ModelMap modelo
     )  {
+        
+        System.out.println("Guardando");
         
         if (validacion.hasErrors()) {
             for (Object error : validacion.getAllErrors()) {

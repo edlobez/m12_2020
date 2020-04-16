@@ -87,6 +87,32 @@ public class Animal {
         this.imatge = imatge;
     }
 
+    public Animal(String nom, Date dataNaix, String sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, boolean inactiu, Date createdDate, String createdUser, String imatge, String tAnimal, String laRaza, String veterinari, String adopcioDate) {
+        this.nom = nom;
+        this.dataNaix = dataNaix;
+        this.sexe = sexe;
+        this.tamany = tamany;
+        this.tipusAnimal = tipusAnimal;
+        this.raza = raza;
+        this.isAlta = isAlta;
+        this.dataAlta = dataAlta;
+        this.isAdoptat = isAdoptat;
+        this.isVacunat = isVacunat;
+        this.isEsterlitzat = isEsterlitzat;
+        this.hasChip = hasChip;
+        this.numChip = numChip;
+        this.vetAssignat = vetAssignat;
+        this.inactiu = inactiu;
+        this.createdDate = createdDate;
+        this.createdUser = createdUser;
+        this.imatge = imatge;
+        this.tAnimal = tAnimal;
+        this.laRaza = laRaza;
+        this.veterinari = veterinari;
+        this.adopcioDate = adopcioDate;
+    }
+
+    
     
     public Animal() {
     }

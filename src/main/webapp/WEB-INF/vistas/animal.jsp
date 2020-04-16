@@ -90,7 +90,7 @@
 
                 <!-- form start -->
                 <mvc:form method="post" role="form" id="register-form" autocomplete="off" 
-                          action="saveAnimal" modelAttribute="animal" methodParam="post">
+                          action="${pageContext.servletContext.contextPath}/animal/saveAnimal" modelAttribute="animal" methodParam="post">
 
                     <div class="form-header">
                         <h3 class="form-title"><i class="fas fa-paw"></i>
