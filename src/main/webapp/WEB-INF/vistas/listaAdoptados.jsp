@@ -60,20 +60,18 @@
             <seccion>
                   <div class="row">
                     <div class="col-md-12">
-                        <table id="tabla_animales" class="display" style="width:100%"><thead>
+                        <table id="tabla_adopciones" class="display" style="width:100%"><thead>
                                 <tr>
-                                    <th>Nom</th>
-                                    <th>Tipus</th>
-                                    <th>Raça</th>
+                                    <th>Nom animal</th>
+                                    <th>Nom adoptant</th>
                                     <th>Data d'adopció</th>
                                 </tr>
                             </thead>
                             <tbody></tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nom</th>
-                                    <th>Tipus</th>
-                                    <th>Raça</th>
+                                    <th>Nom animal</th>
+                                    <th>Nom adoptant</th>
                                     <th>Data d'adopció</th>
                                 </tr>
                             </tfoot>
@@ -94,16 +92,11 @@
             jQuery(document).ready(function ($) {
                 
                 var tipoLista = "${list}";
-              /*  if ( tipoLista === "all") {
-                    var _url = "${home}getAnimalList/all";
-                    var _url_2 = "${home}animal/edit";
-                }*/
                 if ( tipoLista === "adoptados") {
-                    var _url = "${home}getAnimalList/adoptats";
-                    var _url_2 = "${home}animal/consultar_adoptado";
+                    var _url = "${home}getAdoptionsList/all";
                 }
 
-                var table = $('#tabla_animales').DataTable({
+                var table = $('#tabla_adopciones').DataTable({
                     "processing" : true,
                     "serverSide" : true,                    
                     "ajax" : { 
@@ -114,58 +107,33 @@
                         "url" : "../static/resources/lan/Catalan.json"
                     },
                     "columns" : [                        
-                        {"data": "nom"},
-                        {"data": "tAnimal"},
-                        {"data": "laRaza"},
+                        {"data": "nomAnimal"},
+                        {"data": "nomAdoptant"},
                         {"data": "adopcioDate"}
                     ],
                     "columnDefs": [
                         { "searchable": false, "targets": 0 },
                         { "searchable": false, "targets": 1 },
-                        { "searchable": false, "targets": 2 },
                         { "searchable": false, "targets": 3 }
                         
                     ]
                 }); 
                 
-                $('#tabla_animales tbody').on('click', 'tr', function () {
-                    //alert($(this).text());
-                     var data = table.row(this).data();
-                     //console.log(Object.values(data)[0]); 
-                     location.href = _url_2 + '?idanimal=' + Object.values(data)[0];                      
+                $('#tabla_adopciones tbody').on('click', 'tr', function () {
+                     var data = table.row(this).data();                
                      //location.href = '${home}editAnimal?idanimal=' + Object.values(data)[0];                     
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );
-                
-                $('#tabla_animales').on('draw.dt', function () {
-                    //alert("redibujando tabla");
-                    $("td").each(  function () {
-                        if ( $(this).text() === "true") {
-                            $(this).text("Alta médica");
-                            $(this).css("background-color", "#A4F09E");
-                        }
-                        if ( $(this).text() === 'false') {
-                            $(this).text("Baixa médica");
-                            $(this).css("background-color", "#F88078");
-                        }
-                    });
-                });
                 
             });
             
                 var aux = $_GET("param");
                 if (aux.length > 0) {
                     if (aux === "create_ok") {
-                        alert("Animal creat amb èxit.");
+                        alert("Adopció registrada amb èxit.");
                     }
                     if (aux === "update_ok") {
                         alert("Els canvis s'han guardat amb èxit.");
-                    }
-                    if (aux === "delete_ok") {
-                        alert("Animal esborrat amb èxit.");
-                    }
-                    if (aux === "delete_Nok") {
-                        alert("Error a l'esborrar l'animal.");
                     }
                 }  
 
