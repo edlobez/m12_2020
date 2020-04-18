@@ -41,6 +41,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author edlobez
  */
 
+//TODO: @RequestMapping(value = "/adoptionsList")
+
 @Controller
 @RequestMapping("/adopcion")
 public class AdopcionController {
