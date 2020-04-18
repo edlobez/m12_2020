@@ -11,7 +11,8 @@ p.snackbar {
   text-align: center;
   border-radius: 2px;
   padding: 16px;
-  position: fixed;
+  position: absolute;
+  top: -150px;
   z-index: 1;
   left: 50%;
   -webkit-animation: cssAnimation 5s forwards; 
