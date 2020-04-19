@@ -136,7 +136,7 @@ public class AllAnimalController {
     
     
 
-    @RequestMapping(value = "/animal/{edit}")
+    @RequestMapping(value = "/animales/{edit}")
     public ModelAndView editAnimal (
             @RequestParam ("idanimal") int idAnimal, ModelMap modelo,
             @PathVariable ("edit") String edit

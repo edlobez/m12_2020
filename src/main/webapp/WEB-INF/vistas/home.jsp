@@ -250,7 +250,7 @@
                     //alert($(this).text());
                      var data = table.row(this).data();
                      //console.log(Object.values(data)[0]);                     
-                     location.href = '${home}animal/animal/consultar?idanimal=' + Object.values(data)[0];
+                     location.href = '${home}animal/animales/consultar?idanimal=' + Object.values(data)[0];
                      //location.href = '${home}editAnimal?idanimal=' + $(this).data("row-id");
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );

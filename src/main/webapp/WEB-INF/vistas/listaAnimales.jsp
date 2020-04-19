@@ -109,7 +109,7 @@
                 var tipoLista = "${list}";
                 if ( tipoLista === "all") {
                     var _url = "${home}getAnimalList/all";
-                    var _url_2 = "${home}animal/edit";
+                    var _url_2 = "${home}animales/edit";
                 }
               /*  else if ( tipoLista === "adoptados") {
                     var _url = "${home}getAnimalList/adoptats";

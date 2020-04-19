@@ -87,10 +87,16 @@
             </div>
 
             <div class="signup-form-container">    
-
+                <!-- url del action -->
+                <c:if test="${accion=='update'}">
+                    <c:set var="url" scope="page" value="${pageContext.servletContext.contextPath}/animal/saveAnimal"/>
+                </c:if>
+                <c:if test="${accion=='create'}">
+                    <c:set var="url" scope="page" value="${pageContext.servletContext.contextPath}/responsable/saveAnimal"/>
+                </c:if>  
                 <!-- form start -->
                 <mvc:form method="post" role="form" id="register-form" autocomplete="off" 
-                          action="${pageContext.servletContext.contextPath}/animal/saveAnimal" modelAttribute="animal" methodParam="post">
+                          action="${url}" modelAttribute="animal" methodParam="post">
 
                     <div class="form-header">
                         <h3 class="form-title"><i class="fas fa-paw"></i>

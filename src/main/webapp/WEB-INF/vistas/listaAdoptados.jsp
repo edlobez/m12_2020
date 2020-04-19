@@ -121,7 +121,7 @@
                 
                 $('#tabla_adopciones tbody').on('click', 'tr', function () {
                      var data = table.row(this).data();                
-                     location.href = '${home}animal/consultar_adoptado?idanimal=' + Object.values(data)[0];                     
+                     location.href = '${home}animales/consultar_adoptado?idanimal=' + Object.values(data)[0];                     
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );
                 
