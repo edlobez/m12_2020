@@ -283,9 +283,11 @@
 
                             <div class="row">
                                 <div class="form-group col-lg-12">
-                                    <button data-toggle="modal" href="#mi_modal" class="btn btn-default" type="button">
-                                        Veure comentaris
-                                    </button>
+                                    <c:if test="${not empty comentarios}">
+                                        <button data-toggle="modal" href="#mi_modal" class="btn btn-default" type="button">
+                                            Veure comentaris
+                                        </button>
+                                    </c:if>
                                     
                                     <c:if test="${accion=='update'}">
                                     <button type="button" id="nuevoComentario" class="btn btn-default">
