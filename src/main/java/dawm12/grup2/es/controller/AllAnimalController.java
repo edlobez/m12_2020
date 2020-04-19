@@ -488,8 +488,7 @@ public class AllAnimalController {
         // Cadena complementario a la busqueda      
         String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " "; 
         String adoptats = "inactiu=0";
-        if ( tipo_lista.equals("adoptats") ) { 
-            System.out.println("Mostrando adoptados");
+        if ( tipo_lista.equals("adoptats") ) {             
             adoptats = adoptats + ",isadoptat=1";            
         }
         else if ( tipo_lista.equals("all") ){
