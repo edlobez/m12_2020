@@ -92,8 +92,8 @@
             jQuery(document).ready(function ($) {
                 
                 var tipoLista = "${list}";
-                if ( tipoLista === "adoptados") {
-                    var _url = "${home}getAdoptionsList/all";
+                if ( tipoLista === "adoptados") {                    
+                    var _url = "${home}getAnimalList/adoptats";
                 }
 
                 var table = $('#tabla_adopciones').DataTable({
@@ -107,21 +107,21 @@
                         "url" : "../static/resources/lan/Catalan.json"
                     },
                     "columns" : [                        
-                        {"data": "nomAnimal"},
-                        {"data": "nomAdoptant"},
+                        {"data": "nom"},
+                        {"data": "nomAdoptante"},
                         {"data": "adopcioDate"}
                     ],
                     "columnDefs": [
                         { "searchable": false, "targets": 0 },
                         { "searchable": false, "targets": 1 },
-                        { "searchable": false, "targets": 3 }
+                        { "searchable": false, "targets": 2 }
                         
                     ]
                 }); 
                 
                 $('#tabla_adopciones tbody').on('click', 'tr', function () {
                      var data = table.row(this).data();                
-                     //location.href = '${home}editAnimal?idanimal=' + Object.values(data)[0];                     
+                     location.href = '${home}animal/consultar?idanimal=' + Object.values(data)[0];                     
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );
                 

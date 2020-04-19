@@ -64,6 +64,7 @@ public class Animal {
     private String laRaza;
     private String veterinari;
     private String adopcioDate;
+    private String nomAdoptante;
 
     public Animal(int idAnimal, String nom, Date dataNaix, String sexe, String tamany, int tipusAnimal, int raza, boolean isAlta, Date dataAlta, boolean isAdoptat, boolean isVacunat, boolean isEsterlitzat, boolean hasChip, int numChip, String vetAssignat, boolean inactiu, Date createdDate, String createdUser, String imatge) {
         this.idAnimal = idAnimal;
@@ -115,6 +116,14 @@ public class Animal {
     
     
     public Animal() {
+    }
+
+    public String getNomAdoptante() {
+        return nomAdoptante;
+    }
+
+    public void setNomAdoptante(String nomAdotante) {
+        this.nomAdoptante = nomAdotante;
     }
     
     

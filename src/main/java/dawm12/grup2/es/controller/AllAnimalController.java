@@ -425,7 +425,16 @@ public class AllAnimalController {
            HttpServletRequest request 
     ) throws JSONException {
        
-        String campos_tabla [] = {"nom", "tipusAnimal", "raza", "isAlta"};
+        String campos_tabla [] = null;// = {"nom", "tipusAnimal", "raza", "isAlta"};
+        
+        if ( tipo_lista.equals("all") || tipo_lista.equals("disponibles") ) {
+           String campos[] = {"nom", "tipusAnimal", "raza", "isAlta"};
+           campos_tabla = campos;
+        }
+        if ( tipo_lista.equals("adoptats") ){
+           String campos[] = {"nom", "nomAdoptante", "adopcioDate"};
+           campos_tabla = campos;
+        }
         
         // Cada petición debemos sumar 1 a este parámetro
         int draw = Integer.parseInt(request.getParameter("draw")) + 1;
@@ -479,7 +488,8 @@ public class AllAnimalController {
         // Cadena complementario a la busqueda      
         String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " "; 
         String adoptats = "inactiu=0";
-        if ( tipo_lista.equals("adoptats") ) {            
+        if ( tipo_lista.equals("adoptats") ) { 
+            System.out.println("Mostrando adoptados");
             adoptats = adoptats + ",isadoptat=1";            
         }
         else if ( tipo_lista.equals("all") ){
@@ -524,7 +534,10 @@ public class AllAnimalController {
                   // Para animales adoptados además hace falta la fecha de adopcin
                 if  ( tipo_lista.equals("adoptats") ) { 
                     Adopcio ap = (Adopcio) adopcioService.getone("idanimal=" + animales.get(i).getIdAnimal());
-                    if ( ap != null ) animales.get(i).setAdopcioDate(ap.getDataAdopcioString());
+                    if ( ap != null ) {
+                        animales.get(i).setAdopcioDate(ap.getDataAdopcioString());
+                        animales.get(i).setNomAdoptante( ((Persona)personaService.getone( "idpersona="+ap.getIdPersona())).getNom());
+                    }
                 }
         
             }
