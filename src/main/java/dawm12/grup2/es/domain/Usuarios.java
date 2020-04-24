@@ -57,7 +57,9 @@ public class Usuarios {
     private int rol;
     private int tipusAnimal;
     
+    // Elementos para el Json de listado
     private String tAnimal;
+    private String srol;
 
     public Usuarios(String username,String password, boolean enabled, boolean changePass, String nombre, String apellido1, String apellido2, String email, int rol, int tipusAnimal) {
         this.username = username;
@@ -178,6 +180,14 @@ public class Usuarios {
 
     public void settAnimal(String tAnimal) {
         this.tAnimal = tAnimal;
+    }
+
+    public String getSrol() {
+        return srol;
+    }
+
+    public void setSrol(String Srol) {
+        this.srol = Srol;
     }
     
     

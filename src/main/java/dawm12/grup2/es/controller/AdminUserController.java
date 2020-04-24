@@ -357,6 +357,9 @@ public class AdminUserController {
             for (int i = 0; i < usuarios.size(); i++) {
                 TipusAnimal t = (TipusAnimal) tipusAnimalService.getone("idtipus=" + usuarios.get(i).getTipusAnimal());
                 usuarios.get(i).settAnimal(  t.getDescripcio()  );
+                Roles r = (Roles) rolesService.getone ("idrol=" + usuarios.get(i).getRol());
+                usuarios.get(i).setSrol(r.getRol());
+                
             }
         }
         

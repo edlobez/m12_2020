@@ -74,6 +74,7 @@
         <thead>
             <tr>
                 <th>Username</th>
+                <th>Rol</th>
                 <th>Nom</th>
                 <th>Cognom</th>
                 <th>Email</th>
@@ -84,6 +85,7 @@
         <tfoot>
             <tr>
                 <th>Username</th>
+                <th>Rol</th>
                 <th>Nom</th>
                 <th>Cognom</th>
                 <th>Email</th>
@@ -131,6 +133,7 @@
                     },
                     "columns" : [
                         {"data": "username"},
+                        {"data": "srol"},
                         {"data": "nombre"},
                         {"data": "apellido1"},
                         {"data": "email"},
