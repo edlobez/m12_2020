@@ -56,6 +56,37 @@
         </nav>
         <div class="container">
             <br>
+             <div id="img_container" class="row">
+                <div id="myCarousel" class="carousel slide col-md-12" data-ride="carousel">
+                    <!-- https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_carousel2&stacked=h -->
+                    <h2>${nombre_animal}</h2>
+                    <ol class="carousel-indicators">
+                        <c:set var="aux_1" scope="page" value="0"/>
+                        <c:forEach var="imagen" items="${imagenes}">
+                            <c:set var="clase" scope="page" value=""/> 
+                            <c:if test="${aux_1==0}">
+                               <c:set var="clase" scope="page" value="active"/> 
+                            </c:if>
+                            <li data-target="#myCarousel" data-slide-to="${aux_1}" class="${clase}"></li>
+                             <c:set var="aux_1" scope="page" value="${aux_1+1}"/>   
+                        </c:forEach>
+                    </ol>
+                    
+                    <div class="carousel-inner">                       
+                        <c:set var="aux" scope="page" value="${true}"/>
+                        <c:forEach var="imagen" items="${imagenes}">
+                            <c:set var="clase" scope="page" value="carousel-item"/>
+                            <c:if test="${aux}">
+                                <c:set var="clase" scope="page" value="carousel-item active"/>
+                                <c:set var="aux" scope="page" value="${false}"/>
+                            </c:if>
+                            <div class="${clase}">
+                                <img id="imagen" src='data:${imagen.tipo};base64,${imagen.base64}' class="d-block w-100" style="max-width:15%; max-height:15%;display: block;margin-left: auto;margin-right: auto;" onerror="ocultarImagen();"/>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
+            </div>
             <mvc:form role="form" id="adopcio-form" autocomplete="off" action="saveAdopcio" modelAttribute="adoptante">  
                 <div class="form-header">
                     <h3 class="form-title"><i class="fas fa-dove"></i>
@@ -118,37 +149,7 @@
                  
             </mvc:form>  
             <br><br>
-            <div id="img_container" class="row">
-                <div id="myCarousel" class="carousel slide col-md-12" data-ride="carousel">
-                    <!-- https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_carousel2&stacked=h -->
-                    <h2>${nombre_animal}</h2>
-                    <ol class="carousel-indicators">
-                        <c:set var="aux_1" scope="page" value="0"/>
-                        <c:forEach var="imagen" items="${imagenes}">
-                            <c:set var="clase" scope="page" value=""/> 
-                            <c:if test="${aux_1==0}">
-                               <c:set var="clase" scope="page" value="active"/> 
-                            </c:if>
-                            <li data-target="#myCarousel" data-slide-to="${aux_1}" class="${clase}"></li>
-                             <c:set var="aux_1" scope="page" value="${aux_1+1}"/>   
-                        </c:forEach>
-                    </ol>
-                    
-                    <div class="carousel-inner">                       
-                        <c:set var="aux" scope="page" value="${true}"/>
-                        <c:forEach var="imagen" items="${imagenes}">
-                            <c:set var="clase" scope="page" value="carousel-item"/>
-                            <c:if test="${aux}">
-                                <c:set var="clase" scope="page" value="carousel-item active"/>
-                                <c:set var="aux" scope="page" value="${false}"/>
-                            </c:if>
-                            <div class="${clase}">
-                                <img id="imagen" src='data:${imagen.tipo};base64,${imagen.base64}' class="d-block w-100" style="max-width:15%; max-height:15%;display: block;margin-left: auto;margin-right: auto;" onerror="ocultarImagen();"/>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-            </div>
+           
 
         </div>
     </body>
