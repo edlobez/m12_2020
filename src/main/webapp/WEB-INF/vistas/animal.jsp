@@ -63,13 +63,13 @@
                         <c:forEach var="imagen" items="${imagenes}">
                             <c:set var="clase" scope="page" value=""/> 
                             <c:if test="${aux_1==0}">
-                               <c:set var="clase" scope="page" value="active"/> 
+                                <c:set var="clase" scope="page" value="active"/> 
                             </c:if>
                             <li data-target="#myCarousel" data-slide-to="${aux_1}" class="${clase}"></li>
-                             <c:set var="aux_1" scope="page" value="${aux_1+1}"/>   
-                        </c:forEach>
+                                <c:set var="aux_1" scope="page" value="${aux_1+1}"/>   
+                            </c:forEach>
                     </ol>
-                    
+
                     <div class="carousel-inner">                       
                         <c:set var="aux" scope="page" value="${true}"/>
                         <c:forEach var="imagen" items="${imagenes}">
@@ -288,13 +288,13 @@
                                             Veure comentaris
                                         </button>
                                     </c:if>
-                                    
+
                                     <c:if test="${accion=='update'}">
-                                    <button type="button" id="nuevoComentario" class="btn btn-default">
-                                        Nou comentari
-                                    </button>
+                                        <button type="button" id="nuevoComentario" class="btn btn-default">
+                                            Nou comentari
+                                        </button>
                                     </c:if>
-                                    
+
                                 </div>
                             </div>
                             <!-- si se necesita cambiar tamaño de modal agregar modal-lg a la linea 
@@ -342,14 +342,14 @@
 
                         <br/> <br/>
                         <div class="form-footer">
-                            
+
                             <c:if test="${accion=='update' || accion=='create'}">
-                            
-                            <button type="submit" id="btn_enviar" class="btn btn-info">
-                                <span class="glyphicon glyphicon-log-in"></span> Enviar
-                            </button>                            
-                           <!-- <input type="button" id="btn_volver" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'"                        
-                                   value=' Tornar'/>-->
+
+                                <button type="submit" id="btn_enviar" class="btn btn-info">
+                                    <span class="glyphicon glyphicon-log-in"></span> Enviar
+                                </button>                            
+                               <!-- <input type="button" id="btn_volver" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'"                        
+                                       value=' Tornar'/>-->
                             </c:if>
 
                             <c:if test="${accion=='update'}">
@@ -357,8 +357,35 @@
                                     <i class="fas fa-camera-retro"></i> Afegeix imatge
                                 </button>
                             </c:if>
-
-
+                            <c:if test="${accion=='consulta_adoptado'}">
+                            <div class="row">
+                                <br>                                
+                                <h2>Familia adopante</h2>
+                                <div class="form-group col-md-4">
+                                    <label>Nom:&nbsp;</label> <c:out value="${persona.nom}"/>                                   
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Cognom 1:&nbsp;</label> <c:out value="${persona.cognom1}"/>                                   
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Cognom 2:&nbsp;</label><c:out value="${persona.cognom2}"/>                                  
+                                </div>                                
+                                <br><br>
+                            </div>
+                                <div class="row">                                
+                                <div class="form-group col-md-4">
+                                    <label>Email :&nbsp;</label><c:out value="${persona.email}"/>                                
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Telefon 1:&nbsp;</label><c:out value="${persona.telefon}"/>                                 
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label>Direcció 2:&nbsp;</label><c:out value="${persona.direccio}"/>                                
+                                </div>                                
+                                <br><br>
+                            </div>
+                            </c:if>
+ 
                             <button type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalList'">Tornar</button>
 
                             <sec:authorize access="hasAuthority('admin')">  
@@ -368,7 +395,7 @@
                             </sec:authorize>
 
                             <input type="hidden" id="_accion" name="accion" value="${accion}"/>
-                            
+
 
                             <mvc:errors path="*" cssClass="alert alert-danger" element="div"/>
                             <br>
@@ -386,13 +413,7 @@
 
                 </mvc:form>
 
-                <div class="row">
-                    <br>
-                <c:if test="${accion=='consulta_adoptado'}">
-                    <h2>Adoptante</h2>
-                    <c:out value="${persona.nom}"/>
-                </c:if> 
-                </div>
+
 
                 <!-- Modal-->
                 <div class="modal fade" id="modal_imagen" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -446,7 +467,7 @@
                 if (accion == "update" && $("#estado_medico").val() == "BAIXA") {
                     $("._adoptatRadio").attr("disabled", "true");
                     $("#noadoptat").prop("checked", true);
-                }                
+                }
 
                 /*Habilita/Deshabilita el campo Num chip al cargar segun si tiene o no chip*/
                 if ($("._chipRadio:checked").val() == 1) {
