@@ -8,14 +8,12 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ca">
 
     <head>
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta name="description" content="">
-        <meta name="author" content="">
 
         <title>RescueManagement</title>
 
@@ -24,10 +22,8 @@
 
         <!-- Custom styles for this template -->
         <link href="static/startbootstrap-simple-sidebar/css/simple-sidebar.css" rel="stylesheet">
-
-        <script src="https://kit.fontawesome.com/42bb3417c7.js" crossorigin="anonymous"></script>
         
-         <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/>    
+        <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/>    
         <link href="static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
     </head>
 
@@ -37,7 +33,7 @@
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <a href="${pageContext.servletContext.contextPath}">
-                    <div class="sidebar-heading"><img src="static/resources/imgs/kitty_ico.png" width="30" height="30" alt=""><!--<img src="static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">-->
+                    <div style="color:darkslategrey; strong" class="sidebar-heading"><img src="static/resources/imgs/kitty_ico.png" width="30" height="30" alt="logo">
                         RescueManagement                       
                     </div>
                 </a>
@@ -47,7 +43,6 @@
                             <li class="active">
                                 <a href="#usuarisSubmenu" data-toggle="collapse" aria-expanded="false" 
                                    class="list-group-item list-group-item-action bg-light dropdown-toggle">
-                                    <i class="fas fa-users"></i>
                                     <strong>Usuaris</strong>
                                 </a>
                                 <ul class="collapse list-unstyled" id="usuarisSubmenu">
@@ -167,10 +162,10 @@
                         <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                             <li class="nav-item">
                                 <span>
-                                    <span id="username"><sec:authentication property="principal.username" /></span>&nbsp;&nbsp;&nbsp;
+                                    <span id="username"><sec:authentication property="principal.username" /></span>
                                     <span><sec:authentication property="principal.authorities"/></span>&nbsp;&nbsp;&nbsp;
                                 </span>
-                                <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir</i></a> 
+                                <a href="${pageContext.servletContext.contextPath}/logout"><b style="color:black; text-decoration-line: underline;" class="fas fa-sign-out-alt">Sortir</b></a> 
                             </li>
                         </ul>
                     </div>
