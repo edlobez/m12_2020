@@ -11,7 +11,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ca">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,7 +23,6 @@
         <link href="${pageContext.servletContext.contextPath}/static/bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css"/>
         <link href="${pageContext.servletContext.contextPath}/static/css/fileUploader.css" rel="stylesheet" type="text/css"/>
 
-        <script src="https://kit.fontawesome.com/42bb3417c7.js" crossorigin="anonymous"></script>
 
         <script src="${pageContext.servletContext.contextPath}/static/js/jquery/jquery-3.3.1.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -31,6 +30,7 @@
         <title>Formulari Animal</title>
     </head>
     <body>  
+        <a class="skip-link" href="#maincontent">Skip to main</a>
         <header>            
 
             <nav class="navbar navbar-default">
@@ -38,9 +38,9 @@
                     <div class="navbar-header">
                         <a href="${pageContext.servletContext.contextPath}">
                             <span class="navbar-brand">                        
-                                <img src="${pageContext.servletContext.contextPath}/static/resources/imgs/kitty_ico.png" width="30" height="30" alt="" onerror="alert('error');">                            
+                                <img src="${pageContext.servletContext.contextPath}/static/resources/imgs/kitty_ico.png" width="30" height="30" alt="logo" onerror="alert('error');">                            
                             </span>
-                            <span class="navbar-brand">RescueManagement</span>
+                            <span style="color:darkslategrey; strong" class="navbar-brand">RescueManagement</span>
                         </a>
                     </div>
                     <form class="nav navbar-nav navbar-right">
@@ -52,7 +52,7 @@
 
 
         </header>
-
+        <main id="maincontent">
         <div class="container">
 
             <div id="img_container" class="row">
@@ -401,7 +401,7 @@
                             <br>
                             <c:choose>
                                 <c:when test="${error=='fecha_error'}">
-                                    <span class="alert alert-danger">Si us plau, introdueixi una data de naixement correcta.</span>
+                                    <span class="alert alert-danger">Si us plau, introdueix una data de naixement correcta.</span>
                                 </c:when>
                                 <c:when test="${error=='create_error'}">
                                     <span class="alert alert-danger">Error a crear l'animal.</span>
@@ -615,7 +615,7 @@
                 $("#img_container").css("display", "none");
             }
 
-        </script>
-
+            </script>
+        </main>
     </body>
 </html>
