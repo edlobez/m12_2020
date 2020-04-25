@@ -11,7 +11,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html lang ="ca">
     <head>
         <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
         <meta name='viewport' content='width=500, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
@@ -27,7 +27,7 @@
 
         <div class="main">
             <div class="logo">
-             <img src='<c:url value="/static/resources/imgs/kitty.png"></c:url>' />  
+             <img src='<c:url value="/static/resources/imgs/kitty.png"></c:url>'  alt="logo"/>  
             </div>
             <div class="box">
 
