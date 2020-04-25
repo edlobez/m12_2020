@@ -8,17 +8,17 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ca">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
-        <title>RecueManagement</title>
+        <title>RescueManagement</title>
     </head>
     <body>
 
-        <h1>Acceso denegado</h1>
+        <h1>Accés denegat</h1>
 
-        <p><b><sec:authentication property="principal.username"/></b>, Usted no tiene permiso para ver este contenido.</p>
+        <p><b><sec:authentication property="principal.username"/></b>, No tens permisos per veure aquest contingut.</p>
         
         <form action="${pageContext.servletContext.contextPath}" method="post">
             <input type="submit" value="Volver"/>
