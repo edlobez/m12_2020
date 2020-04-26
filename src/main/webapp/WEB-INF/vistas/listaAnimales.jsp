@@ -50,6 +50,7 @@
                         </sec:authorize>
 
                     </ul>
+
                     <form class="form-inline my-2 my-lg-0">
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
                         <span>
@@ -60,9 +61,7 @@
             <input type="hidden" id="rol" value="<sec:authentication property="principal.authorities" />">
 
         </header>
-
-
-        <!-- http://www.jquery-bootgrid.com/ -->
+        <main id="main">
         <div class="container"> 
             <seccion>
                   <div class="row">

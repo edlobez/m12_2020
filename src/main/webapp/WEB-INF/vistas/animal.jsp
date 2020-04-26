@@ -52,12 +52,11 @@
 
 
         </header>
-        <main id="maincontent">
+        <main id="main">
         <div class="container">
 
             <div id="img_container" class="row">
                 <div id="myCarousel" class="carousel slide" data-ride="carousel">
-                    <!-- https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_carousel2&stacked=h -->
                     <ol class="carousel-indicators">
                         <c:set var="aux_1" scope="page" value="0"/>
                         <c:forEach var="imagen" items="${imagenes}">
