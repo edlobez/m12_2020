@@ -45,7 +45,7 @@
                     </div>
                     <form class="nav navbar-nav navbar-right">
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
-                        <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir&nbsp;&nbsp;&nbsp;</i></a> 
+                        <a href="${pageContext.servletContext.contextPath}/logout"><i style="color:black; text-decoration-line: underline;" class="fas fa-sign-out-alt">Sortir</i></a> 
                     </form>
                 </div>
             </nav>
@@ -360,7 +360,7 @@
                             <c:if test="${accion=='consulta_adoptado'}">
                             <div class="row">
                                 <br>                                
-                                <h2>Familia adopante</h2>
+                                <h2>Familia adopant</h2>
                                 <div class="form-group col-md-4">
                                     <label>Nom:&nbsp;</label> <c:out value="${persona.nom}"/>                                   
                                 </div>
@@ -377,7 +377,7 @@
                                     <label>Email :&nbsp;</label><c:out value="${persona.email}"/>                                
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Telefon 1:&nbsp;</label><c:out value="${persona.telefon}"/>                                 
+                                    <label>Telèfon 1:&nbsp;</label><c:out value="${persona.telefon}"/>                                 
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label>Direcció 2:&nbsp;</label><c:out value="${persona.direccio}"/>                                
