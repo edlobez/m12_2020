@@ -30,7 +30,7 @@
         <title>Formulari Animal</title>
     </head>
     <body>  
-        <a class="skip-link" href="#maincontent">Skip to main</a>
+        <a class="skip-link" href="#maincontent" style="display:none">Skip to main</a>
         <header>            
 
             <nav class="navbar navbar-default">
