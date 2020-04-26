@@ -9,10 +9,10 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ca">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!--COMENTANDO PARA VER COMO APARECE LISTADO EN MOVIL<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">-->
         <link href="../static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
@@ -27,14 +27,14 @@
         <title>Llistat d'animals</title>
     </head>
     <body>
-
+        <a class="skip-link" href="#maincontent" style="display:none">Skip to main</a>
         <header>  
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a href="${pageContext.servletContext.contextPath}">
-                    <span class="navbar-brand">
+                    <span style="color:darkslategrey; strong" class="navbar-brand">
                         <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
                         RescueManagement
                     </span>
@@ -48,17 +48,12 @@
                             </li>
                         </c:if>
                         </sec:authorize>
-                        <!--  <li class="nav-item">
-                              <a class="nav-link" href="#">Link</a>
-                          </li>
-                          <li class="nav-item">
-                              <a class="nav-link disabled" href="#">Disabled</a>
-                          </li>-->
+
                     </ul>
                     <form class="form-inline my-2 my-lg-0">
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
                         <span>
-                            <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir</i></a> </span>
+                            <a href="${pageContext.servletContext.contextPath}/logout"><i style="color:black; text-decoration-line: underline;" class="fas fa-sign-out-alt">Sortir</i></a> </span>
                     </form>
                 </div>
             </nav>
@@ -220,6 +215,6 @@
         </script>
 
 
-
+        </main>
     </body>
 </html>
