@@ -165,7 +165,7 @@
                                     <span id="username"><sec:authentication property="principal.username" /></span>
                                     <span><sec:authentication property="principal.authorities"/></span>&nbsp;&nbsp;&nbsp;
                                 </span>
-                                <a href="${pageContext.servletContext.contextPath}/logout"><b style="color:black; text-decoration-line: underline;" class="fas fa-sign-out-alt">Sortir</b></a> 
+                                <a href="${pageContext.servletContext.contextPath}/logout"><i style="color:black; text-decoration-line: underline;" class="fas fa-sign-out-alt">Sortir</i></a> 
                             </li>
                         </ul>
                     </div>
