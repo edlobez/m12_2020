@@ -57,7 +57,7 @@
                 </form>
             </div>
         </nav>
-                
+               <div id='main'> 
         <div class="container">
             <br>
              <div id="img_container" class="row">
@@ -192,7 +192,7 @@
         
 
         </div>
-              
+               </div>
         <script>
             
             jQuery(document).ready(function ($) {

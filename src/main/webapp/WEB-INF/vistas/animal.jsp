@@ -362,25 +362,25 @@
                                 <br>                                
                                 <h2>Familia adopant</h2>
                                 <div class="form-group col-md-4">
-                                    <label>Nom:&nbsp;</label> <c:out value="${persona.nom}"/>                                   
+                                    <label>Nom:&nbsp;</label><label class="form-control"> <c:out value="${persona.nom}"/></label>                                   
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Cognom 1:&nbsp;</label> <c:out value="${persona.cognom1}"/>                                   
+                                    <label>Cognom 1:&nbsp;</label><label class="form-control"> <c:out value="${persona.cognom1}"/> </label>                                  
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Cognom 2:&nbsp;</label><c:out value="${persona.cognom2}"/>                                  
+                                    <label>Cognom 2:&nbsp;</label><label class="form-control"><c:out value="${persona.cognom2}"/> </label>                                 
                                 </div>                                
                                 <br><br>
                             </div>
                                 <div class="row">                                
                                 <div class="form-group col-md-4">
-                                    <label>Email :&nbsp;</label><c:out value="${persona.email}"/>                                
+                                    <label>Email :&nbsp;</label><label class="form-control"><c:out value="${persona.email}"/> </label>                               
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Telèfon 1:&nbsp;</label><c:out value="${persona.telefon}"/>                                 
+                                    <label>Telèfon 1:&nbsp;</label><label class="form-control"><c:out value="${persona.telefon}"/> </label>                                
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Direcció 2:&nbsp;</label><c:out value="${persona.direccio}"/>                                
+                                    <label>Direcció 2:&nbsp;</label><label class="form-control"><c:out value="${persona.direccio}"/> </label>                               
                                 </div>                                
                                 <br><br>
                             </div>
