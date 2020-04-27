@@ -16,12 +16,14 @@
 
         <link href="../static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
 
-        <link href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet"/>              
+        <link href="../static/bootstrap-4.4.1-dist/css/bootstrap.min.css" rel="stylesheet"/>   
+        <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/> 
 
         <script src="https://kit.fontawesome.com/42bb3417c7.js" crossorigin="anonymous"></script>
         <script src="../static/js/jquery/jquery-3.3.1.min.js"></script>        
         <script src="../static/js/jquery/jquery-ui.js"></script>
         <script src="../static/bootstrap-4.4.1-dist/js/bootstrap.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
         <title>Formulari d'adopció</title>
 
@@ -55,7 +57,7 @@
                 </form>
             </div>
         </nav>
-                <main id="main">
+                
         <div class="container">
             <br>
              <div id="img_container" class="row">
@@ -89,6 +91,41 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="row" id="lista_adoptantes">               
+                <div class="col-md-12"><br>
+                    <h2>Llistat d'apotants registrats</h2>
+                    <table id="tabla_adoptantes" class="display" style="width:100%"><thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Cognom 1</th>
+                                <th>Cognom 2</th>                                    
+                                <th>Email</th>  
+                                <th>Telefon</th>  
+                                <th>Adreça</th>  
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Cognom 1</th>
+                                <th>Cognom 2</th>                                    
+                                <th>Email</th>  
+                                <th>Telefon</th>  
+                                <th>Adreça</th>  
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <div>
+                        <br>
+                    <input type="button" id="nuevo_adoptante" class="btn btn-info" onclick="nuevoAdoptante()"                        
+                           value=' Nou Adoptante'/>
+                </div>
+                </div>                  
+            </div>
+                        
+            <div class="row" id="formulario_adopcion">            
             <mvc:form role="form" id="adopcio-form" autocomplete="off" action="saveAdopcio" modelAttribute="adoptante">  
                 <div class="form-header">
                     <h3 class="form-title"><i class="fas fa-dove"></i>
@@ -151,9 +188,64 @@
                  
             </mvc:form>  
             <br><br>
+            </div>
            
 
         </div>
-                </main>
+              
+        <script>
+            
+            jQuery(document).ready(function ($) {
+               
+                $('#formulario_adopcion').css('display', 'none');
+                
+                var table = $('#tabla_adoptantes').DataTable({
+                    "processing" : true,
+                    "serverSide" : true,                    
+                    "ajax" : { 
+                        url: '${home}listaAdoptantes'
+                        ,type: 'POST'
+                    },
+                    "language" : {
+                        "url" : "../static/resources/lan/Catalan.json"
+                    },
+                    "columns" : [                        
+                        {"data": "nom"},
+                        {"data": "cognom1"},
+                        {"data": "cognom2"},
+                        {"data": "email"},
+                        {"data": "telefon"},
+                        {"data": "direccio"}
+                    ],
+                    "columnDefs": [
+                        { "searchable": false, "targets": 0 },
+                        { "searchable": false, "targets": 1 },
+                        { "searchable": false, "targets": 2 },
+                        { "searchable": false, "targets": 3 },
+                        { "searchable": false, "targets": 4 },
+                        { "searchable": false, "targets": 5 }
+                        
+                    ]
+                }); 
+                
+                //$('#tabla_animales tbody').on('click', 'tr', function () {
+                    //alert($(this).text());
+                    // var data = table.row(this).data();
+                     //console.log(Object.values(data)[0]); 
+                    // location.href = _url_2 + '?idanimal=' + Object.values(data)[0];                      
+                     //location.href = '${home}editAnimal?idanimal=' + Object.values(data)[0];                     
+                     //alert( 'You clicked on '+data[5] +'\'s row' );
+                   // } );
+                
+            });
+            
+            function nuevoAdoptante () {
+                $('#lista_adoptantes').css('display', 'none');
+                $('#formulario_adopcion').show('slow');
+            } 
+        
+        </script>            
+
+                        
     </body>
 </html>

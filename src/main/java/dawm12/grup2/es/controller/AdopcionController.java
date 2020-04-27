@@ -16,6 +16,8 @@
  */
 package dawm12.grup2.es.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dawm12.grup2.es.domain.Adopcio;
 import dawm12.grup2.es.domain.Animal;
 import dawm12.grup2.es.domain.Imagen;
@@ -24,7 +26,13 @@ import dawm12.grup2.es.service.Service;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -34,6 +42,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -44,6 +53,7 @@ import org.springframework.web.servlet.ModelAndView;
 //TODO: @RequestMapping(value = "/adoptionsList")
 
 @Controller
+@RestController
 @RequestMapping("/adopcion")
 public class AdopcionController {
     
@@ -98,6 +108,74 @@ public class AdopcionController {
         
         return new ModelAndView("redirect:/" + param);
         
+    }
+    
+    @RequestMapping("/listaAdoptantes")
+    public String listaAdoptantes (
+            HttpServletRequest request
+    ) throws JSONException {
+        
+        String campos_tabla [] = {"nom", "cognom1", "cognom2", "email", "telefon", "direccio"};
+        
+        // Cada petición debemos sumar 1 a este parámetro
+        int draw = Integer.parseInt(request.getParameter("draw")) + 1;
+        
+        // Número de registros a mostrar
+        int num_registros = Integer.parseInt(request.getParameter("length"));
+        
+        // Primer registro a mostrar, depende de la página donde estamos
+        int inicio = Integer.parseInt(request.getParameter("start"));
+        
+        // Miramos si hay algún filtro
+        String cadenaBusqueda = request.getParameter("search[value]");
+        
+        // La columna por la que buscar
+        int buscar_por = Integer.parseInt( request.getParameter("order[0][column]") );
+        String busqueda_por = campos_tabla[buscar_por];
+        
+        //Ordernar ascendenteo o descendente
+        String order_dir = request.getParameter("order[0][dir]");
+        
+        // Cadena complementario a la busqueda      
+        String aux = "ORDER BY " + campos_tabla[buscar_por] + " " + order_dir + " ";
+        
+        List <Persona> _personas = new ArrayList <> ();
+        _personas = personaService.getAll(aux);
+        // Todos los registros sin filtro
+        int total_registros = _personas.size();
+        
+        if (cadenaBusqueda.length() > 0 ) {            
+            _personas = personaService.getAND(aux, busqueda_por + "=%" + cadenaBusqueda + "%");
+        }
+        
+        int reg_final = inicio + num_registros;
+        if ( reg_final > _personas.size() ) reg_final = _personas.size(); 
+        List <Persona> personas = _personas.subList(inicio, reg_final);
+        
+        ObjectMapper JSON_MAPPER = new ObjectMapper();
+        JSONObject member = null;
+        JSONArray array = new JSONArray();
+        for (Persona user : personas) {
+            try {
+                member = new JSONObject(JSON_MAPPER.writeValueAsString(user));
+                array.put(member);
+            } catch (JsonProcessingException ex) {
+                Logger.getLogger(AdopcionController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        //System.out.println("Json array: " + array.toString());
+        JSONObject json = new JSONObject();
+        try {            
+            json.put("recordsFiltered", _personas.size());            
+            json.put("recordsTotal", total_registros);
+            json.put("draw", draw);
+            json.put("data", array);
+        } catch (JSONException ex) {
+            Logger.getLogger(AdopcionController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+     
+        return json.toString();
     }
     
     /*
