@@ -91,7 +91,7 @@ public class AdopcionController {
             BindingResult validacion
     ) {
         String param = "";
-        System.out.println("Persona : " + p);
+        //System.out.println("Persona : " + p);
         ModelAndView mv = new ModelAndView();  
         if (validacion.hasErrors()) {
             //System.out.println("Error validaciones");
@@ -108,6 +108,24 @@ public class AdopcionController {
         
         return new ModelAndView("redirect:/" + param);
         
+    }
+    
+    @RequestMapping("/readoptar")
+    public ModelAndView readoptar (
+        @RequestParam("idpersona") String id_persona
+    ) {
+       // System.out.println("readoptar: " + id_persona + "idanimal: " + an.getIdAnimal());
+        String param = "";
+        Persona p = (Persona) personaService.getone("idpersona=" + id_persona);
+        System.out.println("readoptar: " + p.getNom() + "idanimal: " + an.getIdAnimal());
+        
+        if ( p!=null && realizarAdopcio(p, an) == true) {
+            param = "?param=adopcio_ok";
+        }
+        else param = "?param=adopcio_Nok";
+            
+        
+        return new ModelAndView("redirect:/" + param);
     }
     
     @RequestMapping("/listaAdoptantes")
@@ -184,8 +202,13 @@ public class AdopcionController {
     */
     private boolean realizarAdopcio (Persona p, Animal n) {
         
-        //Añadimos la persona
-        Persona aux_p = (Persona) personaService.create(p);
+        //Añadimos la persona siempre y cuando no exista ya que puede ser una
+        //... readopcion
+        Persona aux_p = null;
+        aux_p = (Persona) personaService.getone("idpersona=" + p.getIdpersona() );
+        if ( aux_p == null )
+             aux_p = (Persona) personaService.create(p);
+        
         if ( aux_p == null ) return false;
         
         // Rellenamos la tabla adopcio

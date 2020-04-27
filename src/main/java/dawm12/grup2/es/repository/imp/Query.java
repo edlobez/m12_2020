@@ -239,7 +239,7 @@ public class Query {
         valor[1] = campos[1].trim();
 
         qry = "SELECT * FROM " + nomTabla + " WHERE " + _campo + " between ? and ?";
-        System.out.println(qry);
+        //System.out.println(qry);
         return qry;
 
     }

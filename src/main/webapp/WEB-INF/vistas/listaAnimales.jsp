@@ -139,13 +139,10 @@
                     ]
                 }); 
                 
-                $('#tabla_animales tbody').on('click', 'tr', function () {
-                    //alert($(this).text());
+                $('#tabla_animales tbody').on('click', 'tr', function () {                    
                      var data = table.row(this).data();
-                     //console.log(Object.values(data)[0]); 
-                     location.href = _url_2 + '?idanimal=' + Object.values(data)[0];                      
-                     //location.href = '${home}editAnimal?idanimal=' + Object.values(data)[0];                     
-                     //alert( 'You clicked on '+data[5] +'\'s row' );
+                     location.href = _url_2 + '?idanimal=' + Object.values(data)[0];                     
+                     
                     } );
                 
                 $('#tabla_animales').on('draw.dt', function () {

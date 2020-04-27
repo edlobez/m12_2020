@@ -64,7 +64,7 @@ public abstract class MyRepositoryImp <T> implements MyRepository <T> {
         try {
             preparedStatement = getPreparedStatement(qry);
             for ( int i = 0; i < q.getValor().length; i++) { 
-                System.out.println("Valor: " + q.getValor()[i]);
+                //System.out.println("Valor: " + q.getValor()[i]);
                 preparedStatement.setString(i+1, q.getValor()[i]);
             }
             result = executeQuery(preparedStatement);

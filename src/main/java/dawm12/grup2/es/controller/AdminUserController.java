@@ -386,22 +386,7 @@ public class AdminUserController {
             Logger.getLogger(AdminUserController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        /*  String resultado = "{"
-                + "\"draw\": " + draw +","
-                + "\"recordsTotal\":1,"
-                + "\"recordsFiltered\":1,"
-                + "\"data\": ["
-                + "{"
-                + "\"username\": \"edlobez\","
-                + "\"nombre\": \"edu\","
-                + "\"apellido1\": \"lopez\","
-                + "\"email\": \"edo@do.com\","
-                + "\"tAnimal\": \"gato\" "
-                + "}"
-                + "]"
-                + "}";*/
-        
-        //System.out.println(json.toString());
+     
         return json.toString();
     }
     

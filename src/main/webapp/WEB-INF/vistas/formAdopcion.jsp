@@ -126,7 +126,7 @@
             </div>
                         
             <div class="row" id="formulario_adopcion">            
-            <mvc:form role="form" id="adopcio-form" autocomplete="off" action="saveAdopcio" modelAttribute="adoptante">  
+            <mvc:form role="form" class="col-md-12" id="adopcio-form" autocomplete="off" action="saveAdopcio" modelAttribute="adoptante">  
                 <div class="form-header">
                     <h3 class="form-title"><i class="fas fa-dove"></i>
                         Formulari d'adopció
@@ -189,15 +189,13 @@
             </mvc:form>  
             <br><br>
             </div>
-           
+        
 
         </div>
               
         <script>
             
             jQuery(document).ready(function ($) {
-               
-                $('#formulario_adopcion').css('display', 'none');
                 
                 var table = $('#tabla_adoptantes').DataTable({
                     "processing" : true,
@@ -228,16 +226,17 @@
                     ]
                 }); 
                 
-                //$('#tabla_animales tbody').on('click', 'tr', function () {
-                    //alert($(this).text());
-                    // var data = table.row(this).data();
-                     //console.log(Object.values(data)[0]); 
-                    // location.href = _url_2 + '?idanimal=' + Object.values(data)[0];                      
-                     //location.href = '${home}editAnimal?idanimal=' + Object.values(data)[0];                     
-                     //alert( 'You clicked on '+data[5] +'\'s row' );
-                   // } );
+                $('#tabla_adoptantes tbody').on('click', 'tr', function () {
+                    var data = table.row(this).data();
+                    var opcion = confirm("Confirma que ${nombre_animal} va ser adoptado por " + Object.values(data)[5] +"?");
+                    if (opcion==true) location.href = '${home}readoptar?idpersona=' + Object.values(data)[4];                     
+                });
+            
+                $('#formulario_adopcion').css('display', 'none');
                 
             });
+            
+           
             
             function nuevoAdoptante () {
                 $('#lista_adoptantes').css('display', 'none');
