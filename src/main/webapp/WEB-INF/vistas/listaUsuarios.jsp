@@ -151,8 +151,8 @@
                 $('#tabla_usuarios tbody').on('click', 'tr', function () {
                     //alert($(this).text());
                      var data = table.row(this).data();
-                     //console.log(Object.values(data)[10]);                     
-                     location.href = '${pageContext.servletContext.contextPath}/admin/editUser?username=' + Object.values(data)[10];
+                     //console.log(Object.values(data)[11]);                     
+                     location.href = '${pageContext.servletContext.contextPath}/admin/editUser?username=' + Object.values(data)[11];
                      //alert( 'You clicked on '+data[5] +'\'s row' );
                     } );                     
                     $("th").click(function () {

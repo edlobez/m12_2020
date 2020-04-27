@@ -222,6 +222,8 @@ public class AllUserController {
     public String getCommentList (HttpServletRequest request           
     ) throws JSONException {
         
+        ejemplo();
+        
         String campos_tabla [] = {"descripcio", "idAnimal","createdDate", "createdUser"}; 
         
         // Cada petición debemos sumar 1 a este parámetro
@@ -458,4 +460,13 @@ public class AllUserController {
         return auth.getName();
     }
 
+    private void ejemplo() {
+        System.out.println("Animales: "+ animalService.get("between 4 and 20", "idanimal"));
+        System.out.println("Animales: "+ animalService.get("between 2018-02-05 and 2020-12-31", "createdDate"));
+        System.out.println("Animales: "+ animalService.get("between 2018-02-05 and 2020-12-31", "createdDate"));
+        String inici = "2020-01-01";
+        String fi = "2020-03-20";
+        System.out.println(animalService.get("between " + inici + "AND " + fi, "createdDate"));
+
+    }
 }

@@ -25,6 +25,8 @@
         
         <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"/>    
         <link href="static/resources/imgs/favicon.ico" rel="icon" type="image/x-icon">
+        
+        <script src="https://kit.fontawesome.com/42bb3417c7.js" crossorigin="anonymous"></script>
     </head>
 
     <body>        
@@ -43,7 +45,7 @@
                             <li class="active">
                                 <a href="#usuarisSubmenu" data-toggle="collapse" aria-expanded="false" 
                                    class="list-group-item list-group-item-action bg-light dropdown-toggle">
-                                    <strong>Usuaris</strong>
+                                    <i class="fas fa-users"></i><strong>&nbsp;Usuaris</strong>
                                 </a>
                                 <ul class="collapse list-unstyled" id="usuarisSubmenu">
                                     <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

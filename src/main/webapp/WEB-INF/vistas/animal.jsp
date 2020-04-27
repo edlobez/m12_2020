@@ -26,6 +26,7 @@
 
         <script src="${pageContext.servletContext.contextPath}/static/js/jquery/jquery-3.3.1.min.js"></script>
         <script src="${pageContext.servletContext.contextPath}/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/42bb3417c7.js" crossorigin="anonymous"></script>
 
         <title>Formulari Animal</title>
     </head>
