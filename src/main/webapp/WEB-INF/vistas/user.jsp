@@ -11,7 +11,7 @@
 <%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ca">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,9 +36,10 @@
             }
         </style>
 
-        <title>Formulario usuario</title>
+        <title>Formulari usuari</title>
     </head>
     <body>  
+         <a class="skip-link" href="#maincontent" style="display:none">Skip to main</a>
         <!-- amagar checkbox tipusanimal si rol !=  veterinari o responsable -->
         <script type="text/javascript" language="javascript">
             
@@ -60,7 +61,7 @@
         </script>
 
         <header>            
-
+            
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -68,19 +69,20 @@
                         <span class="navbar-brand">                        
                             <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">                            
                         </span>
-                        <span class="navbar-brand">RescueManagement</span>
+                        <span style="color:darkslategrey; strong" class="navbar-brand">RescueManagement</span>
                         </a>
                     </div>
+                        
                     <form class="nav navbar-nav navbar-right">
                         <span id="usr_actual"><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
-                        <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir&nbsp;&nbsp;&nbsp;</i></a> 
+                        <a href="${pageContext.servletContext.contextPath}/logout"><i style="color:black; text-decoration-line: underline;" class="fas fa-sign-out-alt">Sortir</i></a> 
                     </form>
                 </div>
             </nav>
 
 
         </header>
-
+                     <main id="main">
         <div class="container">
 
             <div class="signup-form-container">               
@@ -329,6 +331,6 @@
             }
 
         </script>
-
+                     </main>
     </body>
 </html>
