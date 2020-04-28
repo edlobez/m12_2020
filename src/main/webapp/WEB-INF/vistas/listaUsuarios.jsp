@@ -9,7 +9,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ca">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,14 +31,14 @@
         <title>Llistat d'usuaris</title>
     </head>
     <body>
-
+        <a class="skip-link" href="#maincontent" style="display:none">Skip to main</a>
         <header>   
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a href="${pageContext.servletContext.contextPath}">
-                    <span class="navbar-brand">
+                    <span style="color:darkslategrey; strong"class="navbar-brand">
                         <img src="../static/resources/imgs/kitty_ico.png" width="30" height="30" alt="">
                         RescueManagement
                     </span>
@@ -56,14 +56,14 @@
                     <form class="form-inline my-2 my-lg-0">
                         <span><sec:authentication property="principal.username" />&nbsp;&nbsp;&nbsp;</span>
                         <span>
-                            <a href="${pageContext.servletContext.contextPath}/logout"><i class="fas fa-sign-out-alt">Sortir</i></a> </span>
+                            <a href="${pageContext.servletContext.contextPath}/logout"><i style="color:black; text-decoration-line: underline;" class="fas fa-sign-out-alt">Sortir</i></a> </span>
                     </form>
                 </div>
             </nav>
 
 
         </header>
-
+                    <main id="main">
 
         <!-- https://datatables.net// -->
         <div class="container"> 
@@ -211,6 +211,6 @@
         </script>
 
 
-
+                    </main>
     </body>
 </html>

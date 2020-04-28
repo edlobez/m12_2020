@@ -10,7 +10,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="mvc" %>
 
 <!DOCTYPE html>
-<html>
+<html lang="ca">
     <head>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
