@@ -255,7 +255,7 @@
                                     </div>
 
                                     <div class="form-check col-lg-2">
-                                    <mvc:label path="hasChip" for="hasChip"><i class="fas fa-briefcase-medical"></i>&nbsp;Té chip?</mvc:label>
+                                    <mvc:label path="hasChip" for="hasChip"><i class="fas fa-briefcase-medical"></i>&nbsp;Té xip?</mvc:label>
                                         <br/>                                       
                                     <mvc:radiobutton path="hasChip" name="hasChip"  class="form-check-input _chipRadio" value="0" />
                                     <mvc:label path="hasChip" class="form-check-label">No</mvc:label>
@@ -265,7 +265,7 @@
                                     </div>
 
                                     <div class="form-check col-lg-4">
-                                    <mvc:label path="numChip" for="numChip">Nº chip</mvc:label>
+                                    <mvc:label path="numChip" for="numChip">Nº xip</mvc:label>
                                         <div class="input-group">                                  
                                             <div class="input-group-addon"><i class="fas fa-microchip"></i></div>                                                                     
                                             <mvc:input path="numChip" name="numChip" type="text" id="numChip" class="form-control" placeholder="Nombre chip" disabled="true" />                                   
@@ -456,16 +456,17 @@
         <script>
 
             jQuery(document).ready(function () {
-
+                $("._adoptatRadio").attr("disabled", "true");
+                
                 /*Si es la pantalla de creación muestra el textarea de comentario*/
                 var accion = "${accion}";
                 if (accion == "create") {
                     $("#newComentari").show("slow");
-                    $("._adoptatRadio").attr("disabled", "true");
+                   /* $("._adoptatRadio").attr("disabled", "true");*/
                 }
 
                 if (accion == "update" && $("#estado_medico").val() == "BAIXA") {
-                    $("._adoptatRadio").attr("disabled", "true");
+                    /*$("._adoptatRadio").attr("disabled", "true");*/
                     $("#noadoptat").prop("checked", true);
                 }
 
@@ -598,14 +599,14 @@
                     $("#_estado_medico").val("true");
                     $("#estado_medico").removeClass("btn-danger");
                     $("#estado_medico").addClass("btn-success");
-                    $("._adoptatRadio").removeAttr("disabled");
+                    /*$("._adoptatRadio").removeAttr("disabled");*/
 
                 } else {
                     $("#_estado_medico").val("false");
                     $("#estado_medico").val("BAIXA");
                     $("#estado_medico").removeClass("btn-success");
                     $("#estado_medico").addClass("btn-danger");
-                    $("._adoptatRadio").attr("disabled", "true");
+                    /*$("._adoptatRadio").attr("disabled", "true");*/
                     $("#noadoptat").prop("checked", true);
                 }
 

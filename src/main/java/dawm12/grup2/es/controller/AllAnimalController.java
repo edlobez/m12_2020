@@ -96,9 +96,6 @@ public class AllAnimalController {
     @Autowired @Qualifier("adopcioService")
     private Service adopcioService;
     
-    @Autowired @Qualifier("adopcioService")
-    private Service adopcionService;
-    
     @Autowired @Qualifier("personaService")
     private Service personaService;
     
@@ -159,7 +156,7 @@ public class AllAnimalController {
         // Un animal adoptado pasamos a la vista los datos del adoptante
         if ( edit.equals("consultar_adoptado") ) {
             modelo.addAttribute("accion", "consulta_adoptado");
-            Adopcio ad = (Adopcio) adopcionService.getone("idanimal=" + an.getIdAnimal());
+            Adopcio ad = (Adopcio) adopcioService.getone("idanimal=" + an.getIdAnimal());
             Persona p = null;
             if ( ad != null ) p = (Persona) personaService.getone("idpersona=" + ad.getIdPersona());
             if ( p != null ) modelo.addAttribute("persona", p);
