@@ -23,14 +23,18 @@ import dawm12.grup2.es.domain.EstadisicasBean;
 import dawm12.grup2.es.domain.Raza;
 import dawm12.grup2.es.domain.TipusAnimal;
 import dawm12.grup2.es.service.Service;
+import java.io.IOException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,6 +52,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value="/animals")
 public class RestWSController {
     
+    @Autowired
+    private JdbcTemplate jdbc;
+    
     @Autowired @Qualifier("animalService")
     private Service animalService;
     
@@ -60,6 +67,7 @@ public class RestWSController {
     @Autowired @Qualifier("adopcioService")
     private Service adopcioService;
     
+    /*Camps taula animal*/
     private final String CAMP_ADOPTAT = "isAdoptat";
     private final String CAMP_INACTIU = "inactiu";
     private final String CAMP_ALTA = "isAlta";
@@ -70,26 +78,22 @@ public class RestWSController {
     private final String CAMP_TIPUS_ANIMAL = "tipusAnimal";
     private final String CAMP_SEXE = "sexe";
     private final String CAMP_ID_ANIMAL = "idAnimal";
+    private final String CAMP_XIP= "hasChip";
+    private final String CAMP_ESTERILITZAT= "isEsterilitzat";
     
     
     private final String CAMP_DESC = "descripcio";
+    /*camp taula tipusAnimal*/
     private final String CAMP_ID_TIPUS = "idtipus";
+    /*camp taula raza*/
     private final String CAMP_ID_RAZA = "idraza";
     
+    /*camp taula adopcio*/
+    private final String CAMP_DATAADOPCIO = "dataAdopcio";
     
-    
-    
-    
-    /* TODO, no me acaba de gustar que se mmuestren todos los animales. Haré que se muestre solo los animales que están actualmente es decir:
-    - No adoptados
-    - Dados de alta, están para adoptar.
-    - No inactivos
-    */
-   /* @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody
-    List<Animal> getAll() {
-        return this.animalService.getAll();
-    }*/
+    private final String TAULA_ANIMAL = "animal";
+    private final String TAULA_ADOPCIO = "adopcio";
+   
     
     /* Listado de animales que están para adoptar (no adoptados, dados de alta y activos) */
     @RequestMapping(method = RequestMethod.GET)
@@ -161,44 +165,10 @@ public class RestWSController {
         return llistatOut;
     }
     
-    @RequestMapping(value = "{codi}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public @ResponseBody Animal getbyCodi(@PathVariable String codi) {
-        return (Animal) animalService.getone("idAnimal=" + codi);
-    }
-    
-    /* fechas en formato ddMMyyyy */
-    @RequestMapping(value = "/data", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public List<AnimalBean> getbyDataAlta(@RequestParam String inici, @RequestParam (required = false) String fi) throws ParseException{
-        SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
-        
-        Date fechaInicio = (Date) formato.parse(inici);
-        inici = new SimpleDateFormat("yyyy-MM-dd").format(fechaInicio);
-        
-        Date fechaFin = null;
-        
-        if(fi != null && !fi.isEmpty()){
-            fechaFin = (Date) formato.parse(fi);
-            fi = new SimpleDateFormat("yyyy-MM-dd").format(fechaFin);
-        }else{
-            Date actual = new Date();
-            fi = new SimpleDateFormat("yyyy-MM-dd").format(actual);
-        } 
-        
-        List<Animal> animals = animalService.get("between " + inici + "AND " + fi, CAMP_DATA_CREACIO);
-        
-        //Date createdDate = new Date((long)animals.*1000);
-        /*TODO  cambiar fechas de tiempo unix a date */
-       
-        return mapearAnimal(animals);
-        
-    }
-    
-        /* fechas en formato ddMMyyyy */
+    /* Devuelve el número total de animales de las diferentes búsquedas entre dos fechas, para hacer las estadísticas, fechas en formato ddMMyyyy */
     @RequestMapping(value = "/estadistiques", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public EstadisicasBean getEstadistiquesbyData(@RequestParam String inici, @RequestParam (required = false) String fi) throws ParseException{
+    public EstadisicasBean getEstadistiquesbyData(@RequestParam String inici, @RequestParam (required = false) String fi) throws ParseException, IOException, SQLException{
         SimpleDateFormat formato = new SimpleDateFormat("ddMMyyyy");
         
         Date fechaInicio = (Date) formato.parse(inici);
@@ -216,23 +186,107 @@ public class RestWSController {
         
         EstadisicasBean beanOut = new EstadisicasBean();
         
-        //List<Animal> animals = animalService.get("between " + inici + "AND " + fi, CAMP_DATA_CREACIO);
-        
         /*ALTAS:*/
         //Altas totales:
-        
-        List<Animal> animals = animalService.get("between " + inici + "AND " + fi, CAMP_DATA_CREACIO);
-        beanOut.setAltes(animals.size());
-        
-       // List<Animal> animals = animalService.get("between " + inici + "AND " + fi, CAMP_DATA_CREACIO);
-        
-        
+        String sql = "SELECT count(*) FROM " + TAULA_ANIMAL + " WHERE " + CAMP_DATA_CREACIO + " BETWEEN '" + inici + "' AND '" + fi + "'";
+        List<Map<String, Object>> result = jdbc.queryForList(sql);
 
-       
+        if (!result.isEmpty()) {
+            long altes = (long) result.get(0).get("count(*)");
+            beanOut.setAltes((int)altes);   
+        }
+        
+        //Altas con chip
+        sql = "SELECT count(*) FROM " + TAULA_ANIMAL + " WHERE " + CAMP_XIP + "= 1 AND " + CAMP_DATA_CREACIO + " BETWEEN '" + inici + "' AND '" + fi + "'";
+        result = jdbc.queryForList(sql);
+        
+        if (!result.isEmpty()) {
+            long altesXip = (long) result.get(0).get("count(*)");
+            beanOut.setAltesXip((int)altesXip);   
+        }
+        
+        //Altas esterilizados
+        sql = "SELECT count(*) FROM " + TAULA_ANIMAL + " WHERE " + CAMP_ESTERILITZAT + "= 1 AND " + CAMP_DATA_CREACIO + " BETWEEN '" + inici + "' AND '" + fi + "'";
+        result = jdbc.queryForList(sql);
+        
+        if (!result.isEmpty()) {
+            long altesEsterilitzat= (long) result.get(0).get("count(*)");
+            beanOut.setAltesEsterilitzat((int)altesEsterilitzat);   
+        }
+        
+        //Altas hembras
+        sql = "SELECT count(*) FROM " + TAULA_ANIMAL + " WHERE " + CAMP_SEXE + "= 1 AND " + CAMP_DATA_CREACIO + " BETWEEN '" + inici + "' AND '" + fi + "'";
+        result = jdbc.queryForList(sql);
+        
+        if (!result.isEmpty()) {
+            long altesFemella = (long) result.get(0).get("count(*)");
+            beanOut.setAltesFemella((int)altesFemella);   
+        }
+        
+        //Altas machos
+        sql = "SELECT count(*) FROM " + TAULA_ANIMAL + " WHERE " + CAMP_SEXE + "= 0 AND " + CAMP_DATA_CREACIO + " BETWEEN '" + inici + "' AND '" + fi + "'";
+        result = jdbc.queryForList(sql);
+        
+        if (!result.isEmpty()) {
+            long altesMascle = (long) result.get(0).get("count(*)");
+            beanOut.setAltesMascle((int)altesMascle);   
+        }
+        
+        /*INACTIVOS ACTUALES*/
+        sql = "SELECT count(*) FROM " + TAULA_ANIMAL + " WHERE " + CAMP_INACTIU + "= 1";
+        result = jdbc.queryForList(sql);
+        
+        if (!result.isEmpty()) {
+            long inactius = (long) result.get(0).get("count(*)");
+            beanOut.setInactius((int)inactius);   
+        }
+        
+        /*BAJAS MEDICAS ACTUALES
+        Los animales que tienen el campo de alta a 0 y el campo inactivo a 0*/
+        sql = "SELECT count(*) FROM " + TAULA_ANIMAL + " WHERE " + CAMP_ALTA + "= 0 AND " + CAMP_INACTIU + " = 0";
+        result = jdbc.queryForList(sql);
+        
+        if (!result.isEmpty()) {
+            long baixes = (long) result.get(0).get("count(*)");
+            beanOut.setBaixaMedica((int)baixes);
+        }
+        
+        /*TOTAL EN ADOPCION*/        
+        List<Animal> animals = animalService.getAND(CAMP_ADOPTAT + "= 0," + CAMP_INACTIU + "=0," + CAMP_ALTA + "=1");
+        beanOut.setEnAdopcio(animals.size());
+        
+        /*ADOPTADOS*/
+        //Adoptados totales
+        sql = "SELECT count(*) FROM " + TAULA_ADOPCIO + " WHERE " + CAMP_DATAADOPCIO + " BETWEEN '" + inici + "' AND '" + fi + "'";
+        result = jdbc.queryForList(sql);
+
+        if (!result.isEmpty()) {
+            long adoptats = (long) result.get(0).get("count(*)");
+            beanOut.setAdoptats((int)adoptats);   
+        }
+        
+        //Adoptados hembras
+        sql = "SELECT count(*) FROM " + TAULA_ADOPCIO + " WHERE " + CAMP_ID_ANIMAL + " in (SELECT " + CAMP_ID_ANIMAL + " FROM " + TAULA_ANIMAL + " WHERE " + CAMP_SEXE + " = 1)"
+                + " AND " + CAMP_DATAADOPCIO + " BETWEEN '" + inici + "' AND '" + fi + "'";
+        result = jdbc.queryForList(sql);
+        
+        if (!result.isEmpty()) {
+            long adoptatsFemella = (long) result.get(0).get("count(*)");
+            beanOut.setAdoptatsFemella((int)adoptatsFemella);   
+        }
+        
+        //Adoptados machos
+        sql = "SELECT count(*) FROM " + TAULA_ADOPCIO + " WHERE " + CAMP_ID_ANIMAL + " in (SELECT " + CAMP_ID_ANIMAL + " FROM " + TAULA_ANIMAL + " WHERE " + CAMP_SEXE + " = 0)"
+                + " AND " + CAMP_DATAADOPCIO + " BETWEEN '" + inici + "' AND '" + fi + "'";
+        result = jdbc.queryForList(sql);
+
+        if (!result.isEmpty()) {
+            long adoptatsMascle = (long) result.get(0).get("count(*)");
+            beanOut.setAdoptatsMascle((int)adoptatsMascle);   
+        }
+
         return beanOut;
         
     }
    
-   
-
  }

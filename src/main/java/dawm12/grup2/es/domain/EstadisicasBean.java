@@ -28,17 +28,21 @@ public class EstadisicasBean {
     private int altesMascle;
     private int altesFemella;
     private int inactius;
+    private int baixaMedica;
+    private int enAdopcio;
     private int adoptats;
     private int adoptatsMascle;
     private int adoptatsFemella;
 
-    public EstadisicasBean(int altes, int altesEsterilitzat, int altesXip, int altesMascle, int altesFemella, int inactius, int adoptats, int adoptatsMascle, int adoptatsFemella) {
+    public EstadisicasBean(int altes, int altesEsterilitzat, int altesXip, int altesMascle, int altesFemella, int inactius, int baixaMedica, int enAdopcio, int adoptats, int adoptatsMascle, int adoptatsFemella) {
         this.altes = altes;
         this.altesEsterilitzat = altesEsterilitzat;
         this.altesXip = altesXip;
         this.altesMascle = altesMascle;
         this.altesFemella = altesFemella;
         this.inactius = inactius;
+        this.baixaMedica = baixaMedica;
+        this.enAdopcio = enAdopcio;
         this.adoptats = adoptats;
         this.adoptatsMascle = adoptatsMascle;
         this.adoptatsFemella = adoptatsFemella;
@@ -46,9 +50,24 @@ public class EstadisicasBean {
 
     public EstadisicasBean() {
     }
-    
-    
 
+    public int getBaixaMedica() {
+        return baixaMedica;
+    }
+
+    public void setBaixaMedica(int baixaMedica) {
+        this.baixaMedica = baixaMedica;
+    }
+    
+    
+    public int getEnAdopcio() {
+        return enAdopcio;
+    }
+
+    public void setEnAdopcio(int enAdopcio) {
+        this.enAdopcio = enAdopcio;
+    }
+    
     public int getAltes() {
         return altes;
     }

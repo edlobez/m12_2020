@@ -98,10 +98,10 @@
                     <table id="tabla_adoptantes" class="display" style="width:100%"><thead>
                             <tr>
                                 <th>Nom</th>
-                                <th>Cognom 1</th>
-                                <th>Cognom 2</th>                                    
+                                <th>Primer cognom</th>
+                                <th>Segon Cognom</th>                                    
                                 <th>Email</th>  
-                                <th>Telefon</th>  
+                                <th>Telèfon</th>  
                                 <th>Adreça</th>  
                             </tr>
                         </thead>
@@ -109,10 +109,10 @@
                         <tfoot>
                             <tr>
                                 <th>Nom</th>
-                                <th>Cognom 1</th>
-                                <th>Cognom 2</th>                                    
+                                <th>Primer cognom</th>
+                                <th>Segon Cognom</th>                                    
                                 <th>Email</th>  
-                                <th>Telefon</th>  
+                                <th>Telèfon</th>  
                                 <th>Adreça</th>  
                             </tr>
                         </tfoot>
@@ -120,14 +120,14 @@
                     <div>
                         <br>
                     <input type="button" id="nuevo_adoptante" class="btn btn-info" onclick="nuevoAdoptante()"                        
-                           value=' Nou Adoptante'/>
+                           value='Nou Adoptant'/>
                 </div>
                 </div>                  
             </div>
                         
             <div class="row" id="formulario_adopcion">            
             <mvc:form role="form" class="col-md-12" id="adopcio-form" autocomplete="off" action="saveAdopcio" modelAttribute="adoptante">  
-                <div class="form-header">
+                <div class="form-header"><br>
                     <h3 class="form-title"><i class="fas fa-dove"></i>
                         Formulari d'adopció
                     </h3>
@@ -137,21 +137,21 @@
                         <label for="nom">Nom</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
-                            <mvc:input path="nom" type="text" class="form-control" id="nom" placeholder="nom"/>
+                            <mvc:input path="nom" type="text" class="form-control" id="nom" placeholder="Nom"/>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="cognom1">Cognom 1</label>
+                        <label for="cognom1">Primer cognom</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
-                            <mvc:input path="cognom1" type="text" class="form-control" id="cognom1" placeholder="Cognom 1"/>
+                            <mvc:input path="cognom1" type="text" class="form-control" id="cognom1" placeholder="Primer cognom"/>
                         </div>
                     </div>
                     <div class="form-group col-md-4">
-                        <label for="cognom2">Cognom 2</label>
+                        <label for="cognom2">Segon cognom</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-user"></i></span></div>
-                            <mvc:input path="cognom2" type="text" class="form-control" id="cognom2" placeholder="Cognom 1"/>
+                            <mvc:input path="cognom2" type="text" class="form-control" id="cognom2" placeholder="Segon cognom"/>
                         </div>
                     </div>
                 </div>
@@ -160,26 +160,27 @@
                         <label for="email">Email</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-envelope"></i></span></div>
-                            <mvc:input path="email" type="email" class="form-control" id="email" placeholder="email"/>
+                            <mvc:input path="email" type="email" class="form-control" id="email" placeholder="Email"/>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="telefon">Telefon</label>
+                        <label for="telefon">Telèfon</label>
                         <div class="input-group">   
                             <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-phone"></i></span></div>
-                            <mvc:input path="telefon" type="" class="form-control" id="telefon" placeholder="Telefon"/>
+                            <input path="telefon" type="numeric" class="form-control" id="telefon" placeholder="Telèfon"/>
+                            
                         </div>
                     </div> 
                 </div>
                 <div class="form-group">
-                    <label for="direccio">Direccio</label>
+                    <label for="direccio">Direcció</label>
                     <div class="input-group">   
                         <div class="input-group-prepend"><span class="input-group-text"><i class="fas fa-address-card"></i></span></div>
-                        <mvc:input path="direccio" type="text" class="form-control" id="direccio" placeholder="Direccio"/>
+                        <mvc:input path="direccio" type="text" class="form-control" id="direccio" placeholder="Direcció"/>
                     </div>
                 </div>          
                 
-                <div class="form-footer">                    
+                    <div class="form-footer"> <br>                   
                     <button type="submit" class="btn btn-info">Enviar</button>
                     <button type="button" class="btn btn-info" onclick="location.href = '${pageContext.servletContext.contextPath}/animal/animalListDisponible'">Tornar</button>
 

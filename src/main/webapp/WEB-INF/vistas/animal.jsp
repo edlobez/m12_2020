@@ -110,7 +110,7 @@
                                 <c:out value="Consultar animal"/>
                             </c:if> 
                             <c:if test="${accion=='consulta_adoptado'}">
-                                <c:out value="Consultar animal adoptado"/>
+                                <c:out value="Consultar animal adoptat"/>
                             </c:if> 
                         </h3>
 
@@ -358,29 +358,33 @@
                                 </button>
                             </c:if>
                             <c:if test="${accion=='consulta_adoptado'}">
-                            <div class="row">
-                                <br>                                
-                                <h2>Familia adopant</h2>
+                                <div class="form-header">
+                                    <h3 class="form-title"><i class="fas fa-users"></i>
+                                           <c:out value="Familia adoptant"/>
+                                    </h3>
+
+                                </div>
+                            <div class="row">                              
                                 <div class="form-group col-md-4">
                                     <label>Nom:&nbsp;</label><label class="form-control"> <c:out value="${persona.nom}"/></label>                                   
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Cognom 1:&nbsp;</label><label class="form-control"> <c:out value="${persona.cognom1}"/> </label>                                  
+                                    <label>Primer cognom:&nbsp;</label><label class="form-control"> <c:out value="${persona.cognom1}"/> </label>                                  
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Cognom 2:&nbsp;</label><label class="form-control"><c:out value="${persona.cognom2}"/> </label>                                 
+                                    <label>Segon cognom:&nbsp;</label><label class="form-control"><c:out value="${persona.cognom2}"/> </label>                                 
                                 </div>                                
                                 <br><br>
                             </div>
                                 <div class="row">                                
                                 <div class="form-group col-md-4">
-                                    <label>Email :&nbsp;</label><label class="form-control"><c:out value="${persona.email}"/> </label>                               
+                                    <label>Email:&nbsp;</label><label class="form-control"><c:out value="${persona.email}"/> </label>                               
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Telèfon 1:&nbsp;</label><label class="form-control"><c:out value="${persona.telefon}"/> </label>                                
+                                    <label>Telèfon:&nbsp;</label><label class="form-control"><c:out value="${persona.telefon}"/> </label>                                
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label>Direcció 2:&nbsp;</label><label class="form-control"><c:out value="${persona.direccio}"/> </label>                               
+                                    <label>Direcció:&nbsp;</label><label class="form-control"><c:out value="${persona.direccio}"/> </label>                               
                                 </div>                                
                                 <br><br>
                             </div>
